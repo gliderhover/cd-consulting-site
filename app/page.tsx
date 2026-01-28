@@ -1,13 +1,4 @@
 export default function Home() {
-  const nav = [
-    { label: "C&D Consulting TEST", href: "#problem" },
-    { label: "Solution", href: "#solution" },
-    { label: "Decision Accelerator", href: "#accelerator" },
-    { label: "Outcomes", href: "#outcomes" },
-    { label: "About", href: "#about" },
-    { label: "Contact", href: "#contact" },
-  ];
-
   const differentiators = [
     {
       title: "Neutral by design",
@@ -108,34 +99,6 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-white text-slate-900">
-      {/* Top bar */}
-      <header className="sticky top-0 z-20 border-b border-slate-200/70 bg-white/80 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <div className="flex items-center gap-3">
-            <div className="h-9 w-9 rounded-full bg-slate-900" />
-            <div className="leading-tight">
-              <div className="text-sm font-semibold">C&amp;D Consulting</div>
-              <div className="text-xs text-slate-600">CRE Data + Strategy Intelligence</div>
-            </div>
-          </div>
-
-          <nav className="hidden gap-6 text-sm text-slate-600 md:flex">
-            {nav.map((item) => (
-              <a key={item.href} href={item.href} className="hover:text-slate-900">
-                {item.label}
-              </a>
-            ))}
-          </nav>
-
-          <a
-            href="#contact"
-            className="rounded-full bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800"
-          >
-            Talk to us
-          </a>
-        </div>
-      </header>
-
       {/* Hero */}
       <section className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
         <div className="max-w-3xl">
