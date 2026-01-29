@@ -1,0 +1,146 @@
+{
+  "heroBadge": {
+    "prefix": "Moving from ",
+    "emphasisPrimary": "Systems of Record",
+    "infix": " to a ",
+    "emphasisSecondary": "System of Intelligence"
+  },
+  "heroTitle": "A semantic layer for corporate real estate strategy.",
+  "heroSubtitle": "We deploy a Common Data Model and CRE ontology that keeps your strategic data neutral, connects HR-Finance-CRE, and enables deterministic analytics and AI for portfolio decisions.",
+  "heroCtaPrimary": { "label": "Book a discovery call", "href": "#contact" },
+  "heroCtaSecondary": { "label": "See the Decision Accelerator", "href": "#decision-accelerator" },
+  "differentiators": [
+    {
+      "title": "Neutral by design",
+      "desc": "Agnostic to your service providers and software. We normalize data across HR, Finance, and CRE systems so strategy stays in your control."
+    },
+    {
+      "title": "10x faster data engineering",
+      "desc": "We automate the data engineering work so you get value in months, not multi-year internal data lake cycles."
+    },
+    {
+      "title": "Deterministic AI foundation",
+      "desc": "We structure data for precision. AI that calculates with governance and repeatability, rather than guessing with probability."
+    }
+  ],
+  "problemTitle": "The problem inside the problem",
+  "problemBody": "CRE decisions require dozens of stakeholders and confidential business context. But most tooling was built to capture reality, not forecast it, so strategy becomes manual, slow, and fragile.",
+  "problemCards": [
+    {
+      "title": "Systems of record cannot forecast",
+      "desc": "IWMS, ERPs, and workflow tools are great at tracking what happened. They struggle to connect decisions to future P&L, risk, ESG, and employee outcomes."
+    },
+    {
+      "title": "The 80/20 data trap",
+      "desc": "Teams spend most of their time stitching data across disconnected systems, leaving too little time for portfolio strategy."
+    },
+    {
+      "title": "Service-provider bias",
+      "desc": "Provider data models are optimized for provider delivery, not for the occupier's strategic decision making."
+    }
+  ],
+  "solutionTitle": "Our solution",
+  "solutionBody": "A proprietary Common Data Model built for the corporate occupier, paired with a CRE ontology that functions as a semantic layer for strategy and AI.",
+  "solutionCards": [
+    {
+      "title": "Common Data Model",
+      "body": "Normalize data across CRE, Finance, HR, and providers while retaining decision-level grain."
+    },
+    {
+      "title": "CRE Ontology (Semantic Layer)",
+      "body": "Add meaning and relationships so your data becomes an active strategic asset, not static records."
+    },
+    {
+      "title": "Invisible AI",
+      "body": "The heavy lifting algorithms that drive performance predict utilization, find cost drivers, and model trade-offs with precision."
+    }
+  ],
+  "solutionCalloutTitle": "We are not deploying another software.",
+  "solutionCalloutBody": "We enhance your existing investments while building the AI-ready data foundation that powers operational and strategic capacity.",
+  "acceleratorTitle": "The Decision Accelerator",
+  "acceleratorBody": "A 3-step methodology to build the foundational, AI-ready data asset that models the reality and possibilities of your portfolio.",
+  "acceleratorCta": { "label": "Ask for a sample engagement plan", "href": "#contact" },
+  "acceleratorSteps": [
+    {
+      "title": "Diagnose",
+      "desc": "Your IT team builds the house. We bring the meaning, acting as strategic translators so infrastructure supports operational reality, not just technical specs."
+    },
+    {
+      "title": "Deploy",
+      "desc": "Implement a Common Data Model that enforces consistency and solves the grain problem so you do not lose decision-level fidelity (for example, GL transactional detail)."
+    },
+    {
+      "title": "Deliver",
+      "desc": "Stop the cycle of one-off reports. Architect an AI Factory, a reusable foundation where logic like Total Cost of Occupancy serves Finance, Operations, and Strategy at once."
+    }
+  ],
+  "outcomesTitle": "Value delivered",
+  "outcomesBody": "The result is not a new tool. It is a new way of working, faster decisions, stronger governance, and durable trust across stakeholders.",
+  "outcomesCards": [
+    {
+      "title": "Unlock strategic capacity (the 80/20 flip)",
+      "desc": "Automate data janitor work so the team spends less time prepping and more time managing the portfolio."
+    },
+    {
+      "title": "Eradicate indecision",
+      "desc": "Replace manual reporting cycles with automated analytics to compress the time between a market signal and a strategic move."
+    },
+    {
+      "title": "Executive narrative control",
+      "desc": "Reduce the recurring fire drill of meeting prep with auditable, executive-ready narratives on demand."
+    },
+    {
+      "title": "Restore organizational trust",
+      "desc": "Replace best-guess estimates and Excel wars with governed logic and repeatable answers when Finance asks, Are you sure?"
+    },
+    {
+      "title": "Unified governance",
+      "desc": "Create a portfolio Rosetta Stone so HR, Finance, and CRE agree on one version of truth."
+    }
+  ],
+  "tracks": [
+    {
+      "title": "Track 1: Strategy architect",
+      "desc": "When a major lease expires, generate scenarios that calculate true P&L impact, exit friction, capacity and constraints, and capital reality, without weeks of spreadsheet stitching.",
+      "bullets": [
+        "Business case scenarios on demand",
+        "True P&L impacts beyond cash flow",
+        "Exit friction and decommissioning logic"
+      ]
+    },
+    {
+      "title": "Track 2: Operational mechanic",
+      "desc": "For monthly reviews, budgets, and accruals, solve data readiness upstream so BI teams stop cleaning data and start delivering insight.",
+      "bullets": [
+        "Curated, platform-agnostic lakehouse access",
+        "Semantic model usable in Excel/Power BI",
+        "Data scientists use preferred tooling"
+      ]
+    }
+  ],
+  "aboutTitle": "Who we are",
+  "aboutBody": "CRE-native data experts, seasoned real estate professionals first, technologists second. Independent and provider-agnostic. Built to innovate with speed, autonomy, and precision.",
+  "stats": [
+    { "value": "34+ yrs", "label": "combined CRE + data experience" },
+    { "value": "40+", "label": "enterprise clients served" },
+    { "value": "28", "label": "countries delivered in" },
+    { "value": "$120M", "label": "annual savings led" },
+    { "value": "2M sq ft", "label": "portfolio reduction program" },
+    { "value": "60", "label": "person global team led" }
+  ],
+  "contactTitle": "Contact",
+  "contactBody": "Tell us what decision you are trying to enable (lease, exit, growth, budget cycle), what systems are in scope, and your timeline. We will respond with a short plan.",
+  "contactCtas": [
+    {
+      "label": "Email hello@cdconsulting.com",
+      "href": "mailto:hello@cdconsulting.com?subject=C%26D%20Consulting%20-%20Discovery%20Call",
+      "variant": "primary"
+    },
+    {
+      "label": "Add Calendly link",
+      "href": "#",
+      "variant": "secondary"
+    }
+  ],
+  "confidentialTemplate": "CONFIDENTIAL. © {year} C&D Consulting. For intended recipient only. Do not distribute."
+}

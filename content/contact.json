@@ -1,0 +1,23 @@
+{
+  "title": "Contact",
+  "subtitle": "Tell us the decision you need to enable and we will respond with a short plan.",
+  "body": "Share the decision you're working on and we will respond with a clear next step.",
+  "email": "charles@consultcd.com",
+  "calendar": { "label": "Book a demo", "href": "https://outlook.office.com/book/Demo@consultcd.com/" },
+  "secondaryButton": { "label": "Email us", "href": "mailto:charles@consultcd.com" },
+  "sections": [
+    {
+      "heading": "What to share",
+      "body": "A few details help us tailor a path forward.",
+      "bullets": [
+        "Decision type (lease, exit, growth, budget cycle)",
+        "Systems in scope",
+        "Target timeline"
+      ]
+    }
+  ],
+  "cta": {
+    "label": "Email hello@cdconsulting.com",
+    "href": "mailto:hello@cdconsulting.com?subject=C%26D%20Consulting%20-%20Discovery%20Call"
+  }
+}

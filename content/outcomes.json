@@ -1,0 +1,25 @@
+{
+  "title": "Outcomes",
+  "subtitle": "Measurable, decision-ready outcomes that turn data into action.",
+  "sections": [
+    {
+      "heading": "What changes",
+      "body": "You move from static reporting to a decision engine that keeps teams aligned and accountable.",
+      "bullets": [
+        "Faster cycles from signal to decision",
+        "Shared definitions across Finance, HR, and CRE",
+        "Reusable analytics that scale"
+      ]
+    },
+    {
+      "heading": "What you can expect",
+      "body": "A clear path from data foundation to portfolio strategy.",
+      "bullets": [
+        "Decision-grade metrics and narratives",
+        "Governed business logic for trust",
+        "Executives aligned on one version of truth"
+      ]
+    }
+  ],
+  "cta": { "label": "See how we do it", "href": "/solution" }
+}
