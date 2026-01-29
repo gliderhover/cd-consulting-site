@@ -1,4 +1,54 @@
 import Link from "next/link";
+import content from "@/content/decision-accelerator.json";
+
+type CtaLink = {
+  label?: string;
+  href?: string;
+};
+
+type StatItem = {
+  label?: string;
+  value?: string;
+  sub?: string;
+};
+
+type StepItem = {
+  step?: string;
+  title?: string;
+  body?: string;
+  deliverables?: string[];
+};
+
+type Content = {
+  heroBadge?: string;
+  title?: string;
+  subtitle?: string;
+  ctaPrimary?: CtaLink;
+  ctaSecondary?: CtaLink;
+  stats?: StatItem[];
+  outcomesTitle?: string;
+  outcomes?: string[];
+  outcomesCalloutTitle?: string;
+  outcomesCalloutBody?: string;
+  howTitle?: string;
+  howSubtitle?: string;
+  timelineLabel?: string;
+  timeline?: string;
+  steps?: StepItem[];
+  deliverablesTitle?: string;
+  doNotDoTitle?: string;
+  doNotDoItems?: string[];
+  panelLeftTitle?: string;
+  panelLeft?: string[];
+  panelRightTitle?: string;
+  panelRight?: string[];
+  ctaTitle?: string;
+  ctaBody?: string;
+  ctaBottomPrimary?: CtaLink;
+  ctaBottomSecondary?: CtaLink;
+};
+
+const pageContent = content as Partial<Content>;
 
 export default function DecisionAcceleratorPage() {
   return (
@@ -8,55 +58,59 @@ export default function DecisionAcceleratorPage() {
         <div className="space-y-5">
           <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs text-slate-600">
             <span className="h-2 w-2 rounded-full bg-slate-900" />
-            Short-term engagement • 1H 2026
+            {pageContent.heroBadge ?? ""}
           </div>
 
           <h1 className="text-3xl font-semibold tracking-tight text-slate-900 md:text-4xl">
-            The Decision Accelerator
+            {pageContent.title ?? ""}
           </h1>
 
           <p className="text-base leading-relaxed text-slate-600">
-            A 3-step methodology for building the foundational, AI-ready data asset that models the
-            reality and possibilities of your portfolio. We do not replace your tech stack. We make
-            your existing investments decision-ready.
+            {pageContent.subtitle ?? ""}
           </p>
 
           <div className="flex flex-wrap gap-3">
             <Link
-              href="/contact"
+              href={pageContent.ctaPrimary?.href ?? ""}
               className="rounded-full bg-slate-900 px-5 py-2.5 text-sm font-medium text-white hover:bg-slate-800"
             >
-              Talk to us
+              {pageContent.ctaPrimary?.label ?? ""}
             </Link>
-            <a
-              href="#how-it-works"
+            <LinkOrAnchor
+              href={pageContent.ctaSecondary?.href ?? "#how-it-works"}
               className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-medium text-slate-700 hover:border-slate-400"
             >
-              How it works
-            </a>
+              {pageContent.ctaSecondary?.label ?? ""}
+            </LinkOrAnchor>
           </div>
 
           <div className="grid grid-cols-3 gap-4 pt-4 text-sm">
-            <Stat label="Method" value="3 steps" sub="Diagnose • Deploy • Deliver" />
-            <Stat label="Focus" value="Meaning" sub="not more dashboards" />
-            <Stat label="Output" value="AI Factory" sub="reusable analytics" />
+            {(pageContent.stats ?? []).map((stat) => (
+              <Stat
+                key={`${stat.label ?? ""}-${stat.value ?? ""}`}
+                label={stat.label ?? ""}
+                value={stat.value ?? ""}
+                sub={stat.sub ?? ""}
+              />
+            ))}
           </div>
         </div>
 
         <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-          <h2 className="text-lg font-semibold text-slate-900">Typical outcomes</h2>
+          <h2 className="text-lg font-semibold text-slate-900">
+            {pageContent.outcomesTitle ?? ""}
+          </h2>
           <div className="mt-4 grid gap-3">
-            <Bullet>Common Data Model aligned to your decisions</Bullet>
-            <Bullet>CRE ontology (semantic layer) and governed definitions</Bullet>
-            <Bullet>Reusable logic for key metrics (e.g., Total Cost of Occupancy)</Bullet>
-            <Bullet>Decision-ready analytics interface for Finance, Ops, Strategy</Bullet>
+            {(pageContent.outcomes ?? []).map((item) => (
+              <Bullet key={item}>{item}</Bullet>
+            ))}
           </div>
 
           <div className="mt-6 rounded-xl bg-slate-50 p-4 text-sm text-slate-700">
-            <div className="font-medium text-slate-900">What changes</div>
-            <div className="mt-1">
-              You stop building one-off reports and start operating a scalable decision engine.
+            <div className="font-medium text-slate-900">
+              {pageContent.outcomesCalloutTitle ?? ""}
             </div>
+            <div className="mt-1">{pageContent.outcomesCalloutBody ?? ""}</div>
           </div>
         </div>
       </section>
@@ -67,58 +121,41 @@ export default function DecisionAcceleratorPage() {
           <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
             <div className="max-w-3xl">
               <h2 className="text-2xl font-semibold tracking-tight text-slate-900">
-                How it works
+                {pageContent.howTitle ?? ""}
               </h2>
               <p className="mt-2 text-slate-600">
-                Your IT team can build the lakehouse. We bring the meaning. We act as strategic
-                translators so the infrastructure supports operational reality, not just technical
-                specs.
+                {pageContent.howSubtitle ?? ""}
               </p>
             </div>
             <div className="text-sm text-slate-600">
-              Typical timeline: <span className="font-medium text-slate-900">8–12 weeks</span>
+              {pageContent.timelineLabel ?? ""}{" "}
+              <span className="font-medium text-slate-900">
+                {pageContent.timeline ?? ""}
+              </span>
             </div>
           </div>
 
           <div className="mt-8 grid gap-4 md:grid-cols-3">
-            <Step
-              step="01"
-              title="Diagnose"
-              body="Map your decision questions to the data architecture. Identify the systems, grains, and definitions that must align for Finance-grade answers."
-              deliverables={[
-                "Decision map and data inventory",
-                "Current-state grain and semantics assessment",
-                "Priority use cases and success metrics",
-              ]}
-            />
-            <Step
-              step="02"
-              title="Deploy"
-              body="Implement a Common Data Model that enforces consistency. Solve the grain problem so you do not aggregate too early and lose fidelity needed for deep financial analysis."
-              deliverables={[
-                "Common Data Model in your environment",
-                "Canonical entities and relationships",
-                "Governed definitions and transformation rules",
-              ]}
-            />
-            <Step
-              step="03"
-              title="Deliver"
-              body="Architect an AI Factory: reusable analytics logic instead of one-off reports. Once we map key logic (e.g., Total Cost of Occupancy), it serves Finance, Ops, and Strategy simultaneously."
-              deliverables={[
-                "Reusable analytics components",
-                "First decision-ready outputs (dashboards, narratives, APIs)",
-                "Handoff playbook and governance model",
-              ]}
-            />
+            {(pageContent.steps ?? []).map((step) => (
+              <Step
+                key={`${step.step ?? ""}-${step.title ?? ""}`}
+                step={step.step ?? ""}
+                title={step.title ?? ""}
+                body={step.body ?? ""}
+                deliverables={step.deliverables ?? []}
+                deliverablesTitle={pageContent.deliverablesTitle ?? ""}
+              />
+            ))}
           </div>
 
           <div className="mt-8 rounded-xl bg-slate-50 p-5">
-            <div className="text-sm font-medium text-slate-900">What we do not do</div>
+            <div className="text-sm font-medium text-slate-900">
+              {pageContent.doNotDoTitle ?? ""}
+            </div>
             <div className="mt-2 grid gap-2 text-sm text-slate-700 md:grid-cols-3">
-              <span>• No “dashboard factory” point solutions</span>
-              <span>• No multi-year cleanup pitch</span>
-              <span>• No forced rip-and-replace software</span>
+              {(pageContent.doNotDoItems ?? []).map((item) => (
+                <span key={item}>• {item}</span>
+              ))}
             </div>
           </div>
         </div>
@@ -128,22 +165,12 @@ export default function DecisionAcceleratorPage() {
       <section className="mt-16">
         <div className="grid gap-8 md:grid-cols-2">
           <Panel
-            title="What we need from you"
-            items={[
-              "Access to existing data sources (read-only is fine)",
-              "Decision owners for 2–3 priority questions",
-              "A technical partner (IT / data engineer) for deployment coordination",
-              "Agreement on definitions: headcount, seats, sites, costs, hierarchies",
-            ]}
+            title={pageContent.panelLeftTitle ?? ""}
+            items={pageContent.panelLeft ?? []}
           />
           <Panel
-            title="What you get"
-            items={[
-              "A decision-grade common model (not just a lake)",
-              "Governed ontology and definitions (semantic layer)",
-              "Reusable analytics logic and outputs",
-              "A foundation for deterministic AI and reliable narratives",
-            ]}
+            title={pageContent.panelRightTitle ?? ""}
+            items={pageContent.panelRight ?? []}
           />
         </div>
       </section>
@@ -154,24 +181,24 @@ export default function DecisionAcceleratorPage() {
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div>
               <h3 className="text-xl font-semibold text-slate-900">
-                Want to run the Decision Accelerator on your portfolio?
+                {pageContent.ctaTitle ?? ""}
               </h3>
               <p className="mt-1 text-slate-600">
-                We can start with one decision question and build the foundation that scales.
+                {pageContent.ctaBody ?? ""}
               </p>
             </div>
             <div className="flex gap-3">
               <Link
-                href="/contact"
+                href={pageContent.ctaBottomPrimary?.href ?? ""}
                 className="rounded-full bg-slate-900 px-5 py-2.5 text-sm font-medium text-white hover:bg-slate-800"
               >
-                Talk to us
+                {pageContent.ctaBottomPrimary?.label ?? ""}
               </Link>
               <Link
-                href="/outcomes"
+                href={pageContent.ctaBottomSecondary?.href ?? ""}
                 className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-medium text-slate-700 hover:border-slate-400"
               >
-                See outcomes
+                {pageContent.ctaBottomSecondary?.label ?? ""}
               </Link>
             </div>
           </div>
@@ -207,6 +234,7 @@ function Step(props: {
   title: string;
   body: string;
   deliverables: string[];
+  deliverablesTitle: string;
 }) {
   return (
     <div className="rounded-2xl border border-slate-200 bg-white p-6">
@@ -214,17 +242,19 @@ function Step(props: {
       <div className="mt-2 text-sm font-semibold text-slate-900">{props.title}</div>
       <div className="mt-2 text-sm leading-relaxed text-slate-600">{props.body}</div>
 
-      <div className="mt-4 rounded-xl bg-slate-50 p-4">
-        <div className="text-xs font-medium text-slate-900">Deliverables</div>
-        <ul className="mt-2 space-y-2 text-sm text-slate-700">
-          {props.deliverables.map((d) => (
-            <li key={d} className="flex gap-3">
-              <span className="mt-2 h-2 w-2 flex-none rounded-full bg-slate-900" />
-              <span>{d}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
+      {(props.deliverablesTitle || props.deliverables.length > 0) && (
+        <div className="mt-4 rounded-xl bg-slate-50 p-4">
+          <div className="text-xs font-medium text-slate-900">{props.deliverablesTitle}</div>
+          <ul className="mt-2 space-y-2 text-sm text-slate-700">
+            {props.deliverables.map((d) => (
+              <li key={d} className="flex gap-3">
+                <span className="mt-2 h-2 w-2 flex-none rounded-full bg-slate-900" />
+                <span>{d}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
@@ -242,5 +272,25 @@ function Panel(props: { title: string; items: string[] }) {
         ))}
       </ul>
     </div>
+  );
+}
+
+function LinkOrAnchor(props: {
+  href: string;
+  className: string;
+  children: React.ReactNode;
+}) {
+  if (props.href.startsWith("#")) {
+    return (
+      <a href={props.href} className={props.className}>
+        {props.children}
+      </a>
+    );
+  }
+
+  return (
+    <Link href={props.href} className={props.className}>
+      {props.children}
+    </Link>
   );
 }

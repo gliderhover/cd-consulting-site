@@ -1,0 +1,82 @@
+{
+  "heroBadge": "Short-term engagement • 1H 2026",
+  "title": "The Decision Accelerator",
+  "subtitle": "A 3-step methodology for building the foundational, AI-ready data asset that models the reality and possibilities of your portfolio. We do not replace your tech stack. We make your existing investments decision-ready.",
+  "ctaPrimary": { "label": "Talk to us", "href": "/contact" },
+  "ctaSecondary": { "label": "How it works", "href": "#how-it-works" },
+  "stats": [
+    { "label": "Method", "value": "3 steps", "sub": "Diagnose • Deploy • Deliver" },
+    { "label": "Focus", "value": "Meaning", "sub": "not more dashboards" },
+    { "label": "Output", "value": "AI Factory", "sub": "reusable analytics" }
+  ],
+  "outcomesTitle": "Typical outcomes",
+  "outcomes": [
+    "Common Data Model aligned to your decisions",
+    "CRE ontology (semantic layer) and governed definitions",
+    "Reusable logic for key metrics (e.g., Total Cost of Occupancy)",
+    "Decision-ready analytics interface for Finance, Ops, Strategy"
+  ],
+  "outcomesCalloutTitle": "What changes",
+  "outcomesCalloutBody": "You stop building one-off reports and start operating a scalable decision engine.",
+  "howTitle": "How it works",
+  "howSubtitle": "Your IT team can build the lakehouse. We bring the meaning. We act as strategic translators so the infrastructure supports operational reality, not just technical specs.",
+  "timelineLabel": "Typical timeline:",
+  "timeline": "8–12 weeks",
+  "steps": [
+    {
+      "step": "01",
+      "title": "Diagnose",
+      "body": "Map your decision questions to the data architecture. Identify the systems, grains, and definitions that must align for Finance-grade answers.",
+      "deliverables": [
+        "Decision map and data inventory",
+        "Current-state grain and semantics assessment",
+        "Priority use cases and success metrics"
+      ]
+    },
+    {
+      "step": "02",
+      "title": "Deploy",
+      "body": "Implement a Common Data Model that enforces consistency. Solve the grain problem so you do not aggregate too early and lose fidelity needed for deep financial analysis.",
+      "deliverables": [
+        "Common Data Model in your environment",
+        "Canonical entities and relationships",
+        "Governed definitions and transformation rules"
+      ]
+    },
+    {
+      "step": "03",
+      "title": "Deliver",
+      "body": "Architect an AI Factory: reusable analytics logic instead of one-off reports. Once we map key logic (e.g., Total Cost of Occupancy), it serves Finance, Ops, and Strategy simultaneously.",
+      "deliverables": [
+        "Reusable analytics components",
+        "First decision-ready outputs (dashboards, narratives, APIs)",
+        "Handoff playbook and governance model"
+      ]
+    }
+  ],
+  "deliverablesTitle": "Deliverables",
+  "doNotDoTitle": "What we do not do",
+  "doNotDoItems": [
+    "No “dashboard factory” point solutions",
+    "No multi-year cleanup pitch",
+    "No forced rip-and-replace software"
+  ],
+  "panelLeftTitle": "What we need from you",
+  "panelLeft": [
+    "Access to existing data sources (read-only is fine)",
+    "Decision owners for 2–3 priority questions",
+    "A technical partner (IT / data engineer) for deployment coordination",
+    "Agreement on definitions: headcount, seats, sites, costs, hierarchies"
+  ],
+  "panelRightTitle": "What you get",
+  "panelRight": [
+    "A decision-grade common model (not just a lake)",
+    "Governed ontology and definitions (semantic layer)",
+    "Reusable analytics logic and outputs",
+    "A foundation for deterministic AI and reliable narratives"
+  ],
+  "ctaTitle": "Want to run the Decision Accelerator on your portfolio?",
+  "ctaBody": "We can start with one decision question and build the foundation that scales.",
+  "ctaBottomPrimary": { "label": "Talk to us", "href": "/contact" },
+  "ctaBottomSecondary": { "label": "See outcomes", "href": "/outcomes" }
+}
