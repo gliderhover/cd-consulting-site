@@ -1,0 +1,1783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Foundation Architecture</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.26.0/cytoscape.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #FAF6F1;
+            --system-of-record-color: #E2E2E2;
+            --data-foundation-color: #5A6349;
+            --descriptor-color: #C7B9A5;
+            --analytical-color: #B58400;
+            --decision-color: #B06A53;
+            --root-color: #3B597C;
+            --detail-color: #8A9BAE;
+            --edge-color: #5E5E5E;
+            --accent-color: #B58400;
+            --font-family: 'Inter', -apple-system, sans-serif;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: var(--bg-color);
+            font-family: var(--font-family);
+        }
+
+        #cy {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .header {
+            position: absolute;
+            top: 30px;
+            left: 40px;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .header p {
+            margin: 4px 0 0 0;
+            font-size: 0.85rem;
+            color: #777;
+        }
+
+        /* Collapsible Controls Panel */
+        .controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 20;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 16px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 260px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+
+        .highlight-controls {
+            top: 220px;
+        }
+
+        .controls.collapsed {
+            width: 32px;
+            height: 32px;
+            padding: 4px;
+            border-radius: 50%;
+            background: white;
+        }
+
+        .controls-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .controls.collapsed .controls-content {
+            display: none;
+        }
+
+        .toggle-panel-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        .toggle-panel-btn:hover {
+            background: rgba(0,0,0,0.05);
+            color: #333;
+        }
+
+        .controls.collapsed .toggle-panel-btn {
+            width: 32px;
+            height: 32px;
+            color: var(--root-color);
+        }
+
+        .controls-content {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .controls-section {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .controls-section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .controls-title {
+            font-size: 9px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #888;
+            letter-spacing: 0.1em;
+            margin-bottom: 2px;
+        }
+
+        .section-toggle-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 2px 4px;
+            font-size: 10px;
+            color: #888;
+        }
+
+        .controls-section.collapsed .controls-body {
+            display: none;
+        }
+
+        .level-btns {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+
+        .group-btns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+        }
+
+        .filter-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .filter-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-label {
+            font-size: 9px;
+            font-weight: 500;
+            color: #666;
+            min-width: 70px;
+            flex-shrink: 0;
+        }
+
+        .filter-row .level-btns {
+            flex: 1;
+        }
+
+        .filter-row .btn-grp {
+            flex: 1;
+        }
+
+        .select {
+            width: 100%;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            background: #fff;
+            padding: 6px 8px;
+            font-size: 10px;
+            font-family: var(--font-family);
+        }
+
+        .btn {
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            background: #fff;
+            cursor: pointer;
+            font-family: var(--font-family);
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-lvl {
+            width: 26px;
+            height: 26px;
+            font-size: 10px;
+        }
+
+        .btn-grp {
+            padding: 6px 4px;
+            font-size: 10px;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .btn.active {
+            background: var(--root-color);
+            color: white;
+            border-color: var(--root-color);
+        }
+
+        .btn-grp.active.foundation { background-color: var(--root-color); }
+        .btn-grp.active.descriptors { background-color: var(--descriptor-color); border-color: var(--descriptor-color); }
+        .btn-grp.active.analytical { background-color: var(--analytical-color); border-color: var(--analytical-color); }
+        .btn-grp.active.system_of_record { background-color: #E2E2E2; border-color: #E2E2E2; color: #333; }
+        .btn-grp.active.outcome { background-color: #4CAF50; border-color: #4CAF50; }
+        .btn-grp.active.external_context { background-color: #4E8C8A; border-color: #4E8C8A; color: #333; }
+
+        .btn:hover:not(.active) {
+            background: #f0f0f0;
+        }
+
+        #zoom-hint {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            color: #666;
+            pointer-events: none;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Solution Framework</h1>
+        <p>Architectural topology — 2026 edition</p>
+    </div>
+
+    <div class="controls" id="controlsPanel">
+        <div class="controls-header">
+            <div class="controls-title" id="panelTitle">Topology Controls</div>
+            <button class="toggle-panel-btn" id="togglePanel" title="Toggle Controls">
+                <!-- Icon: Settings/Gear -->
+                <svg id="toggleIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                </svg>
+            </button>
+        </div>
+        
+        <div class="controls-content">
+            <div class="controls-section" id="collapseGroupsSection">
+                <div class="controls-section-header">
+                    <div class="controls-title">Collapse Groups</div>
+                    <button class="section-toggle-btn" id="collapseGroupsToggle" type="button">-</button>
+                </div>
+                <div class="controls-body">
+                    <div class="group-btns">
+                        <button class="btn btn-grp collapse-all-groups" id="collapseAllBtn">All</button>
+                        <button class="btn btn-grp collapse-group" data-group-id="system_of_record">System of Record</button>
+                        <button class="btn btn-grp collapse-group" data-group-id="external_context">External Context</button>
+                        <button class="btn btn-grp collapse-group" data-group-id="data_foundation">Data Foundation</button>
+                        <button class="btn btn-grp collapse-group" data-group-id="descriptor">Descriptor</button>
+                        <button class="btn btn-grp collapse-group" data-group-id="analytical">Analytical</button>
+                        <button class="btn btn-grp collapse-group" data-group-id="decision">Decision</button>
+                        <button class="btn btn-grp collapse-group" data-group-id="outcome">Outcome</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls-section collapsed" id="highlightSection">
+                <div class="controls-section-header">
+                    <div class="controls-title">Highlight</div>
+                    <button class="section-toggle-btn" id="highlightSectionToggle" type="button">+</button>
+                </div>
+                <div class="controls-body">
+                    <div class="group-btns">
+                        <button class="btn btn-grp" id="mlHighlightBtn">Machine Learning</button>
+                    </div>
+                    <div class="controls-section" style="gap: 4px;">
+                        <div class="controls-title">Persona</div>
+                        <select class="select" id="personaSelect" aria-label="Persona"></select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls-section collapsed" id="filterLayersSection">
+                <div class="controls-section-header">
+                    <div class="controls-title">Filter Layers</div>
+                    <button class="section-toggle-btn" id="filterLayersToggle" type="button">+</button>
+                </div>
+                <div class="controls-body">
+                    <div class="filter-grid">
+                        <div class="filter-row">
+                            <span class="filter-label">System of Record</span>
+                            <button class="btn btn-lvl active" data-level="0">0</button>
+                        </div>
+                        <div class="filter-row">
+                            <span class="filter-label">External Context</span>
+                            <button class="btn btn-lvl active external-context-toggle" data-group="external_context">E</button>
+                        </div>
+                        <div class="filter-row">
+                            <span class="filter-label">Foundation</span>
+                            <div class="level-btns">
+                                <button class="btn btn-lvl active foundation-all" data-group="foundation">A</button>
+                                <button class="btn btn-lvl active" data-level="1">1</button>
+                                <button class="btn btn-lvl active" data-level="2">2</button>
+                                <button class="btn btn-lvl active" data-level="3">3</button>
+                                <button class="btn btn-lvl active" data-level="4">4</button>
+                            </div>
+                        </div>
+                        <div class="filter-row">
+                            <span class="filter-label">Descriptor</span>
+                            <button class="btn btn-lvl active" data-level="6">6</button>
+                        </div>
+                        <div class="filter-row">
+                            <span class="filter-label">Analytical</span>
+                            <div class="level-btns">
+                                <button class="btn btn-lvl active analytical-all" data-group="analytical">A</button>
+                                <button class="btn btn-lvl active" data-level="7">7</button>
+                                <button class="btn btn-lvl active" data-level="8">8</button>
+                                <button class="btn btn-lvl active" data-level="9">9</button>
+                            </div>
+                        </div>
+                        <div class="filter-row">
+                            <span class="filter-label">Decision</span>
+                            <div class="level-btns">
+                                <button class="btn btn-lvl active decision-all" data-group="decision">A</button>
+                                <button class="btn btn-lvl active" data-level="10">10</button>
+                                <button class="btn btn-lvl active" data-level="11">11</button>
+                            </div>
+                        </div>
+                        <div class="filter-row">
+                            <span class="filter-label">Outcome</span>
+                            <button class="btn btn-lvl active" data-level="12">12</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="zoom-hint">Scroll to zoom • Hover to explore relationships</div>
+    <div id="cy"></div>
+
+    <script>
+        // Grouping definitions by level (parameterized for future use)
+        const levelGroups = [
+            { id: 'system_of_record', levels: [0], linkToGroup: 'data_foundation', linkNodeLevel: [2, 3], linkFromLevel: [] },
+            { id: 'external_context', levels: [0], linkToGroup: 'analytical', linkNodeLevel: [8], linkFromLevel: [] },
+            { id: 'data_foundation', levels: [1, 2, 3, 4], linkToGroup: 'descriptor', linkNodeLevel: [6], linkFromLevel: [0] },
+            { id: 'descriptor', levels: [6], linkToGroup: 'analytical', linkNodeLevel: [7], linkFromLevel: [4] },
+            { id: 'analytical', levels: [7, 8, 9], linkToGroup: 'decision', linkNodeLevel: [10], linkFromLevel: [6] },
+            { id: 'decision', levels: [10, 11], linkToGroup: 'outcome', linkNodeLevel: [12], linkFromLevel: [9] },
+            { id: 'outcome', levels: [12], linkToGroup: null, linkNodeLevel: [], linkFromLevel: [11] }
+        ];
+
+        // Group formatting derived from base level styles
+        const groupStyles = {
+            system_of_record: {
+                shape: 'roundrectangle',
+                width: 240,
+                height: 120,
+                'background-color': '#E2E2E2',
+                color: '#333',
+                'font-size': '20px',
+                'text-wrap': 'wrap',
+                'text-max-width': '220px',
+                'text-valign': 'center',
+                'text-halign': 'center',
+                'opacity': 0.95
+            },
+            data_foundation: {
+                shape: 'ellipse',
+                width: 160,
+                height: 160,
+                'background-color': '#5A6349',
+                color: '#333',
+                'font-size': '20px',
+                'text-wrap': 'wrap',
+                'text-max-width': '160px',
+                'text-valign': 'bottom',
+                'text-margin-y': '8px',
+                'text-halign': 'center',
+                'opacity': 0.95
+            },
+            descriptor: {
+                shape: 'ellipse',
+                width: 160,
+                height: 160,
+                'background-color': '#C7B9A5',
+                color: '#333',
+                'font-size': '20px',
+                'text-wrap': 'wrap',
+                'text-max-width': '160px',
+                'text-valign': 'bottom',
+                'text-margin-y': '8px',
+                'text-halign': 'center',
+                'opacity': 0.95
+            },
+            analytical: {
+                shape: 'ellipse',
+                width: 160,
+                height: 160,
+                'background-color': '#B58400',
+                color: '#333',
+                'font-size': '20px',
+                'text-wrap': 'wrap',
+                'text-max-width': '160px',
+                'text-valign': 'bottom',
+                'text-margin-y': '8px',
+                'text-halign': 'center',
+                'opacity': 0.95
+            },
+            decision: {
+                shape: 'ellipse',
+                width: 160,
+                height: 160,
+                'background-color': '#B06A53',
+                color: '#333',
+                'font-size': '20px',
+                'text-wrap': 'wrap',
+                'text-max-width': '160px',
+                'text-valign': 'bottom',
+                'text-margin-y': '8px',
+                'text-halign': 'center',
+                'opacity': 0.95
+            },
+            outcome: {
+                shape: 'ellipse',
+                width: 160,
+                height: 160,
+                'background-color': '#4CAF50',
+                color: '#333',
+                'font-size': '20px',
+                'text-wrap': 'wrap',
+                'text-max-width': '160px',
+                'text-valign': 'bottom',
+                'text-margin-y': '8px',
+                'text-halign': 'center',
+                'opacity': 0.95
+            },
+            external_context: {
+                shape: 'roundrectangle',
+                width: 240,
+                height: 120,
+                'background-color': '#4E8C8A',
+                color: '#fff',
+                'font-size': '20px',
+                'text-wrap': 'wrap',
+                'text-max-width': '220px',
+                'text-valign': 'center',
+                'text-halign': 'center',
+                'opacity': 0.95
+            }
+        };
+
+        const nodesData = [
+            // Level 0 (System of Record)
+            { id: 'iwms', id_hidden: 'Archibus', type: 'iwms', class: 'system_of_record', col: 0 },
+            { id: 'strategy_planning', id_hidden: 'Sharepoint', type: 'strategy_planning', class: 'system_of_record', col: 0 },
+            { id: 'lease_administration', id_hidden: 'CoStar', type: 'lease_administration', class: 'system_of_record', col: 0 },
+            { id: 'transaction_management', id_hidden: 'TBD', type: 'transaction_management', class: 'system_of_record', col: 0 },
+            { id: 'project_management', id_hidden: 'Appian', type: 'project_management', class: 'system_of_record', col: 0 },
+            { id: 'facility_management', id_hidden: 'Servicenow', type: 'facility_management', class: 'system_of_record', col: 0 },
+            { id: 'occupancy_planning', id_hidden: 'InControl', type: 'occupancy_planning', class: 'system_of_record', col: 0 },
+            { id: 'sustainability', id_hidden: 'REALM', type: 'sustainability', class: 'system_of_record', col: 0 },
+            { id: 'finance', id_hidden: 'TBD', type: 'finance', class: 'system_of_record', col: 0 },
+            { id: 'lease_accounting', id_hidden: 'TBD', type: 'lease_accounting', class: 'system_of_record', col: 0 },
+            { id: 'human_resources', id_hidden: 'Workday', type: 'human_resources', class: 'system_of_record', col: 0 },
+            { id: 'external_context', id_hidden: 'Market Data', type: 'external_context', class: 'external_context', col: 0 },
+
+            // Levels 1-5 (Root and Foundation)
+            { id: 'company', type: 'dimension', class: 'root', col: 1 },
+            { id: 'property', type: 'dimension', class: 'root', col: 1 },
+            { id: 'people', type: 'dimension', class: 'root', col: 1 },
+            { id: 'property_interest', type: 'dimension', class: 'core', col: 2 },
+            { id: 'strategy', type: 'dimension', class: 'core', col: 2 },
+            // Foundation col:3
+            { id: 'scenarios', type: 'dimension', class: 'core', col: 3 },
+            { id: 'lease', type: 'dimension', class: 'core', col: 3 },
+            { id: 'project', type: 'dimension', class: 'core', col: 3 },
+            { id: 'work_zone', type: 'dimension', class: 'core', col: 3 },
+            { id: 'space', type: 'dimension', class: 'core', col: 3 },
+            { id: 'business_unit', type: 'dimension', class: 'core', col: 3 },
+            { id: 'business_line', type: 'dimension', class: 'core', col: 3 },
+            { id: 'consumption_meter', type: 'dimension', class: 'core', col: 3 },
+            // Foundation col:4
+            { id: 'payment_schedule', type: 'fact', class: 'detail', col: 4 },
+            { id: 'critical_dates_or_events', type: 'fact', class: 'detail', col: 4 },
+            { id: 'conditions', type: 'fact', class: 'detail', col: 4 },
+            { id: 'lease_accounting_balances', type: 'dimension', class: 'detail', col: 4 },
+            { id: 'work_order', type: 'dimension', class: 'detail', col: 4 },
+            { id: 'asset', type: 'dimension', class: 'detail', col: 4 }, 
+            { id: 'milestone', type: 'fact', class: 'detail', col: 4 },
+            { id: 'certification', type: 'fact', class: 'detail', col: 4 },
+            { id: 'financial', type: 'fact', class: 'detail', col: 4 },
+            { id: 'general_ledger', type: 'fact', class: 'detail', col: 4 },
+            { id: 'balance', type: 'dimension', class: 'detail', col: 4 },
+            { id: 'fixed_asset_registry', type: 'fact', class: 'detail', col: 4 },
+            { id: 'consumption', type: 'fact', class: 'detail', col: 4 }, 
+            { id: 'headcount', type: 'fact', class: 'detail', col: 4 },
+            { id: 'workspaces', type: 'fact', class: 'detail', col: 4 },
+            { id: 'utilization', type: 'fact', class: 'detail', col: 4 },            
+            { id: 'transaction', type: 'dimension', class: 'detail', col: 4 }, 
+            { id: 'cash_flow', type: 'fact', class: 'detail', col: 4 },
+
+            // Level 6 (Descriptors)
+            { id: 'total_cost_of_occupancy', type: 'descriptor', class: 'descriptor', col: 6 },
+            { id: 'portfolio_key_metrics', type: 'descriptor', class: 'descriptor', col: 6 },
+            { id: 'critical_date_report', type: 'descriptor', class: 'descriptor', col: 6 },
+            { id: 'lease_conditions', type: 'descriptor', class: 'descriptor', col: 6 },
+            { id: 'remaining_lease_obligation', type: 'descriptor', class: 'descriptor', col: 6 },
+            { id: 'transaction_key_metrics', type: 'descriptor', class: 'descriptor', col: 6 },
+            { id: 'capital_budget', type: 'descriptor', class: 'descriptor', col: 6 },
+            { id: 'facility_report', type: 'descriptor', class: 'descriptor', col: 6 },
+            { id: 'occupancy_allocation', type: 'descriptor', class: 'descriptor', col: 6 },
+            { id: 'area_breakdown', type: 'descriptor', class: 'descriptor', col: 6 },
+            { id: 'emission_profile', type: 'descriptor', class: 'descriptor', col: 6 },
+            { id: 'badge_access', type: 'descriptor', class: 'descriptor', col: 6 },
+            { id: 'employee_survey', type: 'descriptor', class: 'descriptor', col: 6 },
+            { id: 'fixed_asset_financial_profile', type: 'descriptor', class: 'descriptor', col: 6 },
+            { id: 'liability_balances', type: 'descriptor', class: 'descriptor', col: 6 },
+
+
+            // Level 7-11 (Analytical)
+            // Analytical 1 (col:7)
+            { id: 'portfolio_health_index', type: 'analytical', class: 'analytical', col: 7, has_ml: true },
+            { id: 'cost_per_visit', type: 'analytical', class: 'analytical', col: 7 },
+            { id: 'lease_flexibility', type: 'analytical', class: 'analytical', col: 7 },
+            { id: 'decommissioning_cost', type: 'analytical', class: 'analytical', col: 7 },
+            { id: 'green_lease_compliance', type: 'analytical', class: 'analytical', col: 7 },
+            { id: 'spatial_segmentation', type: 'analytical', class: 'analytical', col: 7, has_ml: true },
+            { id: 'commute_analysis', type: 'analytical', class: 'analytical', col: 7 },
+            { id: 'demographic_labor_risk_analysis', type: 'analytical', class: 'analytical', col: 7 },
+            { id: 'net_zero_alignment', type: 'analytical', class: 'analytical', col: 7 },
+            { id: 'employee_behavior_analysis', type: 'analytical', class: 'analytical', col: 7, has_ml: true },
+            { id: 'utilization_time_series_analysis', type: 'analytical', class: 'analytical', col: 7, has_ml: true },
+            { id: 'employee_sentiment_scores', type: 'analytical', class: 'analytical', col: 7, has_ml: true },
+            { id: 'budgeting_&_actuals_reconciliation', type: 'analytical', class: 'analytical', col: 7 },
+            { id: 'net_book_value_write-off', type: 'analytical', class: 'analytical', col: 7 },
+            { id: 'fixed_asset_depreciation_forecaster', type: 'analytical', class: 'analytical', col: 7 },
+            { id: 'vendor_performance', type: 'analytical', class: 'analytical', col: 7 },
+            { id: 'operational_resilience', type: 'analytical', class: 'analytical', col: 7 },
+            { id: 'cam_recovery_efficiency', type: 'analytical', class: 'analytical', col: 7 },
+            // Analytical 2 (col:8)
+            { id: 'rto_workplace_demand_predictive_model', type: 'analytical', class: 'analytical', col: 8, has_ml: true },
+            { id: 'lease_buy-out_calculator', type: 'analytical', class: 'analytical', col: 8 },
+            { id: 'benchmarking_analysis', type: 'analytical', class: 'analytical', col: 8, has_ml: true },
+            { id: 'mark-to-market', type: 'analytical', class: 'analytical', col: 8 },
+            { id: 'workplace_experience_score', type: 'analytical', class: 'analytical', col: 8 },
+            { id: 'accessibility_&_flexibility_index', type: 'analytical', class: 'analytical', col: 8, has_ml: true },
+            { id: 'recharge_calculator', type: 'analytical', class: 'analytical', col: 8 },
+            { id: 'regulatory_lead-time_risk', type: 'analytical', class: 'analytical', col: 8 },
+            { id: 'sublease_yield_optimizer', type: 'analytical', class: 'analytical', col: 8 },
+            // Analytical 3 (col:9)
+            { id: 'capital_plan', type: 'analytical', class: 'analytical', col: 9 },
+            { id: 'cost_to_exit', type: 'analytical', class: 'analytical', col: 9 },
+            { id: 'talent_readiness_assessment', type: 'analytical', class: 'analytical', col: 9, has_ml: true },
+            { id: 'partnership_feasibility_index', type: 'analytical', class: 'analytical', col: 9, has_ml: true },
+            { id: 'asset_monetization_index', type: 'analytical', class: 'analytical', col: 9, has_ml: true },
+            { id: 'portfolio_synergy_model', type: 'analytical', class: 'analytical', col: 9 },
+            // Decision 1 (col:10)
+            { id: 'talent_retention_&_attraction', type: 'analytical', class: 'decision', col: 10 },
+            { id: 'improved_employee_experience', type: 'analytical', class: 'decision', col: 10 },
+            { id: 'maintenance_strategy', type: 'analytical', class: 'decision', col: 10 },
+            { id: 'data_driven_design', type: 'analytical', class: 'decision', col: 10 },
+            { id: 'compliance_risk_index', type: 'analytical', class: 'decision', col: 10 },
+            { id: 'financial_modelling', type: 'analytical', class: 'decision', col: 10 },
+            // Decision 2 (col:11)
+            { id: 'savings_potential', type: 'analytical', class: 'decision', col: 11 },
+            { id: 'unlocking_capital', type: 'analytical', class: 'decision', col: 11 },
+            { id: 'sustainability_investment_optimizer', type: 'analytical', class: 'decision', col: 11 },
+            { id: 'm_&_a_optimization', type: 'analytical', class: 'decision', col: 11 },
+            { id: 'owned_asset_optimization', type: 'analytical', class: 'decision', col: 11 },
+            // Outcome (col:12)
+            { id: 'reduce_cost', type: 'outcome', class: 'outcome', col: 12 },
+            { id: 'improve_revenue', type: 'outcome', class: 'outcome', col: 12 },
+            { id: 'decrease_operational_risk', type: 'outcome', class: 'outcome', col: 12 }
+        ];
+
+        const edgesData = [
+            // source to level 2/3
+            { source: 'project_management', target: 'project' },
+            { source: 'iwms', target: 'business_line' },
+            { source: 'iwms', target: 'property_interest' },
+            { source: 'iwms', target: 'space' },
+            { source: 'iwms', target: 'work_zone' },
+            { source: 'lease_administration', target: 'lease' },
+            { source: 'transaction_management', target: 'transaction' },
+            { source: 'occupancy_planning', target: 'business_line' },
+            { source: 'occupancy_planning', target: 'space' },
+            { source: 'sustainability', target: 'consumption_meter' },
+            { source: 'sustainability', target: 'project' },
+            { source: 'sustainability', target: 'work_zone' },
+            { source: 'facility_management', target: 'work_zone' },
+            { source: 'strategy_planning', target: 'strategy' },
+            { source: 'finance', target: 'general_ledger' },
+            { source: 'lease_accounting', target: 'lease_accounting_balances' },
+            { source: 'human_resources', target: 'business_line' },
+            { source: 'external_context', target: 'mark-to-market' },
+            { source: 'external_context', target: 'benchmarking_analysis' },
+            
+
+            // Framework
+            { source: 'company', target: 'property_interest' },
+            { source: 'property', target: 'property_interest' },
+            { source: 'property_interest', target: 'lease' },
+            { source: 'lease', target: 'payment_schedule' },
+            { source: 'lease', target: 'critical_dates_or_events' },
+            { source: 'lease', target: 'conditions' },
+            { source: 'lease', target: 'lease_accounting_balances' },
+            { source: 'property_interest', target: 'work_zone' },
+            { source: 'work_zone', target: 'work_order' },
+            { source: 'work_zone', target: 'asset' },
+            { source: 'asset', target: 'work_order' },
+            { source: 'property_interest', target: 'project' },
+            { source: 'project', target: 'milestone' },
+            { source: 'project', target: 'certification' },
+            { source: 'project', target: 'financial' },
+            { source: 'property_interest', target: 'business_unit' },
+            { source: 'business_unit', target: 'general_ledger' },
+            { source: 'business_unit', target: 'balance' },
+            { source: 'business_unit', target: 'fixed_asset_registry' },
+            { source: 'property_interest', target: 'consumption_meter' },
+            { source: 'consumption_meter', target: 'consumption' },
+            { source: 'property_interest', target: 'space' },
+            { source: 'space', target: 'headcount' },
+            { source: 'people', target: 'headcount' },
+            { source: 'space', target: 'workspaces' },
+            { source: 'business_line', target: 'headcount' },
+            { source: 'business_line', target: 'workspaces' },
+            { source: 'people', target: 'utilization' },
+            { source: 'space', target: 'utilization' },
+            { source: 'business_line', target: 'utilization' },
+            { source: 'company', target: 'strategy' },
+            { source: 'strategy', target: 'scenarios' },
+            { source: 'property_interest', target: 'scenarios' },
+            { source: 'scenarios', target: 'cash_flow' },
+            { source: 'scenarios', target: 'transaction' },
+            { source: 'company', target: 'business_line' },
+            { source: 'project', target: 'capital_budget' },
+            { source: 'asset', target: 'capital_budget' },
+            { source: 'general_ledger', target: 'total_cost_of_occupancy' },
+            { source: 'fixed_asset_registry', target: 'fixed_asset_financial_profile' },
+            { source: 'lease_accounting_balances', target: 'liability_balances' },
+            { source: 'property_interest', target: 'portfolio_key_metrics' },
+            { source: 'lease', target: 'portfolio_key_metrics' },
+            { source: 'property_interest', target: 'area_breakdown' },
+            { source: 'lease', target: 'area_breakdown' },
+            { source: 'space', target: 'area_breakdown' },
+            { source: 'headcount', target: 'occupancy_allocation' },
+            { source: 'workspaces', target: 'occupancy_allocation' },
+            { source: 'headcount', target: 'badge_access' },
+            { source: 'workspaces', target: 'badge_access' },
+            { source: 'utilization', target: 'badge_access' },
+            { source: 'work_order', target: 'operational_resilience' },
+            { source: 'asset', target: 'operational_resilience' },
+            { source: 'asset', target: 'facility_report' },
+            { source: 'critical_dates_or_events', target: 'critical_date_report' },
+            { source: 'payment_schedule', target: 'remaining_lease_obligation' },
+            { source: 'conditions', target: 'lease_conditions' },
+            { source: 'consumption', target: 'emission_profile' },
+            { source: 'area_breakdown', target: 'decommissioning_cost' },
+            { source: 'lease_conditions', target: 'decommissioning_cost' },
+            { source: 'total_cost_of_occupancy', target: 'budgeting_&_actuals_reconciliation' },
+            { source: 'area_breakdown', target: 'net_book_value_write-off' },
+            { source: 'fixed_asset_financial_profile', target: 'net_book_value_write-off' },
+            { source: 'liability_balances', target: 'net_book_value_write-off' },
+            { source: 'area_breakdown', target: 'fixed_asset_depreciation_forecaster' },
+            { source: 'fixed_asset_financial_profile', target: 'fixed_asset_depreciation_forecaster' },
+            { source: 'total_cost_of_occupancy', target: 'cost_per_visit' },
+            { source: 'badge_access', target: 'cost_per_visit' },
+            { source: 'occupancy_allocation', target: 'cost_per_visit' },
+            { source: 'critical_date_report', target: 'lease_flexibility' },
+            { source: 'remaining_lease_obligation', target: 'lease_flexibility' },
+            { source: 'lease_conditions', target: 'lease_flexibility' },
+            { source: 'lease_conditions', target: 'green_lease_compliance' },
+            { source: 'emission_profile', target: 'green_lease_compliance' },
+            { source: 'portfolio_key_metrics', target: 'spatial_segmentation' },
+            { source: 'portfolio_key_metrics', target: 'portfolio_health_index' },
+            { source: 'area_breakdown', target: 'portfolio_health_index' },
+            { source: 'occupancy_allocation', target: 'portfolio_health_index' },
+            { source: 'operational_resilience', target: 'portfolio_health_index' },
+            { source: 'facility_report', target: 'portfolio_health_index' },
+            { source: 'emission_profile', target: 'portfolio_health_index' },
+            { source: 'badge_access', target: 'portfolio_health_index' },
+            { source: 'occupancy_allocation', target: 'commute_analysis' },
+            { source: 'portfolio_key_metrics', target: 'commute_analysis' },
+            { source: 'portfolio_key_metrics', target: 'demographic_labor_risk_analysis' },
+            { source: 'emission_profile', target: 'net_zero_alignment' },
+            { source: 'badge_access', target: 'employee_behavior_analysis' },
+            { source: 'occupancy_allocation', target: 'employee_behavior_analysis' },
+            { source: 'portfolio_key_metrics', target: 'employee_behavior_analysis' },
+            { source: 'badge_access', target: 'utilization_time_series_analysis' },
+            { source: 'occupancy_allocation', target: 'utilization_time_series_analysis' },
+            { source: 'portfolio_key_metrics', target: 'utilization_time_series_analysis' },
+            { source: 'occupancy_allocation', target: 'employee_sentiment_scores' },
+            { source: 'operational_resilience', target: 'employee_sentiment_scores' },
+            { source: 'employee_survey', target: 'employee_sentiment_scores' },
+            { source: 'utilization_time_series_analysis', target: 'rto_workplace_demand_predictive_model' },
+            { source: 'employee_behavior_analysis', target: 'rto_workplace_demand_predictive_model' },
+            { source: 'lease_flexibility', target: 'lease_buy-out_calculator' },
+            { source: 'facility_report', target: 'benchmarking_analysis' },
+            { source: 'total_cost_of_occupancy', target: 'benchmarking_analysis' },
+            { source: 'area_breakdown', target: 'benchmarking_analysis' },
+            { source: 'portfolio_key_metrics', target: 'benchmarking_analysis' },
+            { source: 'total_cost_of_occupancy', target: 'mark-to-market' },
+            { source: 'area_breakdown', target: 'mark-to-market' },
+            { source: 'portfolio_key_metrics', target: 'mark-to-market' },
+            { source: 'fixed_asset_depreciation_forecaster', target: 'capital_plan' },
+            { source: 'capital_budget', target: 'capital_plan' },
+            { source: 'decommissioning_cost', target: 'cost_to_exit' },
+            { source: 'net_book_value_write-off', target: 'cost_to_exit' },
+            { source: 'lease_buy-out_calculator', target: 'cost_to_exit' },
+            { source: 'rto_workplace_demand_predictive_model', target: 'financial_modelling' },
+            { source: 'benchmarking_analysis', target: 'financial_modelling' },
+            { source: 'mark-to-market', target: 'financial_modelling' },
+            { source: 'cost_to_exit', target: 'financial_modelling' },
+            { source: 'total_cost_of_occupancy', target: 'financial_modelling' },
+            { source: 'cash_flow', target: 'financial_modelling' },
+            { source: 'financial_modelling', target: 'savings_potential' },
+            { source: 'capital_plan', target: 'data_driven_design' }, 
+            { source: 'rto_workplace_demand_predictive_model', target: 'data_driven_design' }, 
+            { source: 'employee_sentiment_scores', target: 'data_driven_design' },      
+            { source: 'headcount', target: 'employee_survey' },       
+            { source: 'capital_plan', target: 'maintenance_strategy' }, 
+            { source: 'rto_workplace_demand_predictive_model', target: 'maintenance_strategy' }, 
+            { source: 'benchmarking_analysis', target: 'maintenance_strategy' },
+            { source: 'employee_sentiment_scores', target: 'workplace_experience_score' },
+            { source: 'employee_behavior_analysis', target: 'workplace_experience_score' },
+            { source: 'utilization_time_series_analysis', target: 'workplace_experience_score' },
+            { source: 'spatial_segmentation', target: 'workplace_experience_score' },
+            { source: 'commute_analysis', target: 'accessibility_&_flexibility_index' },
+            { source: 'portfolio_health_index', target: 'accessibility_&_flexibility_index' },
+            { source: 'demographic_labor_risk_analysis', target: 'accessibility_&_flexibility_index' },
+            { source: 'workplace_experience_score', target: 'talent_readiness_assessment' },
+            { source: 'accessibility_&_flexibility_index', target: 'talent_readiness_assessment' },
+            { source: 'rto_workplace_demand_predictive_model', target: 'talent_readiness_assessment' },
+            { source: 'talent_readiness_assessment', target: 'talent_retention_&_attraction' },
+            { source: 'capital_plan', target: 'talent_retention_&_attraction' },
+            { source: 'workplace_experience_score', target: 'improved_employee_experience' },
+            { source: 'accessibility_&_flexibility_index', target: 'improved_employee_experience' },
+            { source: 'rto_workplace_demand_predictive_model', target: 'improved_employee_experience' },
+            { source: 'critical_date_report', target: 'regulatory_lead-time_risk' },
+            { source: 'facility_report', target: 'regulatory_lead-time_risk' },
+            { source: 'operational_resilience', target: 'regulatory_lead-time_risk' },
+            { source: 'regulatory_lead-time_risk', target: 'compliance_risk_index' },
+            { source: 'vendor_performance', target: 'compliance_risk_index' },
+            { source: 'green_lease_compliance', target: 'compliance_risk_index' },
+            { source: 'net_zero_alignment', target: 'compliance_risk_index' },
+            { source: 'operational_resilience', target: 'vendor_performance' },
+            { source: 'total_cost_of_occupancy', target: 'vendor_performance' }, 
+            { source: 'capital_budget', target: 'vendor_performance' }, 
+            { source: 'facility_report', target: 'vendor_performance' },
+            { source: 'transaction_key_metrics', target: 'vendor_performance' },
+            { source: 'net_zero_alignment', target: 'sustainability_investment_optimizer' },
+            { source: 'cash_flow', target: 'sustainability_investment_optimizer' },
+            { source: 'capital_plan', target: 'sustainability_investment_optimizer' },
+            { source: 'green_lease_compliance', target: 'partnership_feasibility_index' },
+            { source: 'total_cost_of_occupancy', target: 'partnership_feasibility_index' },
+            { source: 'partnership_feasibility_index', target: 'sustainability_investment_optimizer' },
+            { source: 'sustainability_investment_optimizer', target: 'compliance_risk_index' },
+            { source: 'fixed_asset_registry', target: 'asset_monetization_index' },
+            { source: 'lease_accounting_balances', target: 'asset_monetization_index' },
+            { source: 'mark-to-market', target: 'asset_monetization_index' },
+            { source: 'scenarios', target: 'asset_monetization_index' },
+            { source: 'transaction', target: 'asset_monetization_index' },
+            { source: 'asset_monetization_index', target: 'unlocking_capital' },
+            { source: 'financial_modelling', target: 'unlocking_capital' },
+            { source: 'cash_flow', target: 'transaction_key_metrics' },
+            { source: 'transaction', target: 'transaction_key_metrics' },
+            // Recharge Calculator edges
+            { source: 'budgeting_&_actuals_reconciliation', target: 'recharge_calculator' },
+            { source: 'spatial_segmentation', target: 'recharge_calculator' },
+            { source: 'area_breakdown', target: 'recharge_calculator' },
+            { source: 'total_cost_of_occupancy', target: 'recharge_calculator' },
+            // M&A Path
+            { source: 'financial_modelling', target: 'portfolio_synergy_model' },
+            { source: 'spatial_segmentation', target: 'portfolio_synergy_model' },
+            { source: 'portfolio_synergy_model', target: 'm_&_a_optimization' },
+            // Owned Asset Path
+            { source: 'total_cost_of_occupancy', target: 'cam_recovery_efficiency' },
+            { source: 'general_ledger', target: 'cam_recovery_efficiency' },
+            { source: 'transaction_key_metrics', target: 'sublease_yield_optimizer' },
+            { source: 'mark-to-market', target: 'sublease_yield_optimizer' },
+            { source: 'cam_recovery_efficiency', target: 'owned_asset_optimization' },
+            { source: 'sublease_yield_optimizer', target: 'owned_asset_optimization' },
+            { source: 'asset_monetization_index', target: 'owned_asset_optimization' },
+            // Outcome edges
+            { source: 'savings_potential', target: 'reduce_cost' },
+            { source: 'unlocking_capital', target: 'improve_revenue' },
+            { source: 'talent_retention_&_attraction', target: 'improve_revenue' },
+            { source: 'compliance_risk_index', target: 'decrease_operational_risk' },
+            // M&A Optimization connections (Strategic consolidation & risk mitigation)
+            { source: 'm_&_a_optimization', target: 'reduce_cost' },
+            { source: 'm_&_a_optimization', target: 'decrease_operational_risk' },
+            // Owned Asset Optimization (Yield and efficiency)
+            { source: 'owned_asset_optimization', target: 'improve_revenue' },
+            { source: 'owned_asset_optimization', target: 'reduce_cost' },
+            // Connecting remaining Level 10 Decision Accelerators
+            { source: 'maintenance_strategy', target: 'decrease_operational_risk' },
+            { source: 'maintenance_strategy', target: 'reduce_cost' },
+            { source: 'data_driven_design', target: 'improve_revenue' },
+            { source: 'data_driven_design', target: 'reduce_cost' },
+            { source: 'financial_modelling', target: 'reduce_cost' },
+            { source: 'improved_employee_experience', target: 'improve_revenue' },
+            { source: 'sustainability_investment_optimizer', target: 'decrease_operational_risk' },
+            { source: 'sustainability_investment_optimizer', target: 'reduce_cost' }
+        ];
+
+        // Get all level 0 node IDs dynamically
+        const level0NodeIds = nodesData.filter(n => n.col === 0).map(n => n.id);
+
+        // Create group parent nodes
+        const groupParentNodes = levelGroups.map(g => ({
+            data: { 
+                id: 'group_' + g.id, 
+                label: g.id.replace(/_/g, ' ').toUpperCase(),
+                groupId: g.id,
+                isGroupParent: true
+            },
+            classes: 'group_parent'
+        }));
+
+        const elements = [
+            ...nodesData.map(n => ({ 
+                data: { ...n, label: n.id.replace(/_/g, ' ').replace(/&/g, '&').toUpperCase() },
+                classes: n.class
+            })),
+            ...groupParentNodes,
+            ...edgesData.map(e => {
+                // Tag edges from level 0 nodes
+                const isFromLevel0 = level0NodeIds.includes(e.source);
+                return { 
+                    data: e, 
+                    classes: isFromLevel0 ? 'from-level-0' : '' 
+                };
+            })
+        ];
+
+        let cy;
+        let activeLevels = new Set([0, 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12]);
+        let systemOfRecordActive = true;
+        let externalContextActive = true;
+        const collapsedGroups = new Set(); // Track which groups are collapsed
+        let mlHighlightActive = false;
+        let activePersonaId = 'all';
+        let personaFilterNodes = null;
+
+        const personaDefinitions = [
+            {
+                id: 'portfolio_strategy',
+                label: 'Portfolio Strategy',
+                items: ['unlocking_capital', 'talent_retention_&_attraction', 'savings_potential', 'm_&_a_optimization'  ]
+            },
+            {
+                id: 'project_manager',
+                label: 'Project Manager',
+                items: ['data_driven_design']
+            },
+            {
+                id: 'facilities_manager',
+                label: 'Facilities Manager',
+                items: ['maintenance_strategy', 'compliance_risk_index']
+            },
+            {
+                id: 'workplace_experience_manager',
+                label: 'Workplace Experience Manager',
+                items: ['improved_employee_experience']
+            },
+            {
+                id: 'sustainability_manager',
+                label: 'Sustainability Manager',
+                items: ['sustainability_investment_optimizer']
+            },
+            {
+                id: 'finance',
+                label: 'Finance',
+                items: ['savings_potential']
+            },
+            {
+                id: 'lease_administrator',
+                label: 'Lease Administrator',
+                items: ['lease_flexibility', 'green_lease_compliance', 'regulatory_lead_time_risk']
+            },
+            {
+                id: 'transaction_manager',
+                label: 'Transaction Manager',
+                items: ['cost_to_exit', 'asset_monetization_index']
+            },
+            {
+                id: 'occupancy_planner',
+                label: 'Occupancy Planner',
+                items: ['rto_workplace_demand_predictive_modeling', 'benchmarking_analysis']
+            }
+        ];
+
+        window.onload = function() {
+            cy = cytoscape({
+                container: document.getElementById('cy'),
+                elements: elements,
+                boxSelectionEnabled: false,
+                autoungrabify: true,
+                autounselectify: true,
+                style: [
+                    {
+                        selector: 'node',
+                        style: {
+                            'font-family': 'Inter',
+                            'font-weight': '400',
+                            'transition-property': 'background-color, line-color, target-arrow-color, opacity',
+                            'transition-duration': '0.3s'
+                        }
+                    },
+                    {
+                        selector: '.root',
+                        style: {
+                            'width': 100,
+                            'height': 100,
+                            'background-color': '#3B597C',
+                            'label': 'data(label)',
+                            'color': '#fff',
+                            'text-valign': 'center',
+                            'text-halign': 'center',
+                            'font-size': '10px',
+                            'text-wrap': 'wrap',
+                            'text-max-width': '80px'
+                        }
+                    },
+                    {
+                        selector: '.core, .descriptor, .analytical, .decision, .outcome',
+                        style: {
+                            'width': 40,
+                            'height': 40,
+                            'label': 'data(label)',
+                            'color': '#333',
+                            'text-valign': 'bottom',
+                            'text-margin-y': '8px',
+                            'font-size': '10px',
+                            'text-wrap': 'wrap',
+                            'text-max-width': '120px'
+                        }
+                    },
+                    {
+                        selector: '.system_of_record',
+                        style: {
+                            'shape': 'roundrectangle',
+                            'width': 150,
+                            'height': 60,
+                            'background-color': 'var(--system-of-record-color)',
+                            'label': 'data(label)',
+                            'color': '#333',
+                            'text-valign': 'center',
+                            'text-halign': 'center',
+                            'font-size': '10px',
+                            'text-wrap': 'wrap',
+                            'text-max-width': '110px'
+                        }
+                    },
+                    {
+                        selector: '.external_context',
+                        style: {
+                            'shape': 'roundrectangle',
+                            'width': 150,
+                            'height': 60,
+                            'background-color': '#4E8C8A',
+                            'label': 'data(label)',
+                            'color': '#fff',
+                            'text-valign': 'center',
+                            'text-halign': 'center',
+                            'font-size': '10px',
+                            'text-wrap': 'wrap',
+                            'text-max-width': '110px'
+                        }
+                    },
+                    { selector: '.system_of_record', style: { 'background-color': '#E2E2E2' } },
+                    { selector: '.external_context', style: { 'background-color': '#4E8C8A' } },
+                    { selector: '.root', style: { 'background-color': '#5A6349' } },
+                    { selector: '.core', style: { 'background-color': '#A2AB99' } },
+                    { selector: '[col="2"].core', style: { 'background-color': '#A2AB99' } },
+                    { selector: '[col="3"].core', style: { 'background-color': '#A2AB99' } },
+                    { selector: '.descriptor', style: { 'background-color': '#C7B9A5' } },
+                    { selector: '.analytical', style: { 'background-color': '#B58400' } },
+                    { selector: '.decision', style: { 'background-color': '#B06A53' } },
+                    { selector: '.outcome', style: { 'background-color': '#4CAF50' } },
+                    {
+                        selector: 'node[has_ml]',
+                        style: {
+                            'background-image': 'data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2232%22%20height%3D%2220%22%20viewBox%3D%220%200%2032%2020%22%3E%3Ctext%20x%3D%2216%22%20y%3D%2214%22%20font-size%3D%2212%22%20font-family%3D%22Arial%2Csans-serif%22%20font-weight%3D%22700%22%20text-anchor%3D%22middle%22%20fill%3D%22%23FFFFFF%22%3EML%3C/text%3E%3C/svg%3E',
+                            'background-position-x': '50%',
+                            'background-position-y': '50%',
+                            'background-width': '32px',
+                            'background-height': '20px',
+                            'background-fit': 'none',
+                            'background-repeat': 'no-repeat'
+                        }
+                    },
+                    {
+                        selector: '.detail',
+                        style: {
+                            'width': 18,
+                            'height': 18,
+                            'background-color': '#C7B9A5',
+                            'label': 'data(label)',
+                            'color': '#555',
+                            'text-valign': 'bottom',
+                            'text-margin-y': '6px',
+                            'font-size': '9px',
+                            'text-wrap': 'wrap',
+                            'text-max-width': '100px'
+                        }
+                    },
+                    {
+                        selector: '[col="4"].detail',
+                        style: {
+                            'width': 18,
+                            'height': 18,
+                            'background-color': '#A2AB99',
+                            'label': 'data(label)',
+                            'color': '#555',
+                            'text-valign': 'bottom',
+                            'text-margin-y': '6px',
+                            'font-size': '9px',
+                            'text-wrap': 'wrap',
+                            'text-max-width': '100px'
+                        }
+                    },
+                    {
+                        selector: '.group_parent',
+                        style: {
+                            'label': 'data(label)',
+                            'text-wrap': 'wrap',
+                            'display': 'none',
+                            'background-opacity': 1,
+                            'opacity': 0.95
+                        }
+                    },
+                    {
+                        selector: 'edge',
+                        style: {
+                            'width': 1.5,
+                            'line-color': '#5E5E5E',
+                            'opacity': 0.25,
+                            'curve-style': 'bezier',
+                            'control-point-step-size': 60,
+                            'target-arrow-shape': 'none',
+                            'transition-property': 'opacity, line-color',
+                            'transition-duration': '0.3s'
+                        }
+                    },
+                    { selector: 'edge.from-level-0', style: { 'opacity': 0.075 } },
+                    { selector: 'edge.group_edge', style: { 'opacity': 0.3, 'width': 2, 'line-color': '#8A8A8A' } },
+                    { selector: 'node.highlight', style: { 'z-index': 999, 'opacity': 1 } },
+                    { selector: 'node.highlight.core, node.highlight.descriptor, node.highlight.analytical, node.highlight.decision, node.highlight.detail, node.highlight.outcome', style: { 'text-background-color': 'rgba(255, 255, 255, 0.5)', 'text-background-opacity': 1, 'text-background-padding': '8px', 'text-background-shape': 'round-rectangle' } },
+                    { selector: 'edge.highlight', style: { 'opacity': 1, 'width': 2.5, 'z-index': 998 } }
+                ],
+                layout: { name: 'null' } 
+            });
+
+            applyLayout();
+            setupControls();
+            setupCollapseControls();
+            setupPanelToggle('controlsPanel', 'panelTitle', 'togglePanel');
+            setupHighlightControls();
+            setupSectionToggles();
+            
+            // Apply initial visibility state to hide level 5 nodes
+            updateVisibility();
+
+            // Force level 4 detail nodes to use the correct color
+            cy.nodes('[col = 4].detail').forEach(node => {
+                node.style('background-color', '#A2AB99');
+            });
+
+            cy.on('mouseover', 'node', function(e) {
+                if (mlHighlightActive) return;
+                const sel = e.target;
+                const toHighlight = buildHoverHighlightSet(cy.collection(sel));
+                applyHighlight(toHighlight);
+            });
+
+            cy.on('mouseout', 'node', function(e) {
+                if (mlHighlightActive) return;
+                clearHighlight();
+            });
+
+            cy.on('zoom', function() {
+                updateLabels(cy.zoom());
+            });
+
+            window.addEventListener('resize', debounce(applyLayout, 250));
+        };
+
+        function setupPanelToggle(panelId, titleId, btnId) {
+            const panel = document.getElementById(panelId);
+            const btn = document.getElementById(btnId);
+            const title = document.getElementById(titleId);
+
+            if (!panel || !btn || !title) return;
+
+            btn.addEventListener('click', () => {
+                panel.classList.toggle('collapsed');
+                if (panel.classList.contains('collapsed')) {
+                    title.style.display = 'none';
+                } else {
+                    title.style.display = 'block';
+                }
+            });
+        }
+
+        function setupSectionToggles() {
+            const sections = [
+                { sectionId: 'collapseGroupsSection', toggleId: 'collapseGroupsToggle' },
+                { sectionId: 'highlightSection', toggleId: 'highlightSectionToggle' },
+                { sectionId: 'filterLayersSection', toggleId: 'filterLayersToggle' }
+            ];
+
+            sections.forEach(({ sectionId, toggleId }) => {
+                const section = document.getElementById(sectionId);
+                const toggle = document.getElementById(toggleId);
+                if (!section || !toggle) return;
+
+                toggle.addEventListener('click', () => {
+                    section.classList.toggle('collapsed');
+                    toggle.textContent = section.classList.contains('collapsed') ? '+' : '-';
+                });
+            });
+        }
+
+        function setupHighlightControls() {
+            const mlBtn = document.getElementById('mlHighlightBtn');
+            const personaSelect = document.getElementById('personaSelect');
+
+            if (personaSelect) {
+                personaSelect.innerHTML = '';
+                const allOption = document.createElement('option');
+                allOption.value = 'all';
+                allOption.textContent = 'All Personas';
+                personaSelect.appendChild(allOption);
+
+                personaDefinitions.forEach(persona => {
+                    const option = document.createElement('option');
+                    option.value = persona.id;
+                    option.textContent = persona.label;
+                    personaSelect.appendChild(option);
+                });
+
+                personaSelect.addEventListener('change', () => {
+                    activePersonaId = personaSelect.value;
+                    if (activePersonaId === 'all') {
+                        personaFilterNodes = null;
+                    } else {
+                        personaFilterNodes = buildPersonaFilterNodes(activePersonaId);
+                    }
+                    updateVisibility();
+                    if (mlHighlightActive) {
+                        applyMLHighlight();
+                    }
+                });
+            }
+
+            if (!mlBtn) return;
+
+            mlBtn.addEventListener('click', () => {
+                mlHighlightActive = !mlHighlightActive;
+                mlBtn.classList.toggle('active', mlHighlightActive);
+                if (mlHighlightActive) {
+                    applyMLHighlight();
+                } else {
+                    clearHighlight();
+                }
+            });
+        }
+
+        function getAncestors(node) {
+            let ancestors = cy.collection();
+            const incomers = node.incomers().nodes();
+            if (incomers.length > 0) {
+                ancestors = ancestors.union(incomers);
+                incomers.forEach(parent => {
+                    ancestors = ancestors.union(getAncestors(parent));
+                });
+            }
+            return ancestors;
+        }
+
+        function buildHoverHighlightSet(baseNodes) {
+            let toHighlight = cy.collection();
+            baseNodes.forEach(node => {
+                toHighlight = toHighlight.union(node);
+                toHighlight = toHighlight.union(getAncestors(node));
+                const children = node.outgoers().nodes();
+                toHighlight = toHighlight.union(children);
+            });
+
+            const highlightedEdges = toHighlight.edgesWith(toHighlight);
+            return toHighlight.union(highlightedEdges);
+        }
+
+        function getDescendants(node) {
+            let descendants = cy.collection();
+            const outgoers = node.outgoers().nodes();
+            if (outgoers.length > 0) {
+                descendants = descendants.union(outgoers);
+                outgoers.forEach(child => {
+                    descendants = descendants.union(getDescendants(child));
+                });
+            }
+            return descendants;
+        }
+
+        function buildPersonaFilterNodes(personaId) {
+            const persona = personaDefinitions.find(p => p.id === personaId);
+            if (!persona) return null;
+
+            let nodes = cy.collection();
+            persona.items.forEach(itemId => {
+                const baseNode = cy.getElementById(itemId);
+                if (baseNode && baseNode.length > 0) {
+                    nodes = nodes.union(baseNode);
+                    nodes = nodes.union(getAncestors(baseNode));
+                    nodes = nodes.union(getDescendants(baseNode));
+                }
+            });
+
+            return nodes;
+        }
+
+        function applyHighlight(toHighlight) {
+            cy.elements().forEach(el => {
+                if (toHighlight.contains(el)) {
+                    el.style('opacity', 1);
+                    if (el.isNode()) {
+                        el.addClass('highlight');
+                        const currentSize = parseFloat(el.style('font-size'));
+                        const currentMaxWidth = parseFloat(el.style('text-max-width'));
+                        el.style('font-size', (currentSize * 1.25) + 'px');
+
+                        if (el.data('has_ml')) {
+                            el.style({
+                                'background-width': '40px',
+                                'background-height': '26px'
+                            });
+                        }
+
+                        if (!el.hasClass('system_of_record')) {
+                            el.style('text-max-width', (currentMaxWidth * 1.5) + 'px');
+                        }
+
+                        const isExternalGroup = el.data('isGroupParent') && el.data('groupId') === 'external_context';
+                        const isSystemGroup = el.data('isGroupParent') && el.data('groupId') === 'system_of_record';
+                        if (!el.hasClass('root') && !el.hasClass('system_of_record') && !el.hasClass('external_context') && !isExternalGroup && !isSystemGroup) {
+                            el.style({
+                                'text-background-color': 'rgba(255, 255, 255, 0.5)',
+                                'text-background-opacity': 1,
+                                'text-background-padding': '8px',
+                                'text-background-shape': 'round-rectangle'
+                            });
+                        }
+                    } else if (el.isEdge()) {
+                        el.addClass('highlight');
+                    }
+                } else {
+                    if (el.data('isGroupParent')) {
+                        el.style('opacity', 0.95);
+                    } else {
+                        el.style('opacity', 0.1);
+                    }
+                }
+            });
+        }
+
+        function clearHighlight() {
+            cy.elements().removeClass('highlight');
+
+            cy.nodes().forEach(el => {
+                if (el.data('isGroupParent') && el.visible()) {
+                    el.style('opacity', 0.95);
+                } else if (!el.data('isGroupParent')) {
+                    el.style('opacity', '');
+                }
+                el.style({
+                    'font-size': '',
+                    'text-max-width': '',
+                    'text-background-color': '',
+                    'text-background-opacity': '',
+                    'text-background-padding': '',
+                    'text-background-shape': '',
+                    'background-width': '',
+                    'background-height': ''
+                });
+            });
+            cy.edges().style('opacity', '');
+            updateLabels(cy.zoom());
+        }
+
+        function applyMLHighlight() {
+            const mlNodes = cy.nodes('[has_ml]');
+            if (mlNodes.length === 0) {
+                clearHighlight();
+                return;
+            }
+            applyHighlight(mlNodes);
+        }
+
+        function setupControls() {
+            // Level buttons (0-12)
+            const lvlBtns = document.querySelectorAll('.btn-lvl[data-level]');
+            lvlBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const level = parseInt(btn.dataset.level);
+                    
+                    // Special handling for level 0 (system of record)
+                    if (level === 0) {
+                        systemOfRecordActive = !systemOfRecordActive;
+                    } else {
+                        if (activeLevels.has(level)) activeLevels.delete(level);
+                        else activeLevels.add(level);
+                    }
+                    updateVisibility();
+                });
+            });
+
+            // "All" buttons for Foundation, Analytical, and Decision
+            const foundationAllBtn = document.querySelector('.foundation-all');
+            if (foundationAllBtn) {
+                foundationAllBtn.addEventListener('click', () => {
+                    const levels = [1, 2, 3, 4];
+                    const allActive = levels.every(l => activeLevels.has(l));
+                    if (allActive) levels.forEach(l => activeLevels.delete(l));
+                    else levels.forEach(l => activeLevels.add(l));
+                    updateVisibility();
+                });
+            }
+
+            const analyticalAllBtn = document.querySelector('.analytical-all');
+            if (analyticalAllBtn) {
+                analyticalAllBtn.addEventListener('click', () => {
+                    const levels = [7, 8, 9];
+                    const allActive = levels.every(l => activeLevels.has(l));
+                    if (allActive) levels.forEach(l => activeLevels.delete(l));
+                    else levels.forEach(l => activeLevels.add(l));
+                    updateVisibility();
+                });
+            }
+
+            const decisionAllBtn = document.querySelector('.decision-all');
+            if (decisionAllBtn) {
+                decisionAllBtn.addEventListener('click', () => {
+                    const levels = [10, 11];
+                    const allActive = levels.every(l => activeLevels.has(l));
+                    if (allActive) levels.forEach(l => activeLevels.delete(l));
+                    else levels.forEach(l => activeLevels.add(l));
+                    updateVisibility();
+                });
+            }
+
+            const externalContextBtn = document.querySelector('.external-context-toggle');
+            if (externalContextBtn) {
+                externalContextBtn.addEventListener('click', () => {
+                    externalContextActive = !externalContextActive;
+                    updateVisibility();
+                });
+            }
+        }
+
+        function setupCollapseControls() {
+            // Individual collapse buttons
+            const collapseBtns = document.querySelectorAll('.collapse-group');
+            collapseBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const groupId = btn.dataset.groupId;
+                    if (collapsedGroups.has(groupId)) {
+                        collapsedGroups.delete(groupId);
+                        btn.classList.remove('active');
+                    } else {
+                        collapsedGroups.add(groupId);
+                        btn.classList.add('active');
+                    }
+                    updateCollapseAllButton();
+                    applyGroupCollapse();
+                    applyLayout();
+                    updateVisibility();
+                });
+            });
+
+            // Collapse/Uncollapse All button
+            const collapseAllBtn = document.getElementById('collapseAllBtn');
+            if (collapseAllBtn) {
+                collapseAllBtn.addEventListener('click', () => {
+                    const allGroupIds = levelGroups.map(g => g.id);
+                    const allCollapsed = allGroupIds.every(id => collapsedGroups.has(id));
+                    
+                    if (allCollapsed) {
+                        // Uncollapse all
+                        allGroupIds.forEach(id => collapsedGroups.delete(id));
+                        document.querySelectorAll('.collapse-group').forEach(b => b.classList.remove('active'));
+                    } else {
+                        // Collapse all
+                        allGroupIds.forEach(id => collapsedGroups.add(id));
+                        document.querySelectorAll('.collapse-group').forEach(b => b.classList.add('active'));
+                    }
+                    
+                    updateCollapseAllButton();
+                    applyGroupCollapse();
+                    applyLayout();
+                    updateVisibility();
+                });
+            }
+        }
+
+        function updateCollapseAllButton() {
+            const collapseAllBtn = document.getElementById('collapseAllBtn');
+            if (collapseAllBtn) {
+                const allGroupIds = levelGroups.map(g => g.id);
+                const allCollapsed = allGroupIds.every(id => collapsedGroups.has(id));
+                if (allCollapsed) {
+                    collapseAllBtn.classList.add('active');
+                } else {
+                    collapseAllBtn.classList.remove('active');
+                }
+            }
+        }
+
+        function getNodesInGroup(groupId) {
+            const group = levelGroups.find(g => g.id === groupId);
+            if (!group) return cy.collection();
+
+            if (groupId === 'system_of_record') {
+                return cy.nodes().filter(n => n.hasClass('system_of_record'));
+            }
+
+            if (groupId === 'external_context') {
+                return cy.nodes().filter(n => n.hasClass('external_context'));
+            }
+            
+            return cy.nodes().filter(n => {
+                if (n.data('isGroupParent')) return false;
+                const col = n.data('col');
+                if (col === undefined || col === null) return false;
+                return group.levels.includes(col);
+            });
+        }
+
+        function applyGroupCollapse() {
+            levelGroups.forEach(group => {
+                const groupId = group.id;
+                const parentNode = cy.getElementById('group_' + groupId);
+                const childNodes = getNodesInGroup(groupId);
+                
+                if (collapsedGroups.has(groupId)) {
+                    // Collapse: hide children, show parent at centroid
+                    const visibleChildren = childNodes.filter(':visible');
+                    
+                    if (visibleChildren.length > 0) {
+                        // Calculate centroid
+                        const positions = visibleChildren.map(n => n.position());
+                        const avgX = positions.reduce((sum, p) => sum + p.x, 0) / positions.length;
+                        const avgY = positions.reduce((sum, p) => sum + p.y, 0) / positions.length;
+                        
+                        // Position and style parent node
+                        parentNode.position({ x: avgX, y: avgY });
+                        
+                        // Apply group style
+                        const style = groupStyles[groupId];
+                        if (style) {
+                            Object.keys(style).forEach(key => {
+                                parentNode.style(key, style[key]);
+                            });
+                            // Ensure background stays opaque even when node opacity changes
+                            parentNode.style('background-opacity', 1);
+                        }
+                        
+                        parentNode.style('display', 'element');
+                    }
+                    
+                    // Hide all children
+                    childNodes.style('display', 'none');
+                } else {
+                    // Expand: show children based on current visibility rules, hide parent
+                    parentNode.style('display', 'none');
+                    
+                    childNodes.forEach(n => {
+                        const col = n.data('col');
+                        const isSystemOfRecord = n.hasClass('system_of_record');
+                        const isExternalContext = n.hasClass('external_context');
+                        const personaAllowed = !personaFilterNodes || personaFilterNodes.contains(n);
+                        
+                        if (isSystemOfRecord) {
+                            n.style('display', systemOfRecordActive && personaAllowed ? 'element' : 'none');
+                        } else if (isExternalContext) {
+                            n.style('display', externalContextActive && personaAllowed ? 'element' : 'none');
+                        } else if (col !== undefined) {
+                            n.style('display', activeLevels.has(col) && personaAllowed ? 'element' : 'none');
+                        }
+                    });
+                }
+            });
+            
+            // Update edge visibility
+            cy.edges().forEach(edge => {
+                const src = edge.source();
+                const tgt = edge.target();
+                if (src.visible() && tgt.visible()) {
+                    edge.style('display', 'element');
+                } else {
+                    edge.style('display', 'none');
+                }
+            });
+            
+            // Add group-to-group and group-to-node edges for collapsed groups
+            updateGroupEdges();
+        }
+
+        function updateGroupEdges() {
+            // Remove existing group edges
+            cy.edges().forEach(edge => {
+                if (edge.data('isGroupEdge')) {
+                    edge.remove();
+                }
+            });
+
+            levelGroups.forEach(group => {
+                if (!collapsedGroups.has(group.id)) return; // Skip if group not collapsed
+                
+                const targetGroupNode = cy.getElementById('group_' + group.id);
+                if (!targetGroupNode.visible()) return;
+
+                // Handle INCOMING edges: from previous group's nodes to this collapsed group
+                if (group.linkFromLevel.length > 0) {
+                    const sourceNodes = cy.nodes().filter(n => {
+                        if (n.data('isGroupParent')) return false;
+                        const col = n.data('col');
+                        return group.linkFromLevel.includes(col) && n.visible();
+                    });
+
+                    sourceNodes.forEach(sourceNode => {
+                        cy.add({
+                            data: {
+                                id: 'group_edge_' + sourceNode.id() + '_to_' + group.id,
+                                source: sourceNode.id(),
+                                target: targetGroupNode.id(),
+                                isGroupEdge: true
+                            },
+                            classes: 'group_edge'
+                        });
+                    });
+                }
+
+                // Handle OUTGOING edges: from this collapsed group to next group/nodes
+                if (group.linkToGroup) {
+                    const targetGroup = levelGroups.find(g => g.id === group.linkToGroup);
+                    
+                    if (targetGroup && collapsedGroups.has(targetGroup.id)) {
+                        // Next group is collapsed: connect to group parent
+                        const targetGroupNode2 = cy.getElementById('group_' + targetGroup.id);
+                        if (targetGroupNode2.visible()) {
+                            cy.add({
+                                data: {
+                                    id: 'group_edge_' + group.id + '_to_' + targetGroup.id,
+                                    source: targetGroupNode.id(),
+                                    target: targetGroupNode2.id(),
+                                    isGroupEdge: true
+                                },
+                                classes: 'group_edge'
+                            });
+                        }
+                    } else if (targetGroup && group.linkNodeLevel.length > 0) {
+                        // Next group is expanded: connect to all nodes in linkNodeLevel
+                        const targetNodes = cy.nodes().filter(n => {
+                            if (n.data('isGroupParent')) return false;
+                            const col = n.data('col');
+                            return group.linkNodeLevel.includes(col) && n.visible();
+                        });
+
+                        targetNodes.forEach(targetNode => {
+                            cy.add({
+                                data: {
+                                    id: 'group_edge_' + group.id + '_to_' + targetNode.id(),
+                                    source: targetGroupNode.id(),
+                                    target: targetNode.id(),
+                                    isGroupEdge: true
+                                },
+                                classes: 'group_edge'
+                            });
+                        });
+                    }
+                }
+            });
+        }
+
+        function updateVisibility() {
+            // Update level button states
+            document.querySelectorAll('.btn-lvl[data-level]').forEach(btn => {
+                const level = parseInt(btn.dataset.level);
+                if (level === 0) {
+                    if (systemOfRecordActive) btn.classList.add('active');
+                    else btn.classList.remove('active');
+                } else {
+                    if (activeLevels.has(level)) btn.classList.add('active');
+                    else btn.classList.remove('active');
+                }
+            });
+
+            // Update "All" buttons
+            const foundationAllBtn = document.querySelector('.foundation-all');
+            if (foundationAllBtn) {
+                const allActive = [1, 2, 3, 4].every(l => activeLevels.has(l));
+                if (allActive) foundationAllBtn.classList.add('active');
+                else foundationAllBtn.classList.remove('active');
+            }
+
+            const analyticalAllBtn = document.querySelector('.analytical-all');
+            if (analyticalAllBtn) {
+                const allActive = [7, 8, 9].every(l => activeLevels.has(l));
+                if (allActive) analyticalAllBtn.classList.add('active');
+                else analyticalAllBtn.classList.remove('active');
+            }
+
+            const decisionAllBtn = document.querySelector('.decision-all');
+            if (decisionAllBtn) {
+                const allActive = [10, 11].every(l => activeLevels.has(l));
+                if (allActive) decisionAllBtn.classList.add('active');
+                else decisionAllBtn.classList.remove('active');
+            }
+
+            const externalContextBtn = document.querySelector('.external-context-toggle');
+            if (externalContextBtn) {
+                if (externalContextActive) externalContextBtn.classList.add('active');
+                else externalContextBtn.classList.remove('active');
+            }
+
+            cy.nodes().forEach(node => {
+                const col = node.data('col');
+                const isSystemOfRecord = node.hasClass('system_of_record');
+                const isExternalContext = node.hasClass('external_context');
+                const isGroupParent = node.data('isGroupParent');
+                const personaAllowed = !personaFilterNodes || personaFilterNodes.contains(node);
+                
+                if (isGroupParent) {
+                    // Group parents handled by applyGroupCollapse
+                    return;
+                } else if (isSystemOfRecord) {
+                    node.style('display', systemOfRecordActive && personaAllowed ? 'element' : 'none');
+                } else if (isExternalContext) {
+                    node.style('display', externalContextActive && personaAllowed ? 'element' : 'none');
+                } else if (col !== undefined) {
+                    node.style('display', activeLevels.has(col) && personaAllowed ? 'element' : 'none');
+                }
+            });
+
+            applyGroupCollapse();
+            applyLayout();
+        }
+
+        function applyLayout() {
+            const w = cy.width();
+            const h = cy.height();
+            const centerY = h / 2;
+            
+            const visibleCols = Array.from(activeLevels).sort((a,b) => a-b);
+            const numVisible = visibleCols.length;
+            
+            const sidePadding = w * 0.04; 
+            const availableWidth = (w * 1.1) - (sidePadding * 2); 
+            
+            const colXMap = {};
+            const colSpacing = numVisible > 1 ? availableWidth / (numVisible - 1) : 0;
+            
+            visibleCols.forEach((col, idx) => {
+                let xPos = numVisible > 1 ? sidePadding + (idx * colSpacing) : w / 2;
+                
+                // Add extra spacing after level 0 (system of record rectangles)
+                if (col > 0 && visibleCols.includes(0)) {
+                    const level0Index = visibleCols.indexOf(0);
+                    if (idx > level0Index) {
+                        xPos += w * 0.08; // Add 8% extra horizontal space after level 0
+                    }
+                }
+                
+                colXMap[col] = xPos;
+            });
+
+            const nodesByCol = { 0: [], 1: [], 2: [], 3: [], 4: [], 6: [], 7: [], 8: [], 9: [], 10: [], 11: [], 12: [] };
+
+            cy.nodes(':visible').forEach(node => {
+                if (node.data('isGroupParent')) return; // Skip group parent nodes
+                const col = node.data('col');
+                if (col !== undefined && col !== null && nodesByCol[col]) {
+                    nodesByCol[col].push(node);
+                }
+            });
+
+            Object.keys(nodesByCol).forEach(colStr => {
+                const col = parseInt(colStr);
+                const nodes = nodesByCol[col];
+                if (!nodes.length) return;
+
+                const x = colXMap[col];
+                const firstNodeClass = nodes[0].classes()[0];
+                
+                let verticalStep = 75;
+                if (firstNodeClass === 'detail') verticalStep = 32;
+                if (firstNodeClass === 'root') verticalStep = 135;
+                if (col === 4) verticalStep = Math.max(verticalStep, 52); // add spacing for column 4
+
+                const totalColumnHeight = (nodes.length - 1) * verticalStep;
+                const columnStartY = centerY - (totalColumnHeight / 2);
+
+                nodes.forEach((node, i) => {
+                    node.position({ x, y: columnStartY + (i * verticalStep) });
+                });
+            });
+
+            cy.fit(null, 80);
+        }
+
+        function updateLabels(zoom) {
+            const threshold = 0.45;
+            cy.nodes().forEach(node => {
+                if (node.hasClass('root')) return; 
+                node.style('text-opacity', zoom < threshold ? 0 : 1);
+            });
+        }
+
+        function debounce(func, wait) {
+            let timeout;
+            return function() {
+                const context = this, args = arguments;
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(context, args), wait);
+            };
+        }
+    </script>
+</body>
+</html>
