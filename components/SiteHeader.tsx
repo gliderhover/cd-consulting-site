@@ -6,8 +6,8 @@ import Link from "next/link";
 const nav = [
   { label: "Solution", href: "#solution" },
   { label: "Decision Accelerator", href: "#decision-accelerator" },
-  { label: "Outcomes", href: "#outcomes" },
   { label: "Diagram", href: "#diagram" },
+  { label: "Outcomes", href: "#outcomes" },
   { label: "About us", href: "#about" },
   { label: "Contact", href: "#contact" },
 ];

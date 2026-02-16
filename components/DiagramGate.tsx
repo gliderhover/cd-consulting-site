@@ -13,11 +13,12 @@ type FormState = {
   email: string;
   name: string;
   company: string;
+  phone: string;
   message: string;
 };
 
-const STORAGE_KEY = "cd_diagram_unlocked";
-const COOKIE_NAME = "cd_diagram_unlocked";
+const STORAGE_KEY = "diagram_unlocked";
+const COOKIE_NAME = "diagram_unlocked";
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 30;
 
 export default function DiagramGate({
@@ -34,6 +35,7 @@ export default function DiagramGate({
     email: "",
     name: "",
     company: "",
+    phone: "",
     message: "",
   });
 
@@ -48,25 +50,13 @@ export default function DiagramGate({
 
   const iframeHeight = mode === "page" ? "h-[80vh]" : "h-[560px] sm:h-[620px] lg:h-[680px]";
 
-  const mailtoHref = useMemo(() => {
-    const subject = encodeURIComponent("Diagram access request");
-    const bodyLines = [
-      `Email: ${form.email}`,
-      form.name ? `Name: ${form.name}` : null,
-      form.company ? `Company: ${form.company}` : null,
-      form.message ? `Message: ${form.message}` : null,
-    ].filter(Boolean);
-    const body = encodeURIComponent(bodyLines.join("\n"));
-    return `mailto:charles@consultcd.com?subject=${subject}&body=${body}`;
-  }, [form]);
-
   const onChange =
     (field: keyof FormState) =>
     (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       setForm((prev) => ({ ...prev, [field]: event.target.value }));
     };
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setSubmitting(true);
     setError(null);
@@ -80,15 +70,32 @@ export default function DiagramGate({
     }
 
     try {
+      const response = await fetch("/api/diagram-ask", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: form.email,
+          name: form.name,
+          company: form.company,
+          phone: form.phone,
+          message: form.message,
+          source: "diagram_gate",
+        }),
+      });
+
+      if (!response.ok) {
+        const payload = await response.json().catch(() => ({}));
+        throw new Error(payload?.error ?? "Unable to submit. Please try again.");
+      }
+
       if (typeof window !== "undefined") {
-        window.localStorage.setItem(STORAGE_KEY, "1");
+        window.localStorage.setItem(STORAGE_KEY, "true");
         document.cookie = `${COOKIE_NAME}=1; max-age=${COOKIE_MAX_AGE}; path=/; samesite=lax`;
       }
       setIsUnlocked(true);
-      setSuccess("Access unlocked. Opening your email client...");
-      window.location.href = mailtoHref;
-    } catch {
-      setError("Unable to unlock. Please try again.");
+      setSuccess("Access unlocked. Loading the diagram...");
+    } catch (submitError) {
+      setError(submitError instanceof Error ? submitError.message : "Unable to unlock.");
     } finally {
       setSubmitting(false);
     }
@@ -190,16 +197,26 @@ export default function DiagramGate({
                 />
               </label>
               <label className="text-sm text-slate-700">
-                Message (optional)
+                Phone (optional)
                 <input
                   type="text"
-                  value={form.message}
-                  onChange={onChange("message")}
+                  value={form.phone}
+                  onChange={onChange("phone")}
                   className="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none"
-                  placeholder="What are you trying to decide?"
+                  placeholder="Phone"
                 />
               </label>
             </div>
+
+            <label className="text-sm text-slate-700">
+              Message (optional)
+              <textarea
+                value={form.message}
+                onChange={onChange("message")}
+                className="mt-1 min-h-[120px] w-full rounded-xl border border-slate-200 px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none"
+                placeholder="What are you trying to decide?"
+              />
+            </label>
 
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
               <button

@@ -38,3 +38,10 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 ## Diagram Access
 
 The interactive diagram is gated at `/diagram`. The HTML file lives under `secure-assets/diagram/` and is served through a protected route after the access form is submitted. Access is stored in a `cd_diag_access` cookie for 7 days per browser.
+
+### Supabase Environment Variables
+
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY`
+- `DIAGRAM_ADMIN_PASSWORD`
