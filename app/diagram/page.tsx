@@ -1,8 +1,9 @@
 import { cookies } from "next/headers";
 import GateForm from "./GateForm";
 
-export default function DiagramPage() {
-  const hasAccess = cookies().get("cd_diag_access")?.value === "true";
+export default async function DiagramPage() {
+  const cookieStore = await cookies();
+  const hasAccess = cookieStore.get("cd_diag_access")?.value === "true";
 
   return (
     <main className="mx-auto max-w-6xl px-6 py-14">

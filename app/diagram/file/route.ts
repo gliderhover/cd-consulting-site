@@ -4,7 +4,8 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 
 export async function GET() {
-  const hasAccess = cookies().get("cd_diag_access")?.value === "true";
+  const cookieStore = await cookies();
+  const hasAccess = cookieStore.get("cd_diag_access")?.value === "true";
   if (!hasAccess) {
     return new NextResponse("Access denied. Please visit /diagram to unlock access.", {
       status: 403,
