@@ -44,6 +44,21 @@ export default function DiagramPage() {
           <p className="mt-3 text-slate-600">
             Share a few details to unlock access instantly.
           </p>
+
+          <div className="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-slate-100">
+            <div className="relative">
+              <img
+                src="/diagram-preview.png"
+                alt="Diagram preview"
+                className="h-[260px] w-full object-cover blur-md sm:h-[320px]"
+              />
+              <div className="absolute inset-0 flex items-center justify-center bg-slate-900/35">
+                <div className="rounded-full bg-white/90 px-4 py-2 text-sm font-medium text-slate-900 shadow-sm">
+                  Request access to view the interactive diagram
+                </div>
+              </div>
+            </div>
+          </div>
           <ul className="mt-4 space-y-2 text-sm text-slate-700">
             <li className="flex gap-3">
               <span className="mt-2 h-2 w-2 flex-none rounded-full bg-slate-900" />

@@ -38,7 +38,7 @@ export default function GateForm() {
       const response = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "same-origin",
+        credentials: "include",
         body: JSON.stringify(form),
       });
 
@@ -48,6 +48,10 @@ export default function GateForm() {
       }
 
       setSuccess("Access unlocked. Loading the diagram...");
+      if (typeof window !== "undefined") {
+        window.location.href = "/diagram";
+        return;
+      }
       router.refresh();
     } catch (submitError) {
       setError(submitError instanceof Error ? submitError.message : "Something went wrong.");
