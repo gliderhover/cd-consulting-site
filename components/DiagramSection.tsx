@@ -18,7 +18,7 @@ export default function DiagramSection() {
             </div>
             <div className="flex flex-wrap gap-2">
               <a
-                href="/Diagram/diagram_complete_v2.html"
+                href="/diagram"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center justify-center rounded-full border border-slate-300 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-slate-700 hover:border-slate-400 hover:text-slate-900"
@@ -40,7 +40,7 @@ export default function DiagramSection() {
           <div className="overflow-hidden rounded-b-2xl">
             <iframe
               title="Interactive diagram"
-              src="/Diagram/diagram_complete_v2.html"
+              src="/diagram/file"
               className="h-[620px] w-full sm:h-[700px] lg:h-[860px]"
               loading="lazy"
               scrolling="yes"
