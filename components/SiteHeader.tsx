@@ -7,7 +7,7 @@ const nav = [
   { label: "Solution", href: "#solution" },
   { label: "Decision Accelerator", href: "#decision-accelerator" },
   { label: "Outcomes", href: "#outcomes" },
-  { label: "Diagram", href: "/diagram" },
+  { label: "Diagram", href: "#diagram" },
   { label: "About us", href: "#about" },
   { label: "Contact", href: "#contact" },
 ];
