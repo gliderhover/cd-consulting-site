@@ -1,3 +1,4 @@
+import DiagramSection from "@/components/DiagramSection";
 import homeContent from "@/content/home.json";
 import solutionContent from "@/content/solution.json";
 import decisionAcceleratorContent from "@/content/decision-accelerator.json";
@@ -540,24 +541,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="diagram" className="scroll-mt-24 border-t border-slate-200 bg-slate-50">
-        <div className="mx-auto max-w-6xl px-6 py-16">
-          <h2 className="text-3xl font-semibold text-slate-900">Diagram</h2>
-          <p className="mt-4 max-w-3xl text-slate-600">
-            Interactive model overview. Explore the relationships and flow directly in the embedded view.
-          </p>
-
-          <div className="mt-8 overflow-hidden rounded-2xl border border-slate-200 bg-white">
-            <iframe
-              title="Interactive diagram"
-              src="/Diagram/diagram_complete_v2.html"
-              className="h-[800px] w-full"
-              loading="lazy"
-              scrolling="yes"
-            />
-          </div>
-        </div>
-      </section>
+      <DiagramSection />
 
       <GenericSection
         id="outcomes"
