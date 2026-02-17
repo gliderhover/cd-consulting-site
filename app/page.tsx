@@ -162,45 +162,47 @@ export default function Home() {
     <main className="min-h-screen bg-white text-slate-900">
       {/* Hero */}
       <section className="py-16 sm:py-20">
-        <Container>
-          <div className="max-w-3xl">
-          <p className="text-sm text-slate-600">
-            {heroBadge.prefix ?? ""}
-            <span className="font-medium text-slate-900">{heroBadge.emphasisPrimary ?? ""}</span>
-            {heroBadge.infix ?? ""}
-            <span className="font-medium text-slate-900">{heroBadge.emphasisSecondary ?? ""}</span>
-          </p>
-          <h1 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl">
-            {home.heroTitle ?? ""}
-          </h1>
-          <p className="mt-5 text-base text-slate-600 sm:text-lg">{home.heroSubtitle ?? ""}</p>
+        <Container maxWidthClass="max-w-screen-2xl">
+          <div className="grid gap-10 lg:grid-cols-2 lg:items-start">
+            <div className="max-w-xl">
+              <p className="text-sm text-slate-600">
+                {heroBadge.prefix ?? ""}
+                <span className="font-medium text-slate-900">{heroBadge.emphasisPrimary ?? ""}</span>
+                {heroBadge.infix ?? ""}
+                <span className="font-medium text-slate-900">{heroBadge.emphasisSecondary ?? ""}</span>
+              </p>
+              <h1 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl">
+                {home.heroTitle ?? ""}
+              </h1>
+              <p className="mt-5 text-base text-slate-600 sm:text-lg">{home.heroSubtitle ?? ""}</p>
 
-          <div className="mt-8 flex flex-wrap gap-3">
-            <a
-              href={home.heroCtaPrimary?.href ?? ""}
-              className="rounded-full bg-slate-900 px-5 py-3 text-sm font-medium text-white hover:bg-slate-800"
-            >
-              {home.heroCtaPrimary?.label ?? ""}
-            </a>
-            <a
-              href={home.heroCtaSecondary?.href ?? ""}
-              className="rounded-full border border-slate-300 px-5 py-3 text-sm font-medium text-slate-900 hover:bg-slate-50"
-            >
-              {home.heroCtaSecondary?.label ?? ""}
-            </a>
-          </div>
-
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {(home.differentiators ?? []).map((item) => (
-              <div
-                key={`${item.title ?? ""}-${item.desc ?? ""}`}
-                className="rounded-2xl border border-slate-200 p-5"
-              >
-                <div className="text-sm font-semibold">{item.title ?? ""}</div>
-                <div className="mt-2 text-sm text-slate-600">{item.desc ?? ""}</div>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <a
+                  href={home.heroCtaPrimary?.href ?? ""}
+                  className="rounded-full bg-slate-900 px-5 py-3 text-sm font-medium text-white hover:bg-slate-800"
+                >
+                  {home.heroCtaPrimary?.label ?? ""}
+                </a>
+                <a
+                  href={home.heroCtaSecondary?.href ?? ""}
+                  className="rounded-full border border-slate-300 px-5 py-3 text-sm font-medium text-slate-900 hover:bg-slate-50"
+                >
+                  {home.heroCtaSecondary?.label ?? ""}
+                </a>
               </div>
-            ))}
-          </div>
+            </div>
+
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-1">
+              {(home.differentiators ?? []).map((item) => (
+                <div
+                  key={`${item.title ?? ""}-${item.desc ?? ""}`}
+                  className="rounded-2xl border border-slate-200 p-5"
+                >
+                  <div className="text-sm font-semibold">{item.title ?? ""}</div>
+                  <div className="mt-2 text-sm text-slate-600">{item.desc ?? ""}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </Container>
       </section>
