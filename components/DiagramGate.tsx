@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 type DiagramGateProps = {
   mode: "inline" | "page";
@@ -31,6 +31,8 @@ export default function DiagramGate({
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const viewportRef = useRef<HTMLDivElement | null>(null);
   const [form, setForm] = useState<FormState>({
     email: "",
     name: "",
@@ -47,6 +49,50 @@ export default function DiagramGate({
       setIsUnlocked(true);
     }
   }, []);
+
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+
+    const handleFullscreenChange = () => {
+      const doc = document as Document & {
+        webkitFullscreenElement?: Element | null;
+      };
+      setIsFullscreen(Boolean(doc.fullscreenElement || doc.webkitFullscreenElement));
+    };
+
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
+    return () => {
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+      document.removeEventListener("webkitfullscreenchange", handleFullscreenChange);
+    };
+  }, []);
+
+  const toggleFullscreen = () => {
+    if (!isUnlocked || !viewportRef.current) return;
+    const doc = document as Document & {
+      webkitExitFullscreen?: () => Promise<void> | void;
+      webkitFullscreenElement?: Element | null;
+    };
+    const element = viewportRef.current as HTMLDivElement & {
+      webkitRequestFullscreen?: () => Promise<void> | void;
+    };
+
+    if (doc.fullscreenElement || doc.webkitFullscreenElement) {
+      if (doc.exitFullscreen) {
+        void doc.exitFullscreen();
+      } else if (doc.webkitExitFullscreen) {
+        doc.webkitExitFullscreen();
+      }
+      return;
+    }
+
+    if (element.requestFullscreen) {
+      void element.requestFullscreen();
+    } else if (element.webkitRequestFullscreen) {
+      element.webkitRequestFullscreen();
+    }
+  };
 
   const onChange =
     (field: keyof FormState) =>
@@ -109,18 +155,20 @@ export default function DiagramGate({
           <p className="mt-2 max-w-3xl text-base text-slate-600 sm:text-lg">{subtitle}</p>
         </div>
         <div className="flex flex-wrap gap-2">
-          <a
-            href="/diagram"
-            className="inline-flex items-center justify-center rounded-full border border-slate-300 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-slate-700 hover:border-slate-400 hover:text-slate-900"
+          <button
+            type="button"
+            onClick={toggleFullscreen}
+            disabled={!isUnlocked}
+            className="inline-flex items-center justify-center rounded-full border border-slate-300 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-slate-700 hover:border-slate-400 hover:text-slate-900 disabled:cursor-not-allowed disabled:opacity-60"
           >
-            Open full screen
-          </a>
+            {isFullscreen ? "EXIT FULL SCREEN" : "OPEN FULL SCREEN"}
+          </button>
         </div>
       </div>
 
       {isUnlocked ? (
         <div className="overflow-hidden rounded-b-2xl">
-          <div className="aspect-[16/9] w-full">
+          <div ref={viewportRef} className="diagram-fs aspect-[16/9] w-full">
             <iframe
               title="Interactive diagram"
               src={embedSrc}
