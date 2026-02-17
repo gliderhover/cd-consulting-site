@@ -162,7 +162,7 @@ export default function Home() {
     <main className="min-h-screen bg-white text-slate-900">
       {/* Hero */}
       <section className="py-16 sm:py-20">
-        <Container maxWidthClass="max-w-screen-2xl">
+        <Container>
           <div className="grid gap-10 lg:grid-cols-2 lg:items-start">
             <div className="max-w-xl">
               <p className="text-sm text-slate-600">
