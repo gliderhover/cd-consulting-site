@@ -48,8 +48,6 @@ export default function DiagramGate({
     }
   }, []);
 
-  const iframeHeight = mode === "page" ? "h-[80vh]" : "h-[560px] sm:h-[620px] lg:h-[680px]";
-
   const onChange =
     (field: keyof FormState) =>
     (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -105,8 +103,10 @@ export default function DiagramGate({
     <div className="rounded-2xl border border-slate-200 bg-white shadow-sm">
       <div className="flex flex-col gap-4 border-b border-slate-200 px-6 py-5 md:flex-row md:items-center md:justify-between">
         <div>
-          <h2 className="text-2xl font-semibold text-slate-900">{title}</h2>
-          <p className="mt-2 max-w-3xl text-sm text-slate-600">{subtitle}</p>
+          <h2 className="text-3xl font-semibold text-slate-900 sm:text-4xl lg:text-5xl">
+            {title}
+          </h2>
+          <p className="mt-2 max-w-3xl text-base text-slate-600 sm:text-lg">{subtitle}</p>
         </div>
         <div className="flex flex-wrap gap-2">
           <a
@@ -120,13 +120,15 @@ export default function DiagramGate({
 
       {isUnlocked ? (
         <div className="overflow-hidden rounded-b-2xl">
-          <iframe
-            title="Interactive diagram"
-            src={embedSrc}
-            className={`${iframeHeight} w-full`}
-            loading="lazy"
-            scrolling="yes"
-          />
+          <div className="aspect-[16/9] w-full">
+            <iframe
+              title="Interactive diagram"
+              src={embedSrc}
+              className="h-full w-full"
+              loading="lazy"
+              scrolling="yes"
+            />
+          </div>
         </div>
       ) : (
         <div className="px-6 py-6">

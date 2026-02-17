@@ -1,3 +1,4 @@
+import Container from "@/components/Container";
 import DiagramSection from "@/components/DiagramSection";
 import homeContent from "@/content/home.json";
 import solutionContent from "@/content/solution.json";
@@ -160,18 +161,19 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-white text-slate-900">
       {/* Hero */}
-      <section className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
-        <div className="max-w-3xl">
+      <section className="py-16 sm:py-20">
+        <Container>
+          <div className="max-w-3xl">
           <p className="text-sm text-slate-600">
             {heroBadge.prefix ?? ""}
             <span className="font-medium text-slate-900">{heroBadge.emphasisPrimary ?? ""}</span>
             {heroBadge.infix ?? ""}
             <span className="font-medium text-slate-900">{heroBadge.emphasisSecondary ?? ""}</span>
           </p>
-          <h1 className="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl">
+          <h1 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl">
             {home.heroTitle ?? ""}
           </h1>
-          <p className="mt-5 text-lg text-slate-600">{home.heroSubtitle ?? ""}</p>
+          <p className="mt-5 text-base text-slate-600 sm:text-lg">{home.heroSubtitle ?? ""}</p>
 
           <div className="mt-8 flex flex-wrap gap-3">
             <a
@@ -188,7 +190,7 @@ export default function Home() {
             </a>
           </div>
 
-          <div className="mt-10 grid gap-3 sm:grid-cols-3">
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {(home.differentiators ?? []).map((item) => (
               <div
                 key={`${item.title ?? ""}-${item.desc ?? ""}`}
@@ -199,25 +201,28 @@ export default function Home() {
               </div>
             ))}
           </div>
-        </div>
+          </div>
+        </Container>
       </section>
 
       {/* Solution */}
       <section id="solution" className="scroll-mt-24 border-t border-slate-200 bg-slate-50">
-        <div className="mx-auto max-w-6xl px-6 py-16">
-          <section className="grid gap-10 md:grid-cols-2 md:items-center">
+        <Container className="py-16">
+          <section className="grid gap-8 lg:grid-cols-2 lg:items-center">
             <div className="space-y-5">
               <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs text-slate-600">
                 <span className="h-2 w-2 rounded-full bg-slate-900" />
                 {solution.heroBadge ?? ""}
               </div>
 
-              <h2 className="text-3xl font-semibold tracking-tight text-slate-900 md:text-4xl">
+              <h2 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
                 {solution.heroTitle ?? ""}
                 <span className="block text-slate-600">{solution.heroTitleAccent ?? ""}</span>
               </h2>
 
-              <p className="text-base leading-relaxed text-slate-600">{solution.heroBody ?? ""}</p>
+              <p className="text-base leading-relaxed text-slate-600 sm:text-lg">
+                {solution.heroBody ?? ""}
+              </p>
 
               <div className="flex flex-wrap gap-3">
                 <a
@@ -234,7 +239,7 @@ export default function Home() {
                 </a>
               </div>
 
-              <div className="grid grid-cols-3 gap-4 pt-4 text-sm">
+              <div className="grid gap-6 pt-4 text-sm sm:grid-cols-2 lg:grid-cols-3">
                 {(solution.stats ?? []).map((stat) => (
                   <SolutionStat
                     key={`${stat.label ?? ""}-${stat.value ?? ""}`}
@@ -277,13 +282,13 @@ export default function Home() {
           <section className="mt-16">
             <div className="rounded-2xl border border-slate-200 bg-white p-8">
               <div className="max-w-3xl space-y-3">
-                <h3 className="text-2xl font-semibold tracking-tight text-slate-900">
+                <h3 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">
                   {problem.title ?? ""}
                 </h3>
-                <p className="text-slate-600">{problem.body ?? ""}</p>
+                <p className="text-slate-600 sm:text-lg">{problem.body ?? ""}</p>
               </div>
 
-              <div className="mt-8 grid gap-4 md:grid-cols-3">
+              <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {(problem.cards ?? []).map((card) => (
                   <SolutionCard
                     key={`${card.title ?? ""}-${card.body ?? ""}`}
@@ -296,12 +301,12 @@ export default function Home() {
           </section>
 
           <section className="mt-16">
-            <div className="grid gap-8 md:grid-cols-2">
+            <div className="grid gap-8 lg:grid-cols-2">
               <div className="rounded-2xl border border-slate-200 bg-white p-8">
-                <h3 className="text-2xl font-semibold tracking-tight text-slate-900">
+                <h3 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">
                   {solutionCore.title ?? ""}
                 </h3>
-                <p className="mt-3 text-slate-600">{solutionCore.body ?? ""}</p>
+                <p className="mt-3 text-slate-600 sm:text-lg">{solutionCore.body ?? ""}</p>
 
                 <div className="mt-6 space-y-4">
                   {(solutionCore.features ?? []).map((feature) => (
@@ -315,7 +320,7 @@ export default function Home() {
               </div>
 
               <div className="rounded-2xl border border-slate-200 bg-slate-900 p-8 text-white">
-                <h3 className="text-xl font-semibold">{orgChange.title ?? ""}</h3>
+                <h3 className="text-xl font-semibold sm:text-2xl">{orgChange.title ?? ""}</h3>
 
                 <div className="mt-5 grid gap-4">
                   {(orgChange.cards ?? []).map((card) => (
@@ -339,14 +344,14 @@ export default function Home() {
 
           <section className="mt-16">
             <div className="rounded-2xl border border-slate-200 bg-white p-8">
-              <h3 className="text-2xl font-semibold tracking-tight text-slate-900">
+              <h3 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">
                 {valueDelivered.title ?? ""}
               </h3>
-              <p className="mt-2 max-w-3xl text-slate-600">
+              <p className="mt-2 max-w-3xl text-slate-600 sm:text-lg">
                 {valueDelivered.body ?? ""}
               </p>
 
-              <div className="mt-8 grid gap-4 md:grid-cols-2">
+              <div className="mt-8 grid gap-8 lg:grid-cols-2">
                 {(valueDelivered.items ?? []).map((item) => (
                   <SolutionValue
                     key={`${item.title ?? ""}-${item.body ?? ""}`}
@@ -362,10 +367,10 @@ export default function Home() {
             <div className="rounded-2xl border border-slate-200 bg-slate-50 p-8">
               <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                 <div>
-                  <h3 className="text-xl font-semibold text-slate-900">
+                  <h3 className="text-xl font-semibold text-slate-900 sm:text-2xl">
                     {solutionCta.title ?? ""}
                   </h3>
-                  <p className="mt-1 text-slate-600">{solutionCta.body ?? ""}</p>
+                  <p className="mt-1 text-slate-600 sm:text-lg">{solutionCta.body ?? ""}</p>
                 </div>
                 <div className="flex gap-3">
                   <a
@@ -384,7 +389,7 @@ export default function Home() {
               </div>
             </div>
           </section>
-        </div>
+        </Container>
       </section>
 
       {/* Decision Accelerator */}
@@ -392,19 +397,19 @@ export default function Home() {
         id="decision-accelerator"
         className="scroll-mt-24 border-t border-slate-200"
       >
-        <div className="mx-auto max-w-6xl px-6 py-16">
-          <section className="grid gap-10 md:grid-cols-2 md:items-center">
+        <Container className="py-16">
+          <section className="grid gap-8 lg:grid-cols-2 lg:items-center">
             <div className="space-y-5">
               <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs text-slate-600">
                 <span className="h-2 w-2 rounded-full bg-slate-900" />
                 {decisionAccelerator.heroBadge ?? ""}
               </div>
 
-              <h2 className="text-3xl font-semibold tracking-tight text-slate-900 md:text-4xl">
+              <h2 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
                 {decisionAccelerator.title ?? ""}
               </h2>
 
-              <p className="text-base leading-relaxed text-slate-600">
+              <p className="text-base leading-relaxed text-slate-600 sm:text-lg">
                 {decisionAccelerator.subtitle ?? ""}
               </p>
 
@@ -423,7 +428,7 @@ export default function Home() {
                 </a>
               </div>
 
-              <div className="grid grid-cols-3 gap-4 pt-4 text-sm">
+              <div className="grid gap-6 pt-4 text-sm sm:grid-cols-2 lg:grid-cols-3">
                 {(decisionAccelerator.stats ?? []).map((stat) => (
                   <DecisionStat
                     key={`${stat.label ?? ""}-${stat.value ?? ""}`}
@@ -458,10 +463,10 @@ export default function Home() {
             <div className="rounded-2xl border border-slate-200 bg-white p-8">
               <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
                 <div className="max-w-3xl">
-                  <h3 className="text-2xl font-semibold tracking-tight text-slate-900">
+                  <h3 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">
                     {decisionAccelerator.howTitle ?? ""}
                   </h3>
-                  <p className="mt-2 text-slate-600">
+                  <p className="mt-2 text-slate-600 sm:text-lg">
                     {decisionAccelerator.howSubtitle ?? ""}
                   </p>
                 </div>
@@ -473,7 +478,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="mt-8 grid gap-4 md:grid-cols-3">
+              <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {(decisionAccelerator.steps ?? []).map((step) => (
                   <DecisionStep
                     key={`${step.step ?? ""}-${step.title ?? ""}`}
@@ -490,7 +495,7 @@ export default function Home() {
                 <div className="text-sm font-medium text-slate-900">
                   {decisionAccelerator.doNotDoTitle ?? ""}
                 </div>
-                <div className="mt-2 grid gap-2 text-sm text-slate-700 md:grid-cols-3">
+                <div className="mt-2 grid gap-2 text-sm text-slate-700 sm:grid-cols-2 lg:grid-cols-3">
                   {(decisionAccelerator.doNotDoItems ?? []).map((item) => (
                     <span key={item}>• {item}</span>
                   ))}
@@ -500,7 +505,7 @@ export default function Home() {
           </section>
 
           <section className="mt-16">
-            <div className="grid gap-8 md:grid-cols-2">
+            <div className="grid gap-8 lg:grid-cols-2">
               <DecisionPanel
                 title={decisionAccelerator.panelLeftTitle ?? ""}
                 items={decisionAccelerator.panelLeft ?? []}
@@ -516,10 +521,12 @@ export default function Home() {
             <div className="rounded-2xl border border-slate-200 bg-slate-50 p-8">
               <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                 <div>
-                  <h3 className="text-xl font-semibold text-slate-900">
+                  <h3 className="text-xl font-semibold text-slate-900 sm:text-2xl">
                     {decisionAccelerator.ctaTitle ?? ""}
                   </h3>
-                  <p className="mt-1 text-slate-600">{decisionAccelerator.ctaBody ?? ""}</p>
+                  <p className="mt-1 text-slate-600 sm:text-lg">
+                    {decisionAccelerator.ctaBody ?? ""}
+                  </p>
                 </div>
                 <div className="flex gap-3">
                   <a
@@ -538,7 +545,7 @@ export default function Home() {
               </div>
             </div>
           </section>
-        </div>
+        </Container>
       </section>
 
       <DiagramSection />
@@ -684,15 +691,19 @@ function GenericSection(props: {
   const className = ["scroll-mt-24", props.className].filter(Boolean).join(" ");
   return (
     <section id={props.id} className={className}>
-      <div className="mx-auto max-w-6xl px-6 py-16">
-        <h2 className="text-3xl font-semibold">{props.content.title ?? ""}</h2>
-        <p className="mt-4 text-slate-600">{props.content.subtitle ?? ""}</p>
+      <Container className="py-16">
+        <h2 className="text-3xl font-semibold sm:text-4xl lg:text-5xl">
+          {props.content.title ?? ""}
+        </h2>
+        <p className="mt-4 text-base text-slate-600 sm:text-lg">
+          {props.content.subtitle ?? ""}
+        </p>
 
         <div className="mt-10 grid gap-8">
           {(props.content.sections ?? []).map((section, index) => (
             <section key={`${section.heading ?? ""}-${index}`}>
               <h3 className="text-xl font-semibold">{section.heading ?? ""}</h3>
-              <p className="mt-3 text-slate-600">{section.body ?? ""}</p>
+              <p className="mt-3 text-slate-600 sm:text-lg">{section.body ?? ""}</p>
               {(section.bullets ?? []).length > 0 && (
                 <ul className="mt-4 list-disc pl-5 text-slate-600">
                   {(section.bullets ?? []).map((bullet) => (
@@ -714,7 +725,7 @@ function GenericSection(props: {
             </a>
           </div>
         ) : null}
-      </div>
+      </Container>
     </section>
   );
 }
@@ -725,22 +736,24 @@ function AboutSection(props: { content: Partial<AboutContent> }) {
 
   return (
     <section id="about" className="scroll-mt-24 border-t border-slate-200">
-      <div className="mx-auto max-w-6xl px-6 py-16">
+      <Container className="py-16">
         {props.content.kicker ? (
           <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
             {props.content.kicker}
           </p>
         ) : null}
-        <h2 className="mt-2 text-3xl font-semibold text-slate-900">
+        <h2 className="mt-2 text-3xl font-semibold text-slate-900 sm:text-4xl lg:text-5xl">
           {props.content.title ?? ""}
         </h2>
-        <p className="mt-4 max-w-3xl text-slate-600">{props.content.body ?? ""}</p>
+        <p className="mt-4 max-w-3xl text-base text-slate-600 sm:text-lg">
+          {props.content.body ?? ""}
+        </p>
 
         <div className="mt-10">
           <h3 className="text-xl font-semibold text-slate-900">
             {props.content.foundersTitle ?? ""}
           </h3>
-          <div className="mt-6 grid gap-6 md:grid-cols-2">
+          <div className="mt-6 grid gap-8 lg:grid-cols-2">
             {founders.map((founder, index) => (
               <div
                 key={`${founder.name ?? ""}-${index}`}
@@ -792,7 +805,7 @@ function AboutSection(props: { content: Partial<AboutContent> }) {
             </ul>
           </div>
         ) : null}
-      </div>
+      </Container>
     </section>
   );
 }
@@ -803,11 +816,13 @@ function ContactSection(props: { content: Partial<ContactContent> }) {
 
   return (
     <section id="contact" className="scroll-mt-24 border-t border-slate-200 bg-slate-50">
-      <div className="mx-auto max-w-6xl px-6 py-16">
-        <h2 className="text-3xl font-semibold text-slate-900">
+      <Container className="py-16">
+        <h2 className="text-3xl font-semibold text-slate-900 sm:text-4xl lg:text-5xl">
           {props.content.title ?? ""}
         </h2>
-        <p className="mt-4 max-w-3xl text-slate-600">{description}</p>
+        <p className="mt-4 max-w-3xl text-base text-slate-600 sm:text-lg">
+          {description}
+        </p>
 
         {email ? (
           <div className="mt-6 text-sm text-slate-600">
@@ -845,7 +860,7 @@ function ContactSection(props: { content: Partial<ContactContent> }) {
         </div>
 
         <div className="mt-4 text-xs text-slate-500">Response time: 1–2 business days.</div>
-      </div>
+      </Container>
     </section>
   );
 }
