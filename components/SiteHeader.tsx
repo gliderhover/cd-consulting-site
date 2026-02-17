@@ -2,6 +2,7 @@
 
 import type { MouseEvent } from "react";
 import Link from "next/link";
+import Container from "@/components/Container";
 
 const nav = [
   { label: "Solution", href: "#solution" },
@@ -36,7 +37,7 @@ export default function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-20 border-b border-slate-200/70 bg-white/80 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+      <Container className="flex items-center justify-between py-4">
         <Link href="/" className="flex items-center gap-3">
           <div className="h-9 w-9 rounded-full bg-slate-900" />
           <div className="leading-tight">
@@ -65,7 +66,7 @@ export default function SiteHeader() {
         >
           Talk to us
         </a>
-      </div>
+      </Container>
     </header>
   );
 }
