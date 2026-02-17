@@ -208,8 +208,11 @@ export default function Home() {
       </section>
 
       {/* Solution */}
-      <section id="solution" className="scroll-mt-24 border-t border-slate-200 bg-slate-50">
-        <Container className="py-16">
+      <section
+        id="solution"
+        className="scroll-mt-24 border-t border-slate-200 bg-slate-50 py-16"
+      >
+        <Container>
           <section className="grid gap-8 lg:grid-cols-2 lg:items-center">
             <div className="space-y-5">
               <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs text-slate-600">
@@ -397,9 +400,9 @@ export default function Home() {
       {/* Decision Accelerator */}
       <section
         id="decision-accelerator"
-        className="scroll-mt-24 border-t border-slate-200"
+        className="scroll-mt-24 border-t border-slate-200 py-16"
       >
-        <Container className="py-16">
+        <Container>
           <section className="grid gap-8 lg:grid-cols-2 lg:items-center">
             <div className="space-y-5">
               <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs text-slate-600">
@@ -690,10 +693,10 @@ function GenericSection(props: {
   content: Partial<GenericSectionContent>;
   className?: string;
 }) {
-  const className = ["scroll-mt-24", props.className].filter(Boolean).join(" ");
+  const className = ["scroll-mt-24", "py-16", props.className].filter(Boolean).join(" ");
   return (
     <section id={props.id} className={className}>
-      <Container className="py-16">
+      <Container>
         <h2 className="text-3xl font-semibold sm:text-4xl lg:text-5xl">
           {props.content.title ?? ""}
         </h2>
@@ -737,8 +740,8 @@ function AboutSection(props: { content: Partial<AboutContent> }) {
   const highlights = props.content.highlights ?? [];
 
   return (
-    <section id="about" className="scroll-mt-24 border-t border-slate-200">
-      <Container className="py-16">
+    <section id="about" className="scroll-mt-24 border-t border-slate-200 py-16">
+      <Container>
         {props.content.kicker ? (
           <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
             {props.content.kicker}
@@ -817,8 +820,8 @@ function ContactSection(props: { content: Partial<ContactContent> }) {
   const email = props.content.email ?? "";
 
   return (
-    <section id="contact" className="scroll-mt-24 border-t border-slate-200 bg-slate-50">
-      <Container className="py-16">
+    <section id="contact" className="scroll-mt-24 border-t border-slate-200 bg-slate-50 py-16">
+      <Container>
         <h2 className="text-3xl font-semibold text-slate-900 sm:text-4xl lg:text-5xl">
           {props.content.title ?? ""}
         </h2>
