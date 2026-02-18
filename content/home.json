@@ -1,14 +1,14 @@
 {
   "heroBadge": {
-    "prefix": "Moving from ",
-    "emphasisPrimary": "Systems of Record",
-    "infix": " to a ",
-    "emphasisSecondary": "System of Intelligence"
+    "prefix": "Decision intelligence for ",
+    "emphasisPrimary": "corporate real estate",
+    "infix": "",
+    "emphasisSecondary": ""
   },
-  "heroTitle": "A semantic layer for corporate real estate strategy.",
-  "heroSubtitle": "We deploy a Common Data Model and CRE ontology that keeps your strategic data neutral, connects HR-Finance-CRE, and enables deterministic analytics and AI for portfolio decisions.",
-  "heroCtaPrimary": { "label": "Book a discovery call", "href": "#contact" },
-  "heroCtaSecondary": { "label": "See the Decision Accelerator", "href": "#decision-accelerator" },
+  "heroTitle": "Make portfolio decisions faster and with confidence.",
+  "heroSubtitle": "Align strategy, finance, and operations with a decision-ready data foundation that connects HR, Finance, and CRE without weeks of manual reporting.",
+  "heroCtaPrimary": { "label": "Explore the technical approach", "href": "/technical" },
+  "heroCtaSecondary": { "label": "Book a discovery call", "href": "#contact" },
   "differentiators": [
     {
       "title": "Neutral by design",

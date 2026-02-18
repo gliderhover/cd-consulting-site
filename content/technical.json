@@ -1,9 +1,26 @@
 {
-  "title": "Technical",
-  "subtitle": "Deeper detail behind the architecture decisions that make reporting reliable.",
-  "sectionTitle": "The issue is not reporting. It is architecture.",
-  "sectionBody": "Most CRE stacks were built to capture reality (payments, work orders, lease abstracts). They are great at looking backward. They struggle to forecast and connect decisions to P&L, employee experience, ESG goals, and risk. That gap turns teams into manual data janitors.",
-  "cards": [
+  "heroEyebrow": "Moving from Systems of Record to a System of Intelligence",
+  "heroTitle": "A semantic layer for corporate real estate strategy.",
+  "heroBody": "We deploy a Common Data Model and CRE ontology that makes portfolio decisions computable: neutral across vendors, aligned to how your business actually runs, and structured for deterministic analytics and enterprise AI.",
+  "heroCtaPrimary": { "label": "Book a discovery call", "href": "/#contact" },
+  "heroCtaSecondary": { "label": "See the Decision Accelerator", "href": "/#decision-accelerator" },
+  "heroCards": [
+    {
+      "title": "Neutral by design",
+      "body": "Agnostic to your service providers and software. We normalize data across HR, Finance, and CRE systems so strategy stays in your control."
+    },
+    {
+      "title": "10x faster data engineering",
+      "body": "We automate the data engineering work so you get value in months, not multi-year internal data lake cycles."
+    },
+    {
+      "title": "Deterministic AI foundation",
+      "body": "We structure data for precision. AI that calculates with governance and repeatability, rather than guessing with probability."
+    }
+  ],
+  "issueTitle": "The issue is not reporting. It is architecture.",
+  "issueBody": "Most CRE stacks were built to capture reality (payments, work orders, lease abstracts). They are great at looking backward. They struggle to forecast and connect decisions to P&L, employee experience, ESG goals, and risk. That gap turns teams into manual data janitors.",
+  "issueCards": [
     {
       "title": "The 80/20 trap",
       "body": "Teams spend most of their time aggregating disconnected data and too little time making decisions."
