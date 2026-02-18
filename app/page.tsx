@@ -117,6 +117,7 @@ type ContactContent = {
   subtitle?: string;
   body?: string;
   email?: string;
+  emails?: string[];
   calendar?: { label?: string; href?: string };
   secondaryButton?: { label?: string; href?: string };
   sections?: { heading?: string; body?: string; bullets?: string[] }[];
@@ -795,7 +796,8 @@ function AboutSection(props: { content: Partial<AboutContent> }) {
 
 function ContactSection(props: { content: Partial<ContactContent> }) {
   const description = props.content.body ?? props.content.subtitle ?? "";
-  const email = props.content.email ?? "";
+  const emails = props.content.emails ?? [];
+  const emailFallback = props.content.email ?? "";
 
   return (
     <section
@@ -810,14 +812,29 @@ function ContactSection(props: { content: Partial<ContactContent> }) {
           {description}
         </p>
 
-        {email ? (
+        {emails.length > 0 ? (
+          <div className="mt-6 text-sm text-slate-600">
+            <span className="font-medium text-slate-900">Email:</span>{" "}
+            {emails.map((email, index) => (
+              <span key={email}>
+                <a
+                  href={`mailto:${email}`}
+                  className="font-medium text-slate-900 hover:text-slate-700"
+                >
+                  {email}
+                </a>
+                {index < emails.length - 1 ? ", " : ""}
+              </span>
+            ))}
+          </div>
+        ) : emailFallback ? (
           <div className="mt-6 text-sm text-slate-600">
             <span className="font-medium text-slate-900">Email:</span>{" "}
             <a
-              href={`mailto:${email}`}
+              href={`mailto:${emailFallback}`}
               className="font-medium text-slate-900 hover:text-slate-700"
             >
-              {email}
+              {emailFallback}
             </a>
           </div>
         ) : null}
