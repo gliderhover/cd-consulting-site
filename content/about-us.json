@@ -1,0 +1,29 @@
+{
+  "heroEyebrow": "ABOUT US",
+  "heroTitle": "About us",
+  "heroSubtitle": "We help CRE leaders turn scattered data into decision-grade intelligence by aligning definitions, grain, and a Common Data Model that can power analytics and AI.",
+  "noteTitle": "A Note from Our Founders",
+  "noteParagraphs": [
+    "We help CRE leaders turn scattered data into decision-grade intelligence by aligning definitions, grain, and a Common Data Model that can power analytics and AI."
+  ],
+  "foundersTitle": "Cofounders",
+  "founders": [
+    {
+      "name": "Charles Fegely",
+      "role": "CEO • Portfolio Strategy & Client Delivery",
+      "bio": "Charles leads CRE strategy and client delivery with a focus on converting portfolio complexity into clear decisions and operating rhythm. He brings experience building global portfolio programs, aligning stakeholders, and translating executive questions into measurable outcomes. His work connects strategy, governance, and execution so data foundations map to how enterprises actually run.",
+      "linkedinUrl": "https://www.linkedin.com/in/charlesfegely/"
+    },
+    {
+      "name": "Diego Rodriguez",
+      "role": "CTO • Business Semantics & Data Foundation",
+      "bio": "Diego builds the semantic layer that turns fragmented CRE data into a consistent model of reality. He focuses on definitions, grain, and common entities so analytics remain trustworthy across teams and systems. His work bridges CRE strategy with data engineering to produce an AI-ready foundation that supports repeatable, decision-grade insights.",
+      "linkedinUrl": "https://www.linkedin.com/in/diego-h-rodriguez/"
+    }
+  ],
+  "bottomCta": {
+    "title": "Want to talk?",
+    "primary": { "label": "Talk to us", "href": "/#contact" },
+    "secondary": { "label": "Book a demo", "href": "https://outlook.office.com/book/Demo@consultcd.com/" }
+  }
+}

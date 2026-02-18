@@ -125,6 +125,7 @@ type AboutContent = {
   kicker?: string;
   title?: string;
   body?: string;
+  cta?: { label?: string; href?: string };
   foundersTitle?: string;
   founders?: {
     name?: string;
@@ -677,46 +678,59 @@ function AboutSection(props: { content: Partial<AboutContent> }) {
           {props.content.body ?? ""}
         </p>
 
-        <div className="mt-10">
-          <h3 className="text-xl font-semibold text-slate-900">
-            {props.content.foundersTitle ?? ""}
-          </h3>
-          <div className="mt-6 grid gap-8 lg:grid-cols-2">
-            {founders.map((founder, index) => (
-              <div
-                key={`${founder.name ?? ""}-${index}`}
-                className="rounded-2xl border border-slate-200 bg-white p-6"
-              >
-                <div className="flex items-center gap-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-900 text-sm font-semibold text-white">
-                    {getInitials(founder.name ?? "")}
-                  </div>
-                  <div>
-                    <div className="text-lg font-semibold text-slate-900">
-                      {founder.name ?? ""}
-                    </div>
-                    <div className="text-sm text-slate-600">{founder.role ?? ""}</div>
-                  </div>
-                </div>
-
-                <p className="mt-4 text-sm leading-relaxed text-slate-600">
-                  {founder.bio ?? ""}
-                </p>
-
-                {founder.linkedinUrl ? (
-                  <a
-                    href={founder.linkedinUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="mt-5 inline-flex items-center rounded-full border border-slate-300 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-slate-700 hover:border-slate-400 hover:text-slate-900"
-                  >
-                    LinkedIn
-                  </a>
-                ) : null}
-              </div>
-            ))}
+        {props.content.cta?.label && props.content.cta?.href ? (
+          <div className="mt-6">
+            <a
+              href={props.content.cta.href}
+              className="inline-flex items-center rounded-full bg-slate-900 px-5 py-2.5 text-sm font-medium text-white hover:bg-slate-800"
+            >
+              {props.content.cta.label}
+            </a>
           </div>
-        </div>
+        ) : null}
+
+        {founders.length > 0 ? (
+          <div className="mt-10">
+            <h3 className="text-xl font-semibold text-slate-900">
+              {props.content.foundersTitle ?? ""}
+            </h3>
+            <div className="mt-6 grid gap-8 lg:grid-cols-2">
+              {founders.map((founder, index) => (
+                <div
+                  key={`${founder.name ?? ""}-${index}`}
+                  className="rounded-2xl border border-slate-200 bg-white p-6"
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-900 text-sm font-semibold text-white">
+                      {getInitials(founder.name ?? "")}
+                    </div>
+                    <div>
+                      <div className="text-lg font-semibold text-slate-900">
+                        {founder.name ?? ""}
+                      </div>
+                      <div className="text-sm text-slate-600">{founder.role ?? ""}</div>
+                    </div>
+                  </div>
+
+                  <p className="mt-4 text-sm leading-relaxed text-slate-600">
+                    {founder.bio ?? ""}
+                  </p>
+
+                  {founder.linkedinUrl ? (
+                    <a
+                      href={founder.linkedinUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="mt-5 inline-flex items-center rounded-full border border-slate-300 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-slate-700 hover:border-slate-400 hover:text-slate-900"
+                    >
+                      LinkedIn
+                    </a>
+                  ) : null}
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : null}
 
         {highlights.length > 0 ? (
           <div className="mt-10 rounded-2xl border border-slate-200 bg-slate-50 p-6">

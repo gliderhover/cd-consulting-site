@@ -5,14 +5,14 @@ import { usePathname } from "next/navigation";
 import type { MouseEvent } from "react";
 import Container from "@/components/Container";
 
-const sectionNav = [
-  { label: "Solution", href: "#solution" },
-  { label: "Decision Accelerator", href: "#decision-accelerator" },
-  { label: "Diagram", href: "#diagram" },
-  { label: "Technical", href: "/technical" },
-  { label: "Outcomes", href: "#outcomes" },
-  { label: "About us", href: "#about" },
-  { label: "Contact", href: "#contact" },
+const navItems = [
+  { label: "Solution", href: "#solution", scroll: true },
+  { label: "Decision Accelerator", href: "#decision-accelerator", scroll: true },
+  { label: "Diagram", href: "#diagram", scroll: true },
+  { label: "Technical", href: "/technical", scroll: false },
+  { label: "Outcomes", href: "#outcomes", scroll: true },
+  { label: "About us", href: "/about-us", scroll: false },
+  { label: "Contact", href: "#contact", scroll: true },
 ];
 
 export default function SiteHeader() {
@@ -52,8 +52,8 @@ export default function SiteHeader() {
         </Link>
 
         <nav className="hidden items-center gap-6 text-sm text-slate-600 md:flex">
-          {sectionNav.map((item) => {
-            if (item.href.startsWith("#")) {
+          {navItems.map((item) => {
+            if (item.scroll && item.href.startsWith("#")) {
               if (isHome) {
                 return (
                   <a
@@ -68,11 +68,7 @@ export default function SiteHeader() {
               }
 
               return (
-                <Link
-                  key={item.href}
-                  href={`/${item.href}`}
-                  className="hover:text-slate-900"
-                >
+                <Link key={item.href} href={`/${item.href}`} className="hover:text-slate-900">
                   {item.label}
                 </Link>
               );
