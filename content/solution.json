@@ -1,146 +1,20 @@
 {
-  "heroBadge": "The semantic layer for CRE strategy",
-  "heroTitle": "Move from systems of record",
-  "heroTitleAccent": "to a system of intelligence.",
-  "heroBody": "We deploy a Common Data Model and CRE ontology that makes portfolio decisions computable: neutral across vendors, aligned to how your business actually runs, and structured for deterministic analytics and enterprise AI.",
-  "heroCtaPrimary": { "label": "Talk to us", "href": "/contact" },
-  "heroCtaSecondary": { "label": "See the method", "href": "#decision-accelerator" },
-  "stats": [
-    { "label": "Speed", "value": "10x", "sub": "faster data engineering" },
-    { "label": "Focus", "value": "80/20", "sub": "flip the time spent on strategy" },
-    { "label": "AI", "value": "Deterministic", "sub": "math over magic" }
+  "heroBadge": "Solution Framework",
+  "heroTitle": "Traditional CRE systems are built to record the past, not navigate the future.",
+  "heroParagraphs": [
+    "Most platforms function as static systems of record - expertly capturing payments and abstracts but struggling to bridge the gap between raw data and strategic outcomes. They show you where you've been but fail to forecast the impact of today's decisions on your P&L, employee experience, or enterprise risk.",
+    "C&D Consulting turns your data foundation into a decision engine. By combining deep domain expertise with a refined data architecture, we provide the \"connective tissue\" between your daily operations and your board-room goals. We don't just organize your data; we optimize it to increase revenue, slash operational costs, and future-proof your portfolio against risk."
   ],
-  "deliverCard": {
-    "title": "What we actually deliver",
-    "bullets": [
-      {
-        "prefix": "A CRE-native ",
-        "emphasis": "Common Data Model",
-        "suffix": " that normalizes HR, Finance, and Real Estate data without forcing you into a new tool."
-      },
-      {
-        "prefix": "A governed ",
-        "emphasis": "ontology (semantic layer)",
-        "suffix": " that encodes meaning, relationships, grain, and business logic."
-      },
-      {
-        "prefix": "An ",
-        "emphasis": "AI-ready foundation",
-        "suffix": " that supports reusable analytics (e.g., total cost of occupancy) across teams."
-      }
-    ],
-    "outcomeLabel": "Outcome",
-    "outcomeBody": "You stop building one-off dashboards and start operating a scalable decision engine."
-  },
-  "problem": {
-    "title": "The issue is not reporting. It is architecture.",
-    "body": "Most CRE stacks were built to capture reality (payments, work orders, lease abstracts). They are great at looking backward. They struggle to forecast and connect decisions to P&L, employee experience, ESG goals, and risk. That gap turns teams into manual data janitors.",
-    "cards": [
-      {
-        "title": "The 80/20 trap",
-        "body": "Teams spend most of their time aggregating disconnected data and too little time making decisions."
-      },
-      {
-        "title": "The vendor bias",
-        "body": "Service-provider data models optimize delivery for the vendor, not the occupier's strategy."
-      },
-      {
-        "title": "The IT bottleneck",
-        "body": "Generalist data projects take years because the CRE semantics and grain are missing."
-      }
-    ]
-  },
-  "solutionCore": {
-    "title": "Our solution: a semantic layer for strategy",
-    "body": "We deploy a proprietary Common Data Model designed for the corporate occupier, accompanied by a CRE ontology that encodes context and relationships.",
-    "features": [
-      {
-        "title": "Neutrality",
-        "body": "Agnostic to your service providers and software. Normalize across HR, Finance, and CRE."
-      },
-      {
-        "title": "Speed",
-        "body": "Automate data engineering and modeling work dramatically faster than generalist approaches."
-      },
-      {
-        "title": "Future-proofing",
-        "body": "Structure data for deterministic results so enterprise AI can calculate with precision."
-      }
-    ]
-  },
-  "orgChange": {
-    "title": "What changes inside your org",
-    "cards": [
-      {
-        "title": "One version of truth",
-        "body": "HR, Finance, and Real Estate stop reconciling competing numbers and start using shared logic."
-      },
-      {
-        "title": "Reusable decision logic",
-        "body": "Once you model Total Cost of Occupancy, it powers Finance, Ops, and Strategy simultaneously."
-      },
-      {
-        "title": "Faster cycles",
-        "body": "Replace quarterly Excel wars with automated, auditable narratives on demand."
-      }
-    ],
-    "cta": { "label": "Get a walkthrough", "href": "/contact" }
-  },
-  "decisionAccelerator": {
-    "title": "The Decision Accelerator",
-    "body": "A 3-step method to build the foundational, AI-ready data asset that models the reality and possibilities of your portfolio.",
-    "timelineLabel": "Typical engagement:",
-    "timelineValue": "3-6 months",
-    "steps": [
-      {
-        "step": "01",
-        "title": "Diagnose",
-        "body": "Your IT team builds the lakehouse. We bring meaning: translate CRE reality into the data design so infrastructure supports decisions, not just specs."
-      },
-      {
-        "step": "02",
-        "title": "Deploy",
-        "body": "Implement a Common Data Model that enforces consistency. Solve grain and fidelity issues so you can model real financial outcomes (not oversimplified aggregates)."
-      },
-      {
-        "step": "03",
-        "title": "Deliver",
-        "body": "Stop one-off reporting. Stand up an AI Factory: reusable logic and analytics components that scale across teams and questions."
-      }
-    ],
-    "expectationsTitle": "What you can expect",
-    "expectations": [
-      "Clean interfaces for BI tools (Power BI / Excel)",
-      "Governed ontology + business logic",
-      "Decision-ready metrics and narratives"
-    ]
-  },
-  "valueDelivered": {
-    "title": "Value delivered",
-    "body": "The result is not a new piece of software. It is a new way of working: more strategic capacity, faster decisions, and higher trust in the numbers.",
-    "items": [
-      {
-        "title": "Unlock strategic capacity (the 80/20 flip)",
-        "body": "Automate the manual aggregation cycle so your team spends time managing the portfolio, not prepping spreadsheets."
-      },
-      {
-        "title": "Context-aware precision",
-        "body": "Align the model to your grain, hierarchies, and P&L logic so outputs match your organization's reality."
-      },
-      {
-        "title": "Faster, smarter decisions",
-        "body": "Compress time between market signals and strategic moves by replacing fragile reporting cycles with automated analytics."
-      },
-      {
-        "title": "Deterministic AI foundation",
-        "body": "A governed semantic layer that supports AI that calculates outcomes with precision rather than guessing from messy inputs."
-      }
-    ]
-  },
+  "graphicPlaceholder": "GRAPHIC TO BE INSERTED",
   "cta": {
-    "title": "Want to see how this fits your stack?",
-    "body": "We can map your current systems and show the fastest path to a decision-ready model.",
-    "primary": { "label": "Talk to us", "href": "/contact" },
-    "secondary": { "label": "View outcomes", "href": "/outcomes" }
+    "title": "Stop Recording the Past. Start Navigating the Future.",
+    "body": "Most portfolios are sitting on a goldmine of data they can't actually use. Our Portfolio Data Audit is a high-impact diagnostic designed to identify where your \"connective tissue\" is broken and how much capital is currently trapped in your system of record.",
+    "bulletsTitle": "What we'll uncover in 45 minutes:",
+    "bullets": [
+      "AI Readiness: A clear assessment of how prepared your architecture is for the next wave of automation.",
+      "The Integrity Gap: Which data sources are currently undermining your decision-making?",
+      "The ROI Roadmap: A prioritized list of \"Optimization\" tasks that lead to immediate cost reduction and time savings."
+    ],
+    "primary": { "label": "Book Your Data Audit", "href": "https://outlook.office.com/book/Demo@consultcd.com/" }
   }
 }

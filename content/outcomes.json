@@ -1,25 +1,33 @@
 {
-  "title": "Outcomes",
-  "subtitle": "Measurable, decision-ready outcomes that turn data into action.",
+  "title": "The Results of a Connected Portfolio:",
+  "subtitle": "",
   "sections": [
     {
-      "heading": "What changes",
-      "body": "You move from static reporting to a decision engine that keeps teams aligned and accountable.",
+      "heading": "Increase Revenue",
+      "body": "",
       "bullets": [
-        "Faster cycles from signal to decision",
-        "Shared definitions across Finance, HR, and CRE",
-        "Reusable analytics that scale"
+        "Unlocking Capital: Identify underperforming assets and execute disposal, reinvestment or restructuring strategies.",
+        "Asset Monetization: Identify new revenue streams within existing square footage.",
+        "Green Partnership Opportunities: Bridge the gap through co-investment strategies that reduce OpEx and increase asset value."
       ]
     },
     {
-      "heading": "What you can expect",
-      "body": "A clear path from data foundation to portfolio strategy.",
+      "heading": "Reduce Costs",
+      "body": "",
       "bullets": [
-        "Decision-grade metrics and narratives",
-        "Governed business logic for trust",
-        "Executives aligned on one version of truth"
+        "Occupancy Optimization: Right-size your footprint-based utilization forecasts while streamlining capital planning and maintenance for peak efficiency.",
+        "AI & Data Readiness: Architect a data foundation that prepares your organization for the next wave of AI-driven automation and insight.",
+        "M&A Integration & Optimization: Accelerate merger ROI by rapidly identifying redundancies and capturing \"day-one\" synergies through unified data architecture."
+      ]
+    },
+    {
+      "heading": "Mitigate Risk",
+      "body": "",
+      "bullets": [
+        "Talent Retention & Attraction: Secure your competitive advantage by aligning workplace design with real-time employee experience and sentiment data.",
+        "Operational Resilience: Protect your enterprise from market volatility, talent shifts, and climate-related risks.",
+        "Compliance & Governance: Ensure global regulatory alignment and data integrity across every region and business line."
       ]
     }
-  ],
-  "cta": { "label": "See how we do it", "href": "/solution" }
+  ]
 }

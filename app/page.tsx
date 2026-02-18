@@ -22,6 +22,9 @@ type HomeContent = {
   };
   heroTitle?: string;
   heroSubtitle?: string;
+  heroBodyPrimary?: string;
+  heroBodySecondary?: string;
+  heroFooter?: string;
   heroCtaPrimary?: LinkItem;
   heroCtaSecondary?: LinkItem;
   differentiators?: { title?: string; desc?: string }[];
@@ -46,42 +49,14 @@ type EmphasisBullet = {
 type SolutionContent = {
   heroBadge?: string;
   heroTitle?: string;
-  heroTitleAccent?: string;
-  heroBody?: string;
-  heroCtaPrimary?: CtaLink;
-  heroCtaSecondary?: CtaLink;
-  stats?: { label?: string; value?: string; sub?: string }[];
-  deliverCard?: {
-    title?: string;
-    bullets?: EmphasisBullet[];
-    outcomeLabel?: string;
-    outcomeBody?: string;
-  };
-  problem?: {
-    title?: string;
-    body?: string;
-    cards?: { title?: string; body?: string }[];
-  };
-  solutionCore?: {
-    title?: string;
-    body?: string;
-    features?: { title?: string; body?: string }[];
-  };
-  orgChange?: {
-    title?: string;
-    cards?: { title?: string; body?: string }[];
-    cta?: CtaLink;
-  };
-  valueDelivered?: {
-    title?: string;
-    body?: string;
-    items?: { title?: string; body?: string }[];
-  };
+  heroParagraphs?: string[];
+  graphicPlaceholder?: string;
   cta?: {
     title?: string;
     body?: string;
+    bulletsTitle?: string;
+    bullets?: string[];
     primary?: CtaLink;
-    secondary?: CtaLink;
   };
 };
 
@@ -157,9 +132,7 @@ const contact = contactContent as Partial<ContactContent>;
 
 export default function Home() {
   const heroBadge = home.heroBadge ?? {};
-  const deliverCard = solution.deliverCard ?? {};
   const technicalTeaser = home.technicalTeaser ?? {};
-  const valueDelivered = solution.valueDelivered ?? {};
 
   return (
     <main className="min-h-screen bg-white text-slate-900">
@@ -177,6 +150,19 @@ export default function Home() {
               {home.heroTitle ?? ""}
             </h1>
             <p className="mt-5 text-base text-slate-600 sm:text-lg">{home.heroSubtitle ?? ""}</p>
+            {home.heroBodyPrimary ? (
+              <p className="mt-5 text-base text-slate-600 sm:text-lg">
+                {home.heroBodyPrimary}
+              </p>
+            ) : null}
+            {home.heroBodySecondary ? (
+              <p className="mt-4 text-base text-slate-600 sm:text-lg">
+                {home.heroBodySecondary}
+              </p>
+            ) : null}
+            {home.heroFooter ? (
+              <p className="mt-4 text-sm font-semibold text-slate-700">{home.heroFooter}</p>
+            ) : null}
 
             <div className="mt-8 flex flex-wrap gap-3">
               <a
@@ -202,8 +188,8 @@ export default function Home() {
         className="scroll-mt-24 border-t border-slate-200 bg-slate-50 py-16 sm:py-20"
       >
         <Container>
-          <section className="grid gap-8 lg:grid-cols-2 lg:items-center">
-            <div className="space-y-5">
+          <section className="space-y-8">
+            <div className="max-w-4xl space-y-5">
               <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs text-slate-600">
                 <span className="h-2 w-2 rounded-full bg-slate-900" />
                 {solution.heroBadge ?? ""}
@@ -211,65 +197,17 @@ export default function Home() {
 
               <h2 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
                 {solution.heroTitle ?? ""}
-                <span className="block text-slate-600">{solution.heroTitleAccent ?? ""}</span>
               </h2>
 
-              <p className="text-base leading-relaxed text-slate-600 sm:text-lg">
-                {solution.heroBody ?? ""}
-              </p>
-
-              <div className="flex flex-wrap gap-3">
-                <a
-                  href={solution.heroCtaPrimary?.href ?? ""}
-                  className="rounded-full bg-slate-900 px-5 py-2.5 text-sm font-medium text-white hover:bg-slate-800"
-                >
-                  {solution.heroCtaPrimary?.label ?? ""}
-                </a>
-                <a
-                  href={solution.heroCtaSecondary?.href ?? ""}
-                  className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-medium text-slate-700 hover:border-slate-400"
-                >
-                  {solution.heroCtaSecondary?.label ?? ""}
-                </a>
-              </div>
-
-              <div className="grid gap-6 pt-4 text-sm sm:grid-cols-2 lg:grid-cols-3">
-                {(solution.stats ?? []).map((stat) => (
-                  <SolutionStat
-                    key={`${stat.label ?? ""}-${stat.value ?? ""}`}
-                    label={stat.label ?? ""}
-                    value={stat.value ?? ""}
-                    sub={stat.sub ?? ""}
-                  />
+              <div className="space-y-4 text-base leading-relaxed text-slate-600 sm:text-lg">
+                {(solution.heroParagraphs ?? []).map((paragraph, index) => (
+                  <p key={`${paragraph.slice(0, 16)}-${index}`}>{paragraph}</p>
                 ))}
               </div>
             </div>
 
-            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-              <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-slate-900">
-                  {deliverCard.title ?? ""}
-                </h3>
-
-                <ul className="space-y-3 text-sm text-slate-700">
-                  {(deliverCard.bullets ?? []).map((bullet, index) => (
-                    <SolutionBullet key={`${bullet.emphasis ?? ""}-${index}`}>
-                      {bullet.prefix ?? ""}
-                      {bullet.emphasis ? (
-                        <span className="font-medium">{bullet.emphasis}</span>
-                      ) : null}
-                      {bullet.suffix ?? ""}
-                    </SolutionBullet>
-                  ))}
-                </ul>
-
-                <div className="rounded-xl bg-slate-50 p-4 text-sm text-slate-700">
-                  <div className="font-medium text-slate-900">
-                    {deliverCard.outcomeLabel ?? ""}
-                  </div>
-                  <div className="mt-1">{deliverCard.outcomeBody ?? ""}</div>
-                </div>
-              </div>
+            <div className="rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-12 text-center text-sm font-semibold text-slate-500">
+              {solution.graphicPlaceholder ?? ""}
             </div>
           </section>
 
@@ -296,26 +234,40 @@ export default function Home() {
           </section>
 
           <section className="mt-16">
-            <div className="rounded-2xl border border-slate-200 bg-white p-8">
-              <h3 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">
-                {valueDelivered.title ?? ""}
-              </h3>
-              <p className="mt-2 max-w-3xl text-slate-600 sm:text-lg">
-                {valueDelivered.body ?? ""}
-              </p>
-
-              <div className="mt-8 grid gap-8 lg:grid-cols-2">
-                {(valueDelivered.items ?? []).map((item) => (
-                  <SolutionValue
-                    key={`${item.title ?? ""}-${item.body ?? ""}`}
-                    title={item.title ?? ""}
-                    body={item.body ?? ""}
-                  />
-                ))}
+            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-8">
+              <div className="space-y-4">
+                <h3 className="text-xl font-semibold text-slate-900 sm:text-2xl">
+                  {solution.cta?.title ?? ""}
+                </h3>
+                <p className="text-slate-600 sm:text-lg">{solution.cta?.body ?? ""}</p>
+                {solution.cta?.bulletsTitle ? (
+                  <div className="text-sm font-semibold text-slate-900">
+                    {solution.cta.bulletsTitle}
+                  </div>
+                ) : null}
+                {(solution.cta?.bullets ?? []).length > 0 ? (
+                  <ul className="space-y-2 text-sm text-slate-700">
+                    {(solution.cta?.bullets ?? []).map((bullet) => (
+                      <li key={bullet} className="flex gap-3">
+                        <span className="mt-2 h-2 w-2 flex-none rounded-full bg-slate-900" />
+                        <span>{bullet}</span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
+                {solution.cta?.primary?.label && solution.cta?.primary?.href ? (
+                  <a
+                    href={solution.cta.primary.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex w-fit items-center rounded-full bg-slate-900 px-5 py-2.5 text-sm font-medium text-white hover:bg-slate-800"
+                  >
+                    {solution.cta.primary.label}
+                  </a>
+                ) : null}
               </div>
             </div>
           </section>
-
         </Container>
       </section>
 
@@ -624,15 +576,19 @@ function GenericSection(props: {
         <h2 className="text-3xl font-semibold sm:text-4xl lg:text-5xl">
           {props.content.title ?? ""}
         </h2>
-        <p className="mt-4 text-base text-slate-600 sm:text-lg">
-          {props.content.subtitle ?? ""}
-        </p>
+        {props.content.subtitle ? (
+          <p className="mt-4 text-base text-slate-600 sm:text-lg">
+            {props.content.subtitle}
+          </p>
+        ) : null}
 
         <div className="mt-10 grid gap-8">
           {(props.content.sections ?? []).map((section, index) => (
             <section key={`${section.heading ?? ""}-${index}`}>
               <h3 className="text-xl font-semibold">{section.heading ?? ""}</h3>
-              <p className="mt-3 text-slate-600 sm:text-lg">{section.body ?? ""}</p>
+              {section.body ? (
+                <p className="mt-3 text-slate-600 sm:text-lg">{section.body}</p>
+              ) : null}
               {(section.bullets ?? []).length > 0 && (
                 <ul className="mt-4 list-disc pl-5 text-slate-600">
                   {(section.bullets ?? []).map((bullet) => (
