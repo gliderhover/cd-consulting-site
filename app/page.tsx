@@ -418,12 +418,14 @@ export default function Home() {
                     {decisionAccelerator.howSubtitle ?? ""}
                   </p>
                 </div>
-                <div className="text-sm text-slate-600">
-                  {decisionAccelerator.timelineLabel ?? ""}{" "}
-                  <span className="font-medium text-slate-900">
-                    {decisionAccelerator.timeline ?? ""}
-                  </span>
-                </div>
+                {decisionAccelerator.timelineLabel || decisionAccelerator.timeline ? (
+                  <div className="text-sm text-slate-600">
+                    {decisionAccelerator.timelineLabel ?? ""}{" "}
+                    <span className="font-medium text-slate-900">
+                      {decisionAccelerator.timeline ?? ""}
+                    </span>
+                  </div>
+                ) : null}
               </div>
 
               <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -843,7 +845,6 @@ function ContactSection(props: { content: Partial<ContactContent> }) {
           ) : null}
         </div>
 
-        <div className="mt-4 text-xs text-slate-500">Response time: 1–2 business days.</div>
       </Container>
     </section>
   );
