@@ -139,44 +139,103 @@ export default function Home() {
       {/* Hero */}
       <section className="py-16 sm:py-20">
         <Container>
-          <div className="max-w-3xl">
-            <p className="text-sm text-slate-600">
-              {heroBadge.prefix ?? ""}
-              <span className="font-medium text-slate-900">{heroBadge.emphasisPrimary ?? ""}</span>
-              {heroBadge.infix ?? ""}
-              <span className="font-medium text-slate-900">{heroBadge.emphasisSecondary ?? ""}</span>
-            </p>
-            <h1 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl">
-              {home.heroTitle ?? ""}
-            </h1>
-            <p className="mt-5 text-base text-slate-600 sm:text-lg">{home.heroSubtitle ?? ""}</p>
-            {home.heroBodyPrimary ? (
+          <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
+            <div className="max-w-3xl">
+              <p className="text-sm text-slate-600">
+                {heroBadge.prefix ?? ""}
+                <span className="font-medium text-slate-900">
+                  {heroBadge.emphasisPrimary ?? ""}
+                </span>
+                {heroBadge.infix ?? ""}
+                <span className="font-medium text-slate-900">
+                  {heroBadge.emphasisSecondary ?? ""}
+                </span>
+              </p>
+              <h1 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl">
+                {home.heroTitle ?? ""}
+              </h1>
               <p className="mt-5 text-base text-slate-600 sm:text-lg">
-                {home.heroBodyPrimary}
+                {home.heroSubtitle ?? ""}
               </p>
-            ) : null}
-            {home.heroBodySecondary ? (
-              <p className="mt-4 text-base text-slate-600 sm:text-lg">
-                {home.heroBodySecondary}
-              </p>
-            ) : null}
-            {home.heroFooter ? (
-              <p className="mt-4 text-sm font-semibold text-slate-700">{home.heroFooter}</p>
-            ) : null}
+              {home.heroBodyPrimary ? (
+                <p className="mt-5 text-base text-slate-600 sm:text-lg">
+                  {home.heroBodyPrimary}
+                </p>
+              ) : null}
+              {home.heroBodySecondary ? (
+                <p className="mt-4 text-base text-slate-600 sm:text-lg">
+                  {home.heroBodySecondary}
+                </p>
+              ) : null}
+              {home.heroFooter ? (
+                <p className="mt-4 text-sm font-semibold text-slate-700">
+                  {home.heroFooter}
+                </p>
+              ) : null}
 
-            <div className="mt-8 flex flex-wrap gap-3">
-              <a
-                href={home.heroCtaPrimary?.href ?? ""}
-                className="rounded-full bg-slate-900 px-5 py-3 text-sm font-medium text-white hover:bg-slate-800"
-              >
-                {home.heroCtaPrimary?.label ?? ""}
-              </a>
-              <a
-                href={home.heroCtaSecondary?.href ?? ""}
-                className="rounded-full border border-slate-300 px-5 py-3 text-sm font-medium text-slate-900 hover:bg-slate-50"
-              >
-                {home.heroCtaSecondary?.label ?? ""}
-              </a>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <a
+                  href={home.heroCtaPrimary?.href ?? ""}
+                  className="rounded-full bg-slate-900 px-5 py-3 text-sm font-medium text-white hover:bg-slate-800"
+                >
+                  {home.heroCtaPrimary?.label ?? ""}
+                </a>
+                <a
+                  href={home.heroCtaSecondary?.href ?? ""}
+                  className="rounded-full border border-slate-300 px-5 py-3 text-sm font-medium text-slate-900 hover:bg-slate-50"
+                >
+                  {home.heroCtaSecondary?.label ?? ""}
+                </a>
+              </div>
+            </div>
+
+            <div className="relative">
+              <div className="absolute -top-16 right-6 h-56 w-56 rounded-full bg-gradient-to-br from-indigo-200 via-sky-200 to-emerald-200 blur-3xl opacity-70" />
+              <div className="absolute -bottom-12 left-6 h-48 w-48 rounded-full bg-gradient-to-br from-fuchsia-200 via-purple-200 to-sky-200 blur-3xl opacity-60" />
+              <div className="relative rounded-3xl border border-slate-200/70 bg-white/70 p-6 shadow-lg backdrop-blur">
+                <div className="grid gap-4">
+                  <div className="rounded-2xl border border-slate-200/70 bg-white/80 p-4">
+                    <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                      Unified Data Layer
+                    </div>
+                    <div className="mt-2 text-sm text-slate-700">
+                      Normalize HR, Finance, and CRE signals into a single decision-ready model.
+                    </div>
+                  </div>
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div className="rounded-2xl border border-slate-200/70 bg-white/80 p-4">
+                      <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                        AI-Ready
+                      </div>
+                      <div className="mt-2 text-sm text-slate-700">
+                        High-fidelity data designed for deterministic analytics.
+                      </div>
+                    </div>
+                    <div className="rounded-2xl border border-slate-200/70 bg-white/80 p-4">
+                      <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                        Portfolio Intelligence
+                      </div>
+                      <div className="mt-2 text-sm text-slate-700">
+                        Forecast outcomes with confidence, not just reports.
+                      </div>
+                    </div>
+                  </div>
+                  <div className="rounded-2xl border border-slate-200/70 bg-gradient-to-r from-slate-900 to-slate-700 p-[1px]">
+                    <div className="rounded-2xl bg-white/90 p-4">
+                      <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                        Decision Engine
+                      </div>
+                      <div className="mt-2 text-sm text-slate-700">
+                        Turn your data foundation into measurable action.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-6 flex items-center gap-3 text-xs text-slate-500">
+                  <span className="h-2 w-2 rounded-full bg-emerald-400" />
+                  Live model readiness indicator
+                </div>
+              </div>
             </div>
           </div>
         </Container>
