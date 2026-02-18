@@ -138,38 +138,38 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-white text-slate-900">
       {/* Hero */}
-      <section className="bg-gradient-to-b from-white via-[#f3f4f6] to-white py-16 sm:py-20">
+      <section className="bg-gradient-to-br from-[#051c2c] via-[#0f344d] to-[#051c2c] py-16 sm:py-20">
         <Container>
-          <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
+          <div className="grid gap-12 text-white lg:grid-cols-2 lg:items-center">
             <div className="max-w-3xl">
-              <p className="text-sm text-slate-600">
+              <p className="text-sm text-white/70">
                 {heroBadge.prefix ?? ""}
-                <span className="font-medium text-slate-900">
+                <span className="font-medium text-white">
                   {heroBadge.emphasisPrimary ?? ""}
                 </span>
                 {heroBadge.infix ?? ""}
-                <span className="font-medium text-slate-900">
+                <span className="font-medium text-white">
                   {heroBadge.emphasisSecondary ?? ""}
                 </span>
               </p>
               <h1 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl">
                 {home.heroTitle ?? ""}
               </h1>
-              <p className="mt-5 text-base text-slate-600 sm:text-lg">
+              <p className="mt-5 text-base text-white/80 sm:text-lg">
                 {home.heroSubtitle ?? ""}
               </p>
               {home.heroBodyPrimary ? (
-                <p className="mt-5 text-base text-slate-600 sm:text-lg">
+                <p className="mt-5 text-base text-white/80 sm:text-lg">
                   {home.heroBodyPrimary}
                 </p>
               ) : null}
               {home.heroBodySecondary ? (
-                <p className="mt-4 text-base text-slate-600 sm:text-lg">
+                <p className="mt-4 text-base text-white/80 sm:text-lg">
                   {home.heroBodySecondary}
                 </p>
               ) : null}
               {home.heroFooter ? (
-                <p className="mt-4 text-sm font-semibold text-slate-700">
+                <p className="mt-4 text-sm font-semibold text-white/80">
                   {home.heroFooter}
                 </p>
               ) : null}
@@ -177,13 +177,13 @@ export default function Home() {
               <div className="mt-8 flex flex-wrap gap-3">
                 <a
                   href={home.heroCtaPrimary?.href ?? ""}
-                  className="rounded-full bg-slate-900 px-5 py-3 text-sm font-medium text-white hover:bg-slate-800"
+                  className="rounded-full bg-white px-5 py-3 text-sm font-medium text-slate-900 hover:bg-slate-100"
                 >
                   {home.heroCtaPrimary?.label ?? ""}
                 </a>
                 <a
                   href={home.heroCtaSecondary?.href ?? ""}
-                  className="rounded-full border border-slate-300 px-5 py-3 text-sm font-medium text-slate-900 hover:bg-slate-50"
+                  className="rounded-full border border-white/30 px-5 py-3 text-sm font-medium text-white hover:bg-white/10"
                 >
                   {home.heroCtaSecondary?.label ?? ""}
                 </a>
@@ -191,49 +191,49 @@ export default function Home() {
             </div>
 
             <div className="relative">
-              <div className="absolute -top-16 right-6 h-56 w-56 rounded-full bg-gradient-to-br from-indigo-200 via-sky-200 to-emerald-200 blur-3xl opacity-70" />
-              <div className="absolute -bottom-12 left-6 h-48 w-48 rounded-full bg-gradient-to-br from-fuchsia-200 via-purple-200 to-sky-200 blur-3xl opacity-60" />
-              <div className="relative rounded-3xl border border-slate-200/70 bg-white/70 p-6 shadow-lg backdrop-blur">
+              <div className="absolute -top-16 right-6 h-56 w-56 rounded-full bg-gradient-to-br from-[#2563eb] via-[#00b8d4] to-[#eaf2ff] blur-3xl opacity-70" />
+              <div className="absolute -bottom-12 left-6 h-48 w-48 rounded-full bg-gradient-to-br from-[#0f344d] via-[#2563eb] to-[#00b8d4] blur-3xl opacity-60" />
+              <div className="relative rounded-3xl border border-white/15 bg-white/10 p-6 shadow-lg backdrop-blur">
                 <div className="grid gap-4">
-                  <div className="rounded-2xl border border-slate-200/70 bg-white/80 p-4">
-                    <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                  <div className="rounded-2xl border border-white/15 bg-white/10 p-4">
+                    <div className="text-xs font-semibold uppercase tracking-wide text-white/60">
                       Unified Data Layer
                     </div>
-                    <div className="mt-2 text-sm text-slate-700">
+                    <div className="mt-2 text-sm text-white/80">
                       Normalize HR, Finance, and CRE signals into a single decision-ready model.
                     </div>
                   </div>
                   <div className="grid gap-4 sm:grid-cols-2">
-                    <div className="rounded-2xl border border-slate-200/70 bg-white/80 p-4">
-                      <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <div className="rounded-2xl border border-white/15 bg-white/10 p-4">
+                      <div className="text-xs font-semibold uppercase tracking-wide text-white/60">
                         AI-Ready
                       </div>
-                      <div className="mt-2 text-sm text-slate-700">
+                      <div className="mt-2 text-sm text-white/80">
                         High-fidelity data designed for deterministic analytics.
                       </div>
                     </div>
-                    <div className="rounded-2xl border border-slate-200/70 bg-white/80 p-4">
-                      <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <div className="rounded-2xl border border-white/15 bg-white/10 p-4">
+                      <div className="text-xs font-semibold uppercase tracking-wide text-white/60">
                         Portfolio Intelligence
                       </div>
-                      <div className="mt-2 text-sm text-slate-700">
+                      <div className="mt-2 text-sm text-white/80">
                         Forecast outcomes with confidence, not just reports.
                       </div>
                     </div>
                   </div>
-                  <div className="rounded-2xl border border-slate-200/70 bg-gradient-to-r from-slate-900 to-slate-700 p-[1px]">
-                    <div className="rounded-2xl bg-white/90 p-4">
-                      <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                  <div className="rounded-2xl border border-white/20 bg-gradient-to-r from-[#00b8d4] to-[#2563eb] p-[1px]">
+                    <div className="rounded-2xl bg-[#051c2c]/70 p-4">
+                      <div className="text-xs font-semibold uppercase tracking-wide text-white/60">
                         Decision Engine
                       </div>
-                      <div className="mt-2 text-sm text-slate-700">
+                      <div className="mt-2 text-sm text-white/80">
                         Turn your data foundation into measurable action.
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="mt-6 flex items-center gap-3 text-xs text-slate-500">
-                  <span className="h-2 w-2 rounded-full bg-emerald-400" />
+                <div className="mt-6 flex items-center gap-3 text-xs text-white/60">
+                  <span className="h-2 w-2 rounded-full bg-teal-300" />
                   Live model readiness indicator
                 </div>
               </div>
@@ -301,25 +301,25 @@ export default function Home() {
         content={outcomes}
         className="border-t border-slate-200 bg-gradient-to-b from-[#f3f4f6] via-white to-[#e6f7fa]"
       />
-      <section className="border-t border-slate-200 bg-gradient-to-b from-[#e6f7fa] via-white to-[#f3f4f6] py-16 sm:py-20">
+      <section className="border-t border-slate-200 bg-gradient-to-b from-[#051c2c] via-[#0f344d] to-[#051c2c] py-16 sm:py-20">
         <Container>
-          <div className="rounded-3xl border border-slate-200 bg-white/80 p-8 shadow-sm backdrop-blur">
-            <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+          <div className="rounded-3xl border border-white/15 bg-white/10 p-8 shadow-lg backdrop-blur">
+            <div className="flex flex-col gap-6 text-white lg:flex-row lg:items-center lg:justify-between">
               <div className="max-w-2xl space-y-4">
-                <h3 className="text-xl font-semibold text-slate-900 sm:text-2xl">
+                <h3 className="text-xl font-semibold text-white sm:text-2xl">
                   {solution.cta?.title ?? ""}
                 </h3>
-                <p className="text-slate-600 sm:text-lg">{solution.cta?.body ?? ""}</p>
+                <p className="text-white/80 sm:text-lg">{solution.cta?.body ?? ""}</p>
                 {solution.cta?.bulletsTitle ? (
-                  <div className="text-sm font-semibold text-slate-900">
+                  <div className="text-sm font-semibold text-white">
                     {solution.cta.bulletsTitle}
                   </div>
                 ) : null}
                 {(solution.cta?.bullets ?? []).length > 0 ? (
-                  <ul className="space-y-2 text-sm text-slate-700">
+                  <ul className="space-y-2 text-sm text-white/80">
                     {(solution.cta?.bullets ?? []).map((bullet) => (
                       <li key={bullet} className="flex gap-3">
-                        <span className="mt-2 h-2 w-2 flex-none rounded-full bg-slate-900" />
+                        <span className="mt-2 h-2 w-2 flex-none rounded-full bg-teal-300" />
                         <span>{bullet}</span>
                       </li>
                     ))}
@@ -331,7 +331,7 @@ export default function Home() {
                   href={solution.cta.primary.href}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex w-fit items-center rounded-full bg-slate-900 px-6 py-3 text-sm font-medium text-white shadow-sm transition hover:bg-slate-800"
+                  className="inline-flex w-fit items-center rounded-full bg-white px-6 py-3 text-sm font-medium text-slate-900 shadow-sm transition hover:bg-slate-100"
                 >
                   {solution.cta.primary.label}
                 </a>
@@ -656,17 +656,25 @@ function GenericSection(props: {
               key={`${section.heading ?? ""}-${index}`}
               className={
                 isOutcomes
-                  ? "rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-sm backdrop-blur"
+                  ? "rounded-3xl border border-white/15 bg-white/70 p-6 shadow-lg backdrop-blur"
                   : ""
               }
             >
               <div className={isOutcomes ? "space-y-4" : ""}>
-                <h3 className="text-xl font-semibold">{section.heading ?? ""}</h3>
+                <h3 className="text-xl font-semibold text-slate-900">
+                  {section.heading ?? ""}
+                </h3>
                 {section.body ? (
                   <p className="mt-3 text-slate-600 sm:text-lg">{section.body}</p>
                 ) : null}
                 {(section.bullets ?? []).length > 0 && (
-                  <ul className={isOutcomes ? "space-y-3 text-sm text-slate-700" : "mt-4 list-disc pl-5 text-slate-600"}>
+                  <ul
+                    className={
+                      isOutcomes
+                        ? "space-y-3 text-sm text-slate-700"
+                        : "mt-4 list-disc pl-5 text-slate-600"
+                    }
+                  >
                     {(section.bullets ?? []).map((bullet) => (
                       <li key={bullet} className={isOutcomes ? "flex gap-3" : ""}>
                         {isOutcomes ? (
