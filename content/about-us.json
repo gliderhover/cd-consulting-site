@@ -1,10 +1,12 @@
 {
-  "heroEyebrow": "ABOUT US",
   "heroTitle": "About us",
   "heroSubtitle": "We help CRE leaders turn scattered data into decision-grade intelligence by aligning definitions, grain, and a Common Data Model that can power analytics and AI.",
   "noteTitle": "A Note from Our Founders",
   "noteParagraphs": [
-    "We help CRE leaders turn scattered data into decision-grade intelligence by aligning definitions, grain, and a Common Data Model that can power analytics and AI."
+    "After nearly two decades at the heart of global corporate real estate, we realized a fundamental truth: the industry isn't suffering from a lack of data, it is suffering from a lack of direction. Most organizations have spent years building massive systems of record that capture every payment, lease, and work order. But these systems are looking in the rearview mirror. They record the past, but they struggle to navigate the future. They tell you what happened, but they cannot tell you how to unlock the capital trapped within your portfolio or how to align your space with the evolving needs of your people.",
+    "We founded C&D Consulting to solve the \"last mile\" of the data journey. Having spent decades in the industry, we saw firsthand how even the most sophisticated portfolios struggle to connect daily operations to boardroom goals. We built this firm to provide the expertise and the architecture required to bridge that gap.",
+    "We are not here to give you another dashboard; we are here to build your decision engine. By combining high-grain data foundations with deep domain expertise, we help you turn raw information into a competitive advantage - reducing costs, mitigating risks, and ultimately, future-proofing your most valuable assets.",
+    "Our Solution Framework is more than just a map; it is our commitment to helping you navigate what is next."
   ],
   "foundersTitle": "Cofounders",
   "founders": [
