@@ -233,41 +233,6 @@ export default function Home() {
             </div>
           </section>
 
-          <section className="mt-16">
-            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-8">
-              <div className="space-y-4">
-                <h3 className="text-xl font-semibold text-slate-900 sm:text-2xl">
-                  {solution.cta?.title ?? ""}
-                </h3>
-                <p className="text-slate-600 sm:text-lg">{solution.cta?.body ?? ""}</p>
-                {solution.cta?.bulletsTitle ? (
-                  <div className="text-sm font-semibold text-slate-900">
-                    {solution.cta.bulletsTitle}
-                  </div>
-                ) : null}
-                {(solution.cta?.bullets ?? []).length > 0 ? (
-                  <ul className="space-y-2 text-sm text-slate-700">
-                    {(solution.cta?.bullets ?? []).map((bullet) => (
-                      <li key={bullet} className="flex gap-3">
-                        <span className="mt-2 h-2 w-2 flex-none rounded-full bg-slate-900" />
-                        <span>{bullet}</span>
-                      </li>
-                    ))}
-                  </ul>
-                ) : null}
-                {solution.cta?.primary?.label && solution.cta?.primary?.href ? (
-                  <a
-                    href={solution.cta.primary.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex w-fit items-center rounded-full bg-slate-900 px-5 py-2.5 text-sm font-medium text-white hover:bg-slate-800"
-                  >
-                    {solution.cta.primary.label}
-                  </a>
-                ) : null}
-              </div>
-            </div>
-          </section>
         </Container>
       </section>
 
@@ -434,6 +399,43 @@ export default function Home() {
         content={outcomes}
         className="border-t border-slate-200 bg-slate-50"
       />
+      <section className="border-t border-slate-200 bg-slate-50 py-16 sm:py-20">
+        <Container>
+          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-8">
+            <div className="space-y-4">
+              <h3 className="text-xl font-semibold text-slate-900 sm:text-2xl">
+                {solution.cta?.title ?? ""}
+              </h3>
+              <p className="text-slate-600 sm:text-lg">{solution.cta?.body ?? ""}</p>
+              {solution.cta?.bulletsTitle ? (
+                <div className="text-sm font-semibold text-slate-900">
+                  {solution.cta.bulletsTitle}
+                </div>
+              ) : null}
+              {(solution.cta?.bullets ?? []).length > 0 ? (
+                <ul className="space-y-2 text-sm text-slate-700">
+                  {(solution.cta?.bullets ?? []).map((bullet) => (
+                    <li key={bullet} className="flex gap-3">
+                      <span className="mt-2 h-2 w-2 flex-none rounded-full bg-slate-900" />
+                      <span>{bullet}</span>
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+              {solution.cta?.primary?.label && solution.cta?.primary?.href ? (
+                <a
+                  href={solution.cta.primary.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex w-fit items-center rounded-full bg-slate-900 px-5 py-2.5 text-sm font-medium text-white hover:bg-slate-800"
+                >
+                  {solution.cta.primary.label}
+                </a>
+              ) : null}
+            </div>
+          </div>
+        </Container>
+      </section>
       <AboutSection content={about} />
       <ContactSection content={contact} />
     </main>
