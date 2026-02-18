@@ -138,7 +138,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-white text-slate-900">
       {/* Hero */}
-      <section className="py-16 sm:py-20">
+      <section className="bg-gradient-to-b from-white via-[#f3f4f6] to-white py-16 sm:py-20">
         <Container>
           <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
             <div className="max-w-3xl">
@@ -245,7 +245,7 @@ export default function Home() {
       {/* Solution */}
       <section
         id="solution"
-        className="scroll-mt-24 border-t border-slate-200 bg-gradient-to-b from-white via-slate-50 to-white py-16 sm:py-20"
+        className="scroll-mt-24 border-t border-slate-200 bg-gradient-to-b from-[#eaf2ff] via-white to-[#f3f4f6] py-16 sm:py-20"
       >
         <Container>
           <section className="space-y-8">
@@ -299,9 +299,9 @@ export default function Home() {
       <GenericSection
         id="outcomes"
         content={outcomes}
-        className="border-t border-slate-200 bg-gradient-to-b from-slate-50 via-white to-slate-50"
+        className="border-t border-slate-200 bg-gradient-to-b from-[#f3f4f6] via-white to-[#e6f7fa]"
       />
-      <section className="border-t border-slate-200 bg-slate-50 py-16 sm:py-20">
+      <section className="border-t border-slate-200 bg-gradient-to-b from-[#e6f7fa] via-white to-[#f3f4f6] py-16 sm:py-20">
         <Container>
           <div className="rounded-3xl border border-slate-200 bg-white/80 p-8 shadow-sm backdrop-blur">
             <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
@@ -344,7 +344,7 @@ export default function Home() {
       {/* Decision Accelerator */}
       <section
         id="decision-accelerator"
-        className="scroll-mt-24 border-t border-slate-200 py-16 sm:py-20"
+        className="scroll-mt-24 border-t border-slate-200 bg-gradient-to-b from-white via-[#eaf2ff] to-[#f3f4f6] py-16 sm:py-20"
       >
         <Container>
           <section className="grid gap-8 lg:grid-cols-2 lg:items-center">
@@ -706,7 +706,10 @@ function AboutSection(props: { content: Partial<AboutContent> }) {
   const highlights = props.content.highlights ?? [];
 
   return (
-    <section id="about" className="scroll-mt-24 border-t border-slate-200 py-16 sm:py-20">
+    <section
+      id="about"
+      className="scroll-mt-24 border-t border-slate-200 bg-gradient-to-b from-[#f3f4f6] via-white to-[#eaf2ff] py-16 sm:py-20"
+    >
       <Container>
         {props.content.kicker ? (
           <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
@@ -802,7 +805,7 @@ function ContactSection(props: { content: Partial<ContactContent> }) {
   return (
     <section
       id="contact"
-      className="scroll-mt-24 border-t border-slate-200 bg-slate-50 py-16 sm:py-20"
+      className="scroll-mt-24 border-t border-slate-200 bg-gradient-to-b from-[#eaf2ff] via-white to-[#f3f4f6] py-16 sm:py-20"
     >
       <Container>
         <h2 className="text-3xl font-semibold text-slate-900 sm:text-4xl lg:text-5xl">
