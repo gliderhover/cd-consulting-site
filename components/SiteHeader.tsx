@@ -1,19 +1,24 @@
 "use client";
 
-import type { MouseEvent } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import type { MouseEvent } from "react";
 import Container from "@/components/Container";
 
-const nav = [
+const sectionNav = [
   { label: "Solution", href: "#solution" },
   { label: "Decision Accelerator", href: "#decision-accelerator" },
   { label: "Diagram", href: "#diagram" },
+  { label: "Technical", href: "/technical" },
   { label: "Outcomes", href: "#outcomes" },
   { label: "About us", href: "#about" },
   { label: "Contact", href: "#contact" },
 ];
 
 export default function SiteHeader() {
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+
   const handleNavClick = (event: MouseEvent<HTMLAnchorElement>) => {
     const href = event.currentTarget.getAttribute("href");
     if (!href || !href.startsWith("#")) {
@@ -47,25 +52,56 @@ export default function SiteHeader() {
         </Link>
 
         <nav className="hidden items-center gap-6 text-sm text-slate-600 md:flex">
-          {nav.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              onClick={handleNavClick}
-              className="hover:text-slate-900"
-            >
-              {item.label}
-            </a>
-          ))}
+          {sectionNav.map((item) => {
+            if (item.href.startsWith("#")) {
+              if (isHome) {
+                return (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    onClick={handleNavClick}
+                    className="hover:text-slate-900"
+                  >
+                    {item.label}
+                  </a>
+                );
+              }
+
+              return (
+                <Link
+                  key={item.href}
+                  href={`/${item.href}`}
+                  className="hover:text-slate-900"
+                >
+                  {item.label}
+                </Link>
+              );
+            }
+
+            return (
+              <Link key={item.href} href={item.href} className="hover:text-slate-900">
+                {item.label}
+              </Link>
+            );
+          })}
         </nav>
 
-        <a
-          href="#contact"
-          onClick={handleNavClick}
-          className="rounded-full bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800"
-        >
-          Talk to us
-        </a>
+        {isHome ? (
+          <a
+            href="#contact"
+            onClick={handleNavClick}
+            className="rounded-full bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800"
+          >
+            Talk to us
+          </a>
+        ) : (
+          <Link
+            href="/#contact"
+            className="rounded-full bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800"
+          >
+            Talk to us
+          </Link>
+        )}
       </Container>
     </header>
   );

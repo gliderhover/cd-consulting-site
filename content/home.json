@@ -23,6 +23,11 @@
       "desc": "We structure data for precision. AI that calculates with governance and repeatability, rather than guessing with probability."
     }
   ],
+  "technicalTeaser": {
+    "title": "Technical details",
+    "body": "Most CRE systems were built to record transactions, not forecast strategy. See the architecture gaps that turn teams into data janitors and how a semantic layer fixes them.",
+    "cta": { "label": "Read technical details", "href": "/technical" }
+  },
   "problemTitle": "The problem inside the problem",
   "problemBody": "CRE decisions require dozens of stakeholders and confidential business context. But most tooling was built to capture reality, not forecast it, so strategy becomes manual, slow, and fragile.",
   "problemCards": [

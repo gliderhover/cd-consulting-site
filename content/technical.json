@@ -1,0 +1,20 @@
+{
+  "title": "Technical",
+  "subtitle": "Deeper detail behind the architecture decisions that make reporting reliable.",
+  "sectionTitle": "The issue is not reporting. It is architecture.",
+  "sectionBody": "Most CRE stacks were built to capture reality (payments, work orders, lease abstracts). They are great at looking backward. They struggle to forecast and connect decisions to P&L, employee experience, ESG goals, and risk. That gap turns teams into manual data janitors.",
+  "cards": [
+    {
+      "title": "The 80/20 trap",
+      "body": "Teams spend most of their time aggregating disconnected data and too little time making decisions."
+    },
+    {
+      "title": "The vendor bias",
+      "body": "Service-provider data models optimize delivery for the vendor, not the occupier's strategy."
+    },
+    {
+      "title": "The IT bottleneck",
+      "body": "Generalist data projects take years because the CRE semantics and grain are missing."
+    }
+  ]
+}

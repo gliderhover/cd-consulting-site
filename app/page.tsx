@@ -25,6 +25,11 @@ type HomeContent = {
   heroCtaPrimary?: LinkItem;
   heroCtaSecondary?: LinkItem;
   differentiators?: { title?: string; desc?: string }[];
+  technicalTeaser?: {
+    title?: string;
+    body?: string;
+    cta?: { label?: string; href?: string };
+  };
 };
 
 type CtaLink = {
@@ -152,7 +157,7 @@ const contact = contactContent as Partial<ContactContent>;
 export default function Home() {
   const heroBadge = home.heroBadge ?? {};
   const deliverCard = solution.deliverCard ?? {};
-  const problem = solution.problem ?? {};
+  const technicalTeaser = home.technicalTeaser ?? {};
   const solutionCore = solution.solutionCore ?? {};
   const orgChange = solution.orgChange ?? {};
   const valueDelivered = solution.valueDelivered ?? {};
@@ -288,20 +293,21 @@ export default function Home() {
             <div className="rounded-2xl border border-slate-200 bg-white p-8">
               <div className="max-w-3xl space-y-3">
                 <h3 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">
-                  {problem.title ?? ""}
+                  {technicalTeaser.title ?? ""}
                 </h3>
-                <p className="text-slate-600 sm:text-lg">{problem.body ?? ""}</p>
+                <p className="text-slate-600 sm:text-lg">{technicalTeaser.body ?? ""}</p>
               </div>
 
-              <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {(problem.cards ?? []).map((card) => (
-                  <SolutionCard
-                    key={`${card.title ?? ""}-${card.body ?? ""}`}
-                    title={card.title ?? ""}
-                    body={card.body ?? ""}
-                  />
-                ))}
-              </div>
+              {technicalTeaser.cta?.label && technicalTeaser.cta?.href ? (
+                <div className="mt-6">
+                  <a
+                    href={technicalTeaser.cta.href}
+                    className="rounded-full bg-slate-900 px-5 py-2.5 text-sm font-medium text-white hover:bg-slate-800"
+                  >
+                    {technicalTeaser.cta.label}
+                  </a>
+                </div>
+              ) : null}
             </div>
           </section>
 
