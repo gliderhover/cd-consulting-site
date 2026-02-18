@@ -244,7 +244,7 @@ export default function Home() {
       {/* Solution */}
       <section
         id="solution"
-        className="scroll-mt-24 border-t border-slate-200 bg-slate-50 py-16 sm:py-20"
+        className="scroll-mt-24 border-t border-slate-200 bg-gradient-to-b from-white via-slate-50 to-white py-16 sm:py-20"
       >
         <Container>
           <section className="space-y-8">
@@ -265,13 +265,13 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-12 text-center text-sm font-semibold text-slate-500">
+            <div className="rounded-3xl border border-dashed border-slate-300 bg-white/80 px-6 py-12 text-center text-sm font-semibold text-slate-500 shadow-sm backdrop-blur">
               {solution.graphicPlaceholder ?? ""}
             </div>
           </section>
 
           <section className="mt-16">
-            <div className="rounded-2xl border border-slate-200 bg-white p-8">
+            <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
               <div className="max-w-3xl space-y-3">
                 <h3 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">
                   {technicalTeaser.title ?? ""}
@@ -292,6 +292,51 @@ export default function Home() {
             </div>
           </section>
 
+        </Container>
+      </section>
+
+      <GenericSection
+        id="outcomes"
+        content={outcomes}
+        className="border-t border-slate-200 bg-gradient-to-b from-slate-50 via-white to-slate-50"
+      />
+      <section className="border-t border-slate-200 bg-slate-50 py-16 sm:py-20">
+        <Container>
+          <div className="rounded-3xl border border-slate-200 bg-white/80 p-8 shadow-sm backdrop-blur">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+              <div className="max-w-2xl space-y-4">
+                <h3 className="text-xl font-semibold text-slate-900 sm:text-2xl">
+                  {solution.cta?.title ?? ""}
+                </h3>
+                <p className="text-slate-600 sm:text-lg">{solution.cta?.body ?? ""}</p>
+                {solution.cta?.bulletsTitle ? (
+                  <div className="text-sm font-semibold text-slate-900">
+                    {solution.cta.bulletsTitle}
+                  </div>
+                ) : null}
+                {(solution.cta?.bullets ?? []).length > 0 ? (
+                  <ul className="space-y-2 text-sm text-slate-700">
+                    {(solution.cta?.bullets ?? []).map((bullet) => (
+                      <li key={bullet} className="flex gap-3">
+                        <span className="mt-2 h-2 w-2 flex-none rounded-full bg-slate-900" />
+                        <span>{bullet}</span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
+              </div>
+              {solution.cta?.primary?.label && solution.cta?.primary?.href ? (
+                <a
+                  href={solution.cta.primary.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex w-fit items-center rounded-full bg-slate-900 px-6 py-3 text-sm font-medium text-white shadow-sm transition hover:bg-slate-800"
+                >
+                  {solution.cta.primary.label}
+                </a>
+              ) : null}
+            </div>
+          </div>
         </Container>
       </section>
 
@@ -453,48 +498,6 @@ export default function Home() {
 
       <DiagramSection />
 
-      <GenericSection
-        id="outcomes"
-        content={outcomes}
-        className="border-t border-slate-200 bg-slate-50"
-      />
-      <section className="border-t border-slate-200 bg-slate-50 py-16 sm:py-20">
-        <Container>
-          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-8">
-            <div className="space-y-4">
-              <h3 className="text-xl font-semibold text-slate-900 sm:text-2xl">
-                {solution.cta?.title ?? ""}
-              </h3>
-              <p className="text-slate-600 sm:text-lg">{solution.cta?.body ?? ""}</p>
-              {solution.cta?.bulletsTitle ? (
-                <div className="text-sm font-semibold text-slate-900">
-                  {solution.cta.bulletsTitle}
-                </div>
-              ) : null}
-              {(solution.cta?.bullets ?? []).length > 0 ? (
-                <ul className="space-y-2 text-sm text-slate-700">
-                  {(solution.cta?.bullets ?? []).map((bullet) => (
-                    <li key={bullet} className="flex gap-3">
-                      <span className="mt-2 h-2 w-2 flex-none rounded-full bg-slate-900" />
-                      <span>{bullet}</span>
-                    </li>
-                  ))}
-                </ul>
-              ) : null}
-              {solution.cta?.primary?.label && solution.cta?.primary?.href ? (
-                <a
-                  href={solution.cta.primary.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex w-fit items-center rounded-full bg-slate-900 px-5 py-2.5 text-sm font-medium text-white hover:bg-slate-800"
-                >
-                  {solution.cta.primary.label}
-                </a>
-              ) : null}
-            </div>
-          </div>
-        </Container>
-      </section>
       <AboutSection content={about} />
       <ContactSection content={contact} />
     </main>
@@ -628,6 +631,7 @@ function GenericSection(props: {
   content: Partial<GenericSectionContent>;
   className?: string;
 }) {
+  const isOutcomes = props.id === "outcomes";
   const className = ["scroll-mt-24", "py-16", "sm:py-20", props.className]
     .filter(Boolean)
     .join(" ");
@@ -643,20 +647,38 @@ function GenericSection(props: {
           </p>
         ) : null}
 
-        <div className="mt-10 grid gap-8">
+        <div className={`mt-10 grid gap-8 ${isOutcomes ? "lg:grid-cols-3" : ""}`}>
           {(props.content.sections ?? []).map((section, index) => (
-            <section key={`${section.heading ?? ""}-${index}`}>
-              <h3 className="text-xl font-semibold">{section.heading ?? ""}</h3>
-              {section.body ? (
-                <p className="mt-3 text-slate-600 sm:text-lg">{section.body}</p>
-              ) : null}
-              {(section.bullets ?? []).length > 0 && (
-                <ul className="mt-4 list-disc pl-5 text-slate-600">
-                  {(section.bullets ?? []).map((bullet) => (
-                    <li key={bullet}>{bullet}</li>
-                  ))}
-                </ul>
-              )}
+            <section
+              key={`${section.heading ?? ""}-${index}`}
+              className={
+                isOutcomes
+                  ? "rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-sm backdrop-blur"
+                  : ""
+              }
+            >
+              <div className={isOutcomes ? "space-y-4" : ""}>
+                <h3 className="text-xl font-semibold">{section.heading ?? ""}</h3>
+                {section.body ? (
+                  <p className="mt-3 text-slate-600 sm:text-lg">{section.body}</p>
+                ) : null}
+                {(section.bullets ?? []).length > 0 && (
+                  <ul className={isOutcomes ? "space-y-3 text-sm text-slate-700" : "mt-4 list-disc pl-5 text-slate-600"}>
+                    {(section.bullets ?? []).map((bullet) => (
+                      <li key={bullet} className={isOutcomes ? "flex gap-3" : ""}>
+                        {isOutcomes ? (
+                          <>
+                            <span className="mt-2 h-2 w-2 flex-none rounded-full bg-slate-900" />
+                            <span>{bullet}</span>
+                          </>
+                        ) : (
+                          bullet
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
             </section>
           ))}
         </div>
