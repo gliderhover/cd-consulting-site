@@ -18,6 +18,8 @@
       "body": "We structure data for precision. AI that calculates with governance and repeatability, rather than guessing with probability."
     }
   ],
+  "detailsTitle": "Technical details",
+  "detailsBody": "Most CRE systems were built to record transactions, not forecast strategy. See the architecture gaps that turn teams into data janitors and how a semantic layer fixes them.",
   "issueTitle": "The issue is not reporting. It is architecture.",
   "issueBody": "Most CRE stacks were built to capture reality (payments, work orders, lease abstracts). They are great at looking backward. They struggle to forecast and connect decisions to P&L, employee experience, ESG goals, and risk. That gap turns teams into manual data janitors.",
   "issueCards": [
@@ -33,5 +35,46 @@
       "title": "The IT bottleneck",
       "body": "Generalist data projects take years because the CRE semantics and grain are missing."
     }
-  ]
+  ],
+  "solutionCore": {
+    "title": "Our solution: a semantic layer for strategy",
+    "body": "We deploy a proprietary Common Data Model designed for the corporate occupier, accompanied by a CRE ontology that encodes context and relationships.",
+    "features": [
+      {
+        "title": "Neutrality",
+        "body": "Agnostic to your service providers and software. Normalize across HR, Finance, and CRE."
+      },
+      {
+        "title": "Speed",
+        "body": "Automate data engineering and modeling work dramatically faster than generalist approaches."
+      },
+      {
+        "title": "Future-proofing",
+        "body": "Structure data for deterministic results so enterprise AI can calculate with precision."
+      }
+    ]
+  },
+  "orgChange": {
+    "title": "What changes inside your org",
+    "cards": [
+      {
+        "title": "One version of truth",
+        "body": "HR, Finance, and Real Estate stop reconciling competing numbers and start using shared logic."
+      },
+      {
+        "title": "Reusable decision logic",
+        "body": "Once you model Total Cost of Occupancy, it powers Finance, Ops, and Strategy simultaneously."
+      },
+      {
+        "title": "Faster cycles",
+        "body": "Replace quarterly Excel wars with automated, auditable narratives on demand."
+      }
+    ]
+  },
+  "bottomCta": {
+    "title": "Want to see how this fits your stack?",
+    "body": "We can map your current systems and show the fastest path to a decision-ready model.",
+    "primary": { "label": "Talk to us", "href": "/#contact" },
+    "secondary": { "label": "View outcomes", "href": "/#outcomes" }
+  }
 }

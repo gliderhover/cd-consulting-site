@@ -158,10 +158,7 @@ export default function Home() {
   const heroBadge = home.heroBadge ?? {};
   const deliverCard = solution.deliverCard ?? {};
   const technicalTeaser = home.technicalTeaser ?? {};
-  const solutionCore = solution.solutionCore ?? {};
-  const orgChange = solution.orgChange ?? {};
   const valueDelivered = solution.valueDelivered ?? {};
-  const solutionCta = solution.cta ?? {};
 
   return (
     <main className="min-h-screen bg-white text-slate-900">
@@ -201,7 +198,7 @@ export default function Home() {
       {/* Solution */}
       <section
         id="solution"
-        className="scroll-mt-24 border-t border-slate-200 bg-slate-50 py-16"
+        className="scroll-mt-24 border-t border-slate-200 bg-slate-50 py-16 sm:py-20"
       >
         <Container>
           <section className="grid gap-8 lg:grid-cols-2 lg:items-center">
@@ -298,48 +295,6 @@ export default function Home() {
           </section>
 
           <section className="mt-16">
-            <div className="grid gap-8 lg:grid-cols-2">
-              <div className="rounded-2xl border border-slate-200 bg-white p-8">
-                <h3 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">
-                  {solutionCore.title ?? ""}
-                </h3>
-                <p className="mt-3 text-slate-600 sm:text-lg">{solutionCore.body ?? ""}</p>
-
-                <div className="mt-6 space-y-4">
-                  {(solutionCore.features ?? []).map((feature) => (
-                    <SolutionFeature
-                      key={`${feature.title ?? ""}-${feature.body ?? ""}`}
-                      title={feature.title ?? ""}
-                      body={feature.body ?? ""}
-                    />
-                  ))}
-                </div>
-              </div>
-
-              <div className="rounded-2xl border border-slate-200 bg-slate-900 p-8 text-white">
-                <h3 className="text-xl font-semibold sm:text-2xl">{orgChange.title ?? ""}</h3>
-
-                <div className="mt-5 grid gap-4">
-                  {(orgChange.cards ?? []).map((card) => (
-                    <SolutionDarkCard
-                      key={`${card.title ?? ""}-${card.body ?? ""}`}
-                      title={card.title ?? ""}
-                      body={card.body ?? ""}
-                    />
-                  ))}
-                </div>
-
-                <a
-                  href={orgChange.cta?.href ?? ""}
-                  className="mt-8 inline-flex w-fit items-center rounded-full bg-white px-5 py-2.5 text-sm font-medium text-slate-900 hover:bg-slate-100"
-                >
-                  {orgChange.cta?.label ?? ""}
-                </a>
-              </div>
-            </div>
-          </section>
-
-          <section className="mt-16">
             <div className="rounded-2xl border border-slate-200 bg-white p-8">
               <h3 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">
                 {valueDelivered.title ?? ""}
@@ -360,39 +315,13 @@ export default function Home() {
             </div>
           </section>
 
-          <section className="mt-16">
-            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-8">
-              <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                <div>
-                  <h3 className="text-xl font-semibold text-slate-900 sm:text-2xl">
-                    {solutionCta.title ?? ""}
-                  </h3>
-                  <p className="mt-1 text-slate-600 sm:text-lg">{solutionCta.body ?? ""}</p>
-                </div>
-                <div className="flex gap-3">
-                  <a
-                    href={solutionCta.primary?.href ?? ""}
-                    className="rounded-full bg-slate-900 px-5 py-2.5 text-sm font-medium text-white hover:bg-slate-800"
-                  >
-                    {solutionCta.primary?.label ?? ""}
-                  </a>
-                  <a
-                    href={solutionCta.secondary?.href ?? ""}
-                    className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-medium text-slate-700 hover:border-slate-400"
-                  >
-                    {solutionCta.secondary?.label ?? ""}
-                  </a>
-                </div>
-              </div>
-            </div>
-          </section>
         </Container>
       </section>
 
       {/* Decision Accelerator */}
       <section
         id="decision-accelerator"
-        className="scroll-mt-24 border-t border-slate-200 py-16"
+        className="scroll-mt-24 border-t border-slate-200 py-16 sm:py-20"
       >
         <Container>
           <section className="grid gap-8 lg:grid-cols-2 lg:items-center">
@@ -685,7 +614,9 @@ function GenericSection(props: {
   content: Partial<GenericSectionContent>;
   className?: string;
 }) {
-  const className = ["scroll-mt-24", "py-16", props.className].filter(Boolean).join(" ");
+  const className = ["scroll-mt-24", "py-16", "sm:py-20", props.className]
+    .filter(Boolean)
+    .join(" ");
   return (
     <section id={props.id} className={className}>
       <Container>
@@ -732,7 +663,7 @@ function AboutSection(props: { content: Partial<AboutContent> }) {
   const highlights = props.content.highlights ?? [];
 
   return (
-    <section id="about" className="scroll-mt-24 border-t border-slate-200 py-16">
+    <section id="about" className="scroll-mt-24 border-t border-slate-200 py-16 sm:py-20">
       <Container>
         {props.content.kicker ? (
           <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
@@ -812,7 +743,10 @@ function ContactSection(props: { content: Partial<ContactContent> }) {
   const email = props.content.email ?? "";
 
   return (
-    <section id="contact" className="scroll-mt-24 border-t border-slate-200 bg-slate-50 py-16">
+    <section
+      id="contact"
+      className="scroll-mt-24 border-t border-slate-200 bg-slate-50 py-16 sm:py-20"
+    >
       <Container>
         <h2 className="text-3xl font-semibold text-slate-900 sm:text-4xl lg:text-5xl">
           {props.content.title ?? ""}
