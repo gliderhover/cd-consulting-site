@@ -1,8 +1,7 @@
 import Container from "@/components/Container";
-import DiagramSection from "@/components/DiagramSection";
+import DiagramGate from "@/components/DiagramGate";
 import homeContent from "@/content/home.json";
 import solutionContent from "@/content/solution.json";
-import decisionAcceleratorContent from "@/content/decision-accelerator.json";
 import outcomesContent from "@/content/outcomes.json";
 import aboutContent from "@/content/about.json";
 import contactContent from "@/content/contact.json";
@@ -60,34 +59,6 @@ type SolutionContent = {
   };
 };
 
-type DecisionAcceleratorContent = {
-  heroBadge?: string;
-  title?: string;
-  subtitle?: string;
-  ctaPrimary?: CtaLink;
-  ctaSecondary?: CtaLink;
-  stats?: { label?: string; value?: string; sub?: string }[];
-  outcomesTitle?: string;
-  outcomes?: string[];
-  outcomesCalloutTitle?: string;
-  outcomesCalloutBody?: string;
-  howTitle?: string;
-  howSubtitle?: string;
-  timelineLabel?: string;
-  timeline?: string;
-  steps?: { step?: string; title?: string; body?: string; deliverables?: string[] }[];
-  deliverablesTitle?: string;
-  doNotDoTitle?: string;
-  doNotDoItems?: string[];
-  panelLeftTitle?: string;
-  panelLeft?: string[];
-  panelRightTitle?: string;
-  panelRight?: string[];
-  ctaTitle?: string;
-  ctaBody?: string;
-  ctaBottomPrimary?: CtaLink;
-  ctaBottomSecondary?: CtaLink;
-};
 
 type GenericSectionContent = {
   title?: string;
@@ -126,7 +97,6 @@ type ContactContent = {
 
 const home = homeContent as Partial<HomeContent>;
 const solution = solutionContent as Partial<SolutionContent>;
-const decisionAccelerator = decisionAcceleratorContent as Partial<DecisionAcceleratorContent>;
 const outcomes = outcomesContent as Partial<GenericSectionContent>;
 const about = aboutContent as Partial<AboutContent>;
 const contact = contactContent as Partial<ContactContent>;
@@ -266,8 +236,11 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="rounded-3xl border border-dashed border-slate-300 bg-white/80 px-6 py-12 text-center text-sm font-semibold text-slate-500 shadow-sm backdrop-blur">
-              {solution.graphicPlaceholder ?? ""}
+            <div
+              id="diagram"
+              className="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-sm backdrop-blur"
+            >
+              <DiagramGate mode="inline" />
             </div>
           </section>
 
@@ -341,165 +314,6 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* Decision Accelerator */}
-      <section
-        id="decision-accelerator"
-        className="scroll-mt-24 border-t border-slate-200 bg-gradient-to-b from-white via-[#eaf2ff] to-[#f3f4f6] py-16 sm:py-20"
-      >
-        <Container>
-          <section className="grid gap-8 lg:grid-cols-2 lg:items-center">
-            <div className="space-y-5">
-              <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs text-slate-600">
-                <span className="h-2 w-2 rounded-full bg-slate-900" />
-                {decisionAccelerator.heroBadge ?? ""}
-              </div>
-
-              <h2 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
-                {decisionAccelerator.title ?? ""}
-              </h2>
-
-              <p className="text-base leading-relaxed text-slate-600 sm:text-lg">
-                {decisionAccelerator.subtitle ?? ""}
-              </p>
-
-              <div className="flex flex-wrap gap-3">
-                <a
-                  href={decisionAccelerator.ctaPrimary?.href ?? ""}
-                  className="rounded-full bg-slate-900 px-5 py-2.5 text-sm font-medium text-white hover:bg-slate-800"
-                >
-                  {decisionAccelerator.ctaPrimary?.label ?? ""}
-                </a>
-                <a
-                  href={decisionAccelerator.ctaSecondary?.href ?? "#how-it-works"}
-                  className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-medium text-slate-700 hover:border-slate-400"
-                >
-                  {decisionAccelerator.ctaSecondary?.label ?? ""}
-                </a>
-              </div>
-
-              <div className="grid gap-6 pt-4 text-sm sm:grid-cols-2 lg:grid-cols-3">
-                {(decisionAccelerator.stats ?? []).map((stat) => (
-                  <DecisionStat
-                    key={`${stat.label ?? ""}-${stat.value ?? ""}`}
-                    label={stat.label ?? ""}
-                    value={stat.value ?? ""}
-                    sub={stat.sub ?? ""}
-                  />
-                ))}
-              </div>
-            </div>
-
-            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-              <h3 className="text-lg font-semibold text-slate-900">
-                {decisionAccelerator.outcomesTitle ?? ""}
-              </h3>
-              <div className="mt-4 grid gap-3">
-                {(decisionAccelerator.outcomes ?? []).map((item) => (
-                  <DecisionBullet key={item}>{item}</DecisionBullet>
-                ))}
-              </div>
-
-              <div className="mt-6 rounded-xl bg-slate-50 p-4 text-sm text-slate-700">
-                <div className="font-medium text-slate-900">
-                  {decisionAccelerator.outcomesCalloutTitle ?? ""}
-                </div>
-                <div className="mt-1">{decisionAccelerator.outcomesCalloutBody ?? ""}</div>
-              </div>
-            </div>
-          </section>
-
-          <section id="how-it-works" className="mt-16 scroll-mt-24">
-            <div className="rounded-2xl border border-slate-200 bg-white p-8">
-              <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-                <div className="max-w-3xl">
-                  <h3 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">
-                    {decisionAccelerator.howTitle ?? ""}
-                  </h3>
-                  <p className="mt-2 text-slate-600 sm:text-lg">
-                    {decisionAccelerator.howSubtitle ?? ""}
-                  </p>
-                </div>
-                {decisionAccelerator.timelineLabel || decisionAccelerator.timeline ? (
-                  <div className="text-sm text-slate-600">
-                    {decisionAccelerator.timelineLabel ?? ""}{" "}
-                    <span className="font-medium text-slate-900">
-                      {decisionAccelerator.timeline ?? ""}
-                    </span>
-                  </div>
-                ) : null}
-              </div>
-
-              <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {(decisionAccelerator.steps ?? []).map((step) => (
-                  <DecisionStep
-                    key={`${step.step ?? ""}-${step.title ?? ""}`}
-                    step={step.step ?? ""}
-                    title={step.title ?? ""}
-                    body={step.body ?? ""}
-                    deliverables={step.deliverables ?? []}
-                    deliverablesTitle={decisionAccelerator.deliverablesTitle ?? ""}
-                  />
-                ))}
-              </div>
-
-              <div className="mt-8 rounded-xl bg-slate-50 p-5">
-                <div className="text-sm font-medium text-slate-900">
-                  {decisionAccelerator.doNotDoTitle ?? ""}
-                </div>
-                <div className="mt-2 grid gap-2 text-sm text-slate-700 sm:grid-cols-2 lg:grid-cols-3">
-                  {(decisionAccelerator.doNotDoItems ?? []).map((item) => (
-                    <span key={item}>• {item}</span>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section className="mt-16">
-            <div className="grid gap-8 lg:grid-cols-2">
-              <DecisionPanel
-                title={decisionAccelerator.panelLeftTitle ?? ""}
-                items={decisionAccelerator.panelLeft ?? []}
-              />
-              <DecisionPanel
-                title={decisionAccelerator.panelRightTitle ?? ""}
-                items={decisionAccelerator.panelRight ?? []}
-              />
-            </div>
-          </section>
-
-          <section className="mt-16">
-            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-8">
-              <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                <div>
-                  <h3 className="text-xl font-semibold text-slate-900 sm:text-2xl">
-                    {decisionAccelerator.ctaTitle ?? ""}
-                  </h3>
-                  <p className="mt-1 text-slate-600 sm:text-lg">
-                    {decisionAccelerator.ctaBody ?? ""}
-                  </p>
-                </div>
-                <div className="flex gap-3">
-                  <a
-                    href={decisionAccelerator.ctaBottomPrimary?.href ?? ""}
-                    className="rounded-full bg-slate-900 px-5 py-2.5 text-sm font-medium text-white hover:bg-slate-800"
-                  >
-                    {decisionAccelerator.ctaBottomPrimary?.label ?? ""}
-                  </a>
-                  <a
-                    href={decisionAccelerator.ctaBottomSecondary?.href ?? ""}
-                    className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-medium text-slate-700 hover:border-slate-400"
-                  >
-                    {decisionAccelerator.ctaBottomSecondary?.label ?? ""}
-                  </a>
-                </div>
-              </div>
-            </div>
-          </section>
-        </Container>
-      </section>
-
-      <DiagramSection />
 
       <AboutSection content={about} />
       <ContactSection content={contact} />
@@ -564,70 +378,6 @@ function SolutionBullet(props: { children: React.ReactNode }) {
   );
 }
 
-function DecisionStat(props: { label: string; value: string; sub: string }) {
-  return (
-    <div className="rounded-xl border border-slate-200 bg-white p-4">
-      <div className="text-xs text-slate-500">{props.label}</div>
-      <div className="mt-1 text-xl font-semibold text-slate-900">{props.value}</div>
-      <div className="mt-1 text-xs text-slate-600">{props.sub}</div>
-    </div>
-  );
-}
-
-function DecisionBullet(props: { children: React.ReactNode }) {
-  return (
-    <div className="flex gap-3 text-sm text-slate-700">
-      <span className="mt-2 h-2 w-2 flex-none rounded-full bg-slate-900" />
-      <span className="leading-relaxed">{props.children}</span>
-    </div>
-  );
-}
-
-function DecisionStep(props: {
-  step: string;
-  title: string;
-  body: string;
-  deliverables: string[];
-  deliverablesTitle: string;
-}) {
-  return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-6">
-      <div className="text-xs font-medium text-slate-500">{props.step}</div>
-      <div className="mt-2 text-sm font-semibold text-slate-900">{props.title}</div>
-      <div className="mt-2 text-sm leading-relaxed text-slate-600">{props.body}</div>
-
-      {(props.deliverablesTitle || props.deliverables.length > 0) && (
-        <div className="mt-4 rounded-xl bg-slate-50 p-4">
-          <div className="text-xs font-medium text-slate-900">{props.deliverablesTitle}</div>
-          <ul className="mt-2 space-y-2 text-sm text-slate-700">
-            {props.deliverables.map((deliverable) => (
-              <li key={deliverable} className="flex gap-3">
-                <span className="mt-2 h-2 w-2 flex-none rounded-full bg-slate-900" />
-                <span>{deliverable}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </div>
-  );
-}
-
-function DecisionPanel(props: { title: string; items: string[] }) {
-  return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-8">
-      <h3 className="text-lg font-semibold text-slate-900">{props.title}</h3>
-      <ul className="mt-4 space-y-3 text-sm text-slate-700">
-        {props.items.map((item) => (
-          <li key={item} className="flex gap-3">
-            <span className="mt-2 h-2 w-2 flex-none rounded-full bg-slate-900" />
-            <span className="leading-relaxed">{item}</span>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
 
 function GenericSection(props: {
   id: string;
