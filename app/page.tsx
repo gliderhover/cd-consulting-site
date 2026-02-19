@@ -236,11 +236,11 @@ export default function Home() {
               </div>
             </div>
 
-            <div
-              id="diagram"
-              className="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-sm backdrop-blur"
-            >
+            <div className="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-sm backdrop-blur">
+              <div className="mb-6 h-px w-full bg-slate-200/70" />
+              <div id="diagram">
               <DiagramGate mode="inline" />
+              </div>
             </div>
           </section>
 
@@ -425,18 +425,22 @@ function GenericSection(props: {
                         : "mt-4 list-disc pl-5 text-slate-600"
                     }
                   >
-                    {(section.bullets ?? []).map((bullet) => (
-                      <li key={bullet} className={isOutcomes ? "flex gap-3" : ""}>
-                        {isOutcomes ? (
-                          <>
-                            <span className="mt-2 h-2 w-2 flex-none rounded-full bg-slate-900" />
-                            <span>{bullet}</span>
-                          </>
-                        ) : (
-                          bullet
-                        )}
-                      </li>
-                    ))}
+                    {(section.bullets ?? []).map((bullet) => {
+                      if (!isOutcomes) {
+                        return <li key={bullet}>{bullet}</li>;
+                      }
+
+                      const [label, rest] = splitOutcomeBullet(bullet);
+                      return (
+                        <li key={bullet} className="flex gap-3">
+                          <span className="mt-2 h-2 w-2 flex-none rounded-full bg-slate-900" />
+                          <span>
+                            <span className="font-semibold text-slate-900">{label}</span>
+                            {rest}
+                          </span>
+                        </li>
+                      );
+                    })}
                   </ul>
                 )}
               </div>
@@ -457,6 +461,16 @@ function GenericSection(props: {
       </Container>
     </section>
   );
+}
+
+function splitOutcomeBullet(bullet: string): [string, string] {
+  const index = bullet.indexOf(":");
+  if (index === -1) {
+    return [bullet, ""];
+  }
+  const label = bullet.slice(0, index + 1);
+  const rest = bullet.slice(index + 1);
+  return [label, rest];
 }
 
 function AboutSection(props: { content: Partial<AboutContent> }) {
