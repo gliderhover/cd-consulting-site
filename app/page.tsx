@@ -236,11 +236,15 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-sm backdrop-blur">
-              <div className="mb-6 h-px w-full bg-slate-200/70" />
-              <div id="diagram">
+            <div className="max-w-4xl">
+              <div className="h-px w-full bg-slate-200/70" />
+            </div>
+
+            <div
+              id="diagram"
+              className="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-sm backdrop-blur"
+            >
               <DiagramGate mode="inline" />
-              </div>
             </div>
           </section>
 
@@ -315,7 +319,6 @@ export default function Home() {
       </section>
 
 
-      <AboutSection content={about} />
       <ContactSection content={contact} />
     </main>
   );
@@ -473,102 +476,6 @@ function splitOutcomeBullet(bullet: string): [string, string] {
   return [label, rest];
 }
 
-function AboutSection(props: { content: Partial<AboutContent> }) {
-  const founders = props.content.founders ?? [];
-  const highlights = props.content.highlights ?? [];
-
-  return (
-    <section
-      id="about"
-      className="scroll-mt-24 border-t border-slate-200 bg-gradient-to-b from-[#f3f4f6] via-white to-[#eaf2ff] py-16 sm:py-20"
-    >
-      <Container>
-        {props.content.kicker ? (
-          <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-            {props.content.kicker}
-          </p>
-        ) : null}
-        <h2 className="mt-2 text-3xl font-semibold text-slate-900 sm:text-4xl lg:text-5xl">
-          {props.content.title ?? ""}
-        </h2>
-        <p className="mt-4 max-w-3xl text-base text-slate-600 sm:text-lg">
-          {props.content.body ?? ""}
-        </p>
-
-        {props.content.cta?.label && props.content.cta?.href ? (
-          <div className="mt-6">
-            <a
-              href={props.content.cta.href}
-              className="inline-flex items-center rounded-full bg-slate-900 px-5 py-2.5 text-sm font-medium text-white hover:bg-slate-800"
-            >
-              {props.content.cta.label}
-            </a>
-          </div>
-        ) : null}
-
-        {founders.length > 0 ? (
-          <div className="mt-10">
-            <h3 className="text-xl font-semibold text-slate-900">
-              {props.content.foundersTitle ?? ""}
-            </h3>
-            <div className="mt-6 grid gap-8 lg:grid-cols-2">
-              {founders.map((founder, index) => (
-                <div
-                  key={`${founder.name ?? ""}-${index}`}
-                  className="rounded-2xl border border-slate-200 bg-white p-6"
-                >
-                  <div className="flex items-center gap-4">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-900 text-sm font-semibold text-white">
-                      {getInitials(founder.name ?? "")}
-                    </div>
-                    <div>
-                      <div className="text-lg font-semibold text-slate-900">
-                        {founder.name ?? ""}
-                      </div>
-                      <div className="text-sm text-slate-600">{founder.role ?? ""}</div>
-                    </div>
-                  </div>
-
-                  <p className="mt-4 text-sm leading-relaxed text-slate-600">
-                    {founder.bio ?? ""}
-                  </p>
-
-                  {founder.linkedinUrl ? (
-                    <a
-                      href={founder.linkedinUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="mt-5 inline-flex items-center rounded-full border border-slate-300 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-slate-700 hover:border-slate-400 hover:text-slate-900"
-                    >
-                      LinkedIn
-                    </a>
-                  ) : null}
-                </div>
-              ))}
-            </div>
-          </div>
-        ) : null}
-
-        {highlights.length > 0 ? (
-          <div className="mt-10 rounded-2xl border border-slate-200 bg-slate-50 p-6">
-            <h3 className="text-lg font-semibold text-slate-900">
-              {props.content.highlightsTitle ?? ""}
-            </h3>
-            <ul className="mt-4 space-y-2 text-sm text-slate-700">
-              {highlights.map((item) => (
-                <li key={item} className="flex gap-3">
-                  <span className="mt-2 h-2 w-2 flex-none rounded-full bg-slate-900" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ) : null}
-      </Container>
-    </section>
-  );
-}
-
 function ContactSection(props: { content: Partial<ContactContent> }) {
   const description = props.content.body ?? props.content.subtitle ?? "";
   const emails = props.content.emails ?? [];
@@ -635,6 +542,14 @@ function ContactSection(props: { content: Partial<ContactContent> }) {
               {props.content.secondaryButton.label ?? "Email us"}
             </a>
           ) : null}
+          {about.cta?.href ? (
+            <a
+              href={about.cta.href}
+              className="inline-flex items-center justify-center rounded-full bg-slate-100 px-5 py-2.5 text-sm font-semibold text-slate-900 hover:bg-slate-200"
+            >
+              {about.cta.label ?? "Read our story"}
+            </a>
+          ) : null}
         </div>
 
       </Container>
@@ -642,11 +557,4 @@ function ContactSection(props: { content: Partial<ContactContent> }) {
   );
 }
 
-function getInitials(name: string) {
-  const parts = name.trim().split(/\s+/).filter(Boolean);
-  if (parts.length === 0) return "";
-  const first = parts[0]?.[0] ?? "";
-  const last = parts.length > 1 ? parts[parts.length - 1]?.[0] ?? "" : "";
-  return `${first}${last}`.toUpperCase();
-}
 

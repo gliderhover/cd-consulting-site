@@ -81,19 +81,6 @@ export default function TechnicalPage() {
       <section className="border-t border-slate-200 bg-slate-50 py-16 sm:py-20">
         <Container>
           <div className="rounded-2xl border border-slate-200 bg-white p-8">
-            <h2 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">
-              {technical.detailsTitle ?? ""}
-            </h2>
-            <p className="mt-3 max-w-3xl text-slate-600 sm:text-lg">
-              {technical.detailsBody ?? ""}
-            </p>
-          </div>
-        </Container>
-      </section>
-
-      <section className="border-t border-slate-200 bg-slate-50 py-16 sm:py-20">
-        <Container>
-          <div className="rounded-2xl border border-slate-200 bg-white p-8">
             <div className="max-w-3xl space-y-3">
               <h2 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">
                 {technical.issueTitle ?? ""}
