@@ -29,23 +29,23 @@ export default function AboutUsPage() {
 
   return (
     <main className="min-h-screen bg-white text-slate-900">
-      <section className="py-16 sm:py-20">
+      <section className="bg-gradient-to-br from-[#051c2c] via-[#0f344d] to-[#051c2c] py-16 sm:py-20">
         <Container>
-          <div className="max-w-3xl">
-            <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+          <div className="max-w-3xl text-white">
+            <p className="text-xs font-semibold uppercase tracking-wide text-white/60">
               {aboutUs.heroEyebrow ?? ""}
             </p>
             <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl">
               {aboutUs.heroTitle ?? ""}
             </h1>
-            <p className="mt-4 text-base text-slate-600 sm:text-lg">
+            <p className="mt-4 text-base text-white/80 sm:text-lg">
               {aboutUs.heroSubtitle ?? ""}
             </p>
           </div>
         </Container>
       </section>
 
-      <section className="border-t border-slate-200 bg-slate-50 py-16 sm:py-20">
+      <section className="border-t border-slate-200 bg-gradient-to-b from-[#f3f4f6] via-white to-[#e6f7fa] py-16 sm:py-20">
         <Container>
           <div className="rounded-2xl border border-slate-200 bg-white p-8">
             <h2 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">
@@ -60,7 +60,7 @@ export default function AboutUsPage() {
         </Container>
       </section>
 
-      <section className="border-t border-slate-200 py-16 sm:py-20">
+      <section className="border-t border-slate-200 bg-gradient-to-b from-white via-[#eaf2ff] to-[#f3f4f6] py-16 sm:py-20">
         <Container>
           <h2 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">
             {aboutUs.foundersTitle ?? ""}
@@ -103,19 +103,19 @@ export default function AboutUsPage() {
         </Container>
       </section>
 
-      <section className="border-t border-slate-200 bg-slate-50 py-16 sm:py-20">
+      <section className="border-t border-slate-200 bg-gradient-to-b from-[#051c2c] via-[#0f344d] to-[#051c2c] py-16 sm:py-20">
         <Container>
-          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-8">
+          <div className="rounded-2xl border border-white/15 bg-white/10 p-8 backdrop-blur">
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <div>
-                <h3 className="text-xl font-semibold text-slate-900 sm:text-2xl">
+                <h3 className="text-xl font-semibold text-white sm:text-2xl">
                   {aboutUs.bottomCta?.title ?? ""}
                 </h3>
               </div>
               <div className="flex gap-3">
                 <a
                   href={aboutUs.bottomCta?.primary?.href ?? ""}
-                  className="rounded-full bg-slate-900 px-5 py-2.5 text-sm font-medium text-white hover:bg-slate-800"
+                  className="rounded-full bg-white px-5 py-2.5 text-sm font-medium text-slate-900 hover:bg-slate-100"
                 >
                   {aboutUs.bottomCta?.primary?.label ?? ""}
                 </a>
@@ -123,7 +123,7 @@ export default function AboutUsPage() {
                   href={aboutUs.bottomCta?.secondary?.href ?? ""}
                   target="_blank"
                   rel="noreferrer"
-                  className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-medium text-slate-700 hover:border-slate-400"
+                  className="rounded-full border border-white/30 px-5 py-2.5 text-sm font-medium text-white hover:bg-white/10"
                 >
                   {aboutUs.bottomCta?.secondary?.label ?? ""}
                 </a>
