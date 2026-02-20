@@ -286,7 +286,11 @@ export default function Home() {
                 <h3 className="text-xl font-semibold text-white sm:text-2xl">
                   {solution.cta?.title ?? ""}
                 </h3>
-                <p className="text-white/80 sm:text-lg">{solution.cta?.body ?? ""}</p>
+                {solution.cta?.body ? (
+                  <p className="text-white/80 sm:text-lg">
+                    {boldPhrase(solution.cta.body, "Portfolio Data Audit")}
+                  </p>
+                ) : null}
                 {solution.cta?.bulletsTitle ? (
                   <div className="text-sm font-semibold text-white">
                     {solution.cta.bulletsTitle}
@@ -474,6 +478,18 @@ function splitOutcomeBullet(bullet: string): [string, string] {
   const label = bullet.slice(0, index + 1);
   const rest = bullet.slice(index + 1);
   return [label, rest];
+}
+
+function boldPhrase(text: string, phrase: string) {
+  const index = text.indexOf(phrase);
+  if (index === -1) return text;
+  return (
+    <>
+      {text.slice(0, index)}
+      <span className="font-semibold text-white">{phrase}</span>
+      {text.slice(index + phrase.length)}
+    </>
+  );
 }
 
 function ContactSection(props: { content: Partial<ContactContent> }) {
