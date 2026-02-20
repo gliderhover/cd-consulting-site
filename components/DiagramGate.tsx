@@ -24,7 +24,7 @@ const COOKIE_MAX_AGE = 60 * 60 * 24 * 30;
 export default function DiagramGate({
   mode,
   embedSrc = "/Diagram/diagram_complete_v2.html",
-  title = "Interactive Diagram",
+  title = "An AI Native Solution",
   subtitle = "A visual map of the data foundation and how the pieces connect.",
 }: DiagramGateProps) {
   const [isUnlocked, setIsUnlocked] = useState(false);

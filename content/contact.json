@@ -1,7 +1,7 @@
 {
   "title": "Contact",
   "subtitle": "Tell us the decision you need to enable and we will respond with a short plan.",
-  "body": "Share the decision you're working on and we will respond with a clear next step.",
+  "body": "Start a conversation with our founders and we will respond with clear next steps.",
   "email": "charles@consultcd.com",
   "emails": ["charles@consultcd.com", "diego@consultcd.com"],
   "calendar": { "label": "Book a demo", "href": "https://outlook.office.com/book/Demo@consultcd.com/" },

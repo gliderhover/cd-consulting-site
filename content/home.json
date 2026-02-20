@@ -1,15 +1,15 @@
 {
   "heroBadge": {
-    "prefix": "We provide the data foundation to allow for ",
+    "prefix": "We provide the data foundation and enable ",
     "emphasisPrimary": "advanced analytics",
-    "infix": ".",
+    "infix": "",
     "emphasisSecondary": ""
   },
   "heroTitle": "Own the Future of Your Portfolio",
   "heroSubtitle": "Accelerate to Strategic Analytics 10x Faster Than Traditional IT Cycles",
   "heroBodyPrimary": "We provide the Common Data Model (CDM) that automates the labor-intensive data preparation currently stalling your AI and data initiatives. Our products unblock your IT and data teams by orchestrating data 10x faster than legacy data engineering cycles.",
   "heroBodySecondary": "Move beyond dashboards; we deliver the advanced, high-fidelity analytics the industry has lacked to manage global corporate real estate portfolios.",
-  "heroFooter": "Built by CRE Natives. Powered by Proprietary Technology.",
+  "heroFooter": "Built by Corporate Real Estate Natives. Powered by Proprietary Technology.",
   "heroCtaPrimary": { "label": "Explore the technical approach", "href": "/technical" },
   "heroCtaSecondary": { "label": "Book a discovery call", "href": "#contact" },
   "differentiators": [

@@ -1,20 +1,21 @@
 {
   "heroBadge": "Solution Framework",
-  "heroTitle": "Traditional CRE systems are built to record the past, not navigate the future.",
+  "heroTitle": "Most platforms function as static systems of record.",
   "heroParagraphs": [
-    "Most platforms function as static systems of record - expertly capturing payments and abstracts but struggling to bridge the gap between raw data and strategic outcomes. They show you where you've been but fail to forecast the impact of today's decisions on your P&L, employee experience, or enterprise risk.",
-    "C&D Consulting turns your data foundation into a decision engine. By combining deep domain expertise with a refined data architecture, we provide the \"connective tissue\" between your daily operations and your board-room goals. We don't just organize your data; we optimize it to increase revenue, slash operational costs, and future-proof your portfolio against risk."
+    "They capture payments, work orders, lease details but rarely bridge the gap between raw data and strategic outcomes. They show you where you've been but fail to forecast the impact of decisions on your P&L, employee experience or enterprise risk.",
+    "C&D turns your data into a decision engine. By combining deep domain expertise with data architecture specific to corporate real estate, we provide the \"connective tissue\" between your daily operations and your board-room goals. We don't just organize your data; we optimize it to unlock capital, slash operational costs, improve employee experience and future-proof your portfolio against risk."
   ],
   "graphicPlaceholder": "GRAPHIC TO BE INSERTED",
   "cta": {
-    "title": "Stop Recording the Past. Start Navigating the Future.",
-    "body": "Most portfolios are sitting on a goldmine of data they can't actually use. Our Portfolio Data Audit is a high-impact diagnostic designed to identify where your \"connective tissue\" is broken and how much capital is currently trapped in your system of record.",
+    "title": "Navigate the Future of Your Portfolio",
+    "body": "Most portfolios are sitting on a goldmine of data trapped within static systems. Our Portfolio Data Audit is a high-impact diagnostic identifying the bottlenecks that are preventing your teams from moving at the speed of the market.",
     "bulletsTitle": "What we'll uncover in 45 minutes:",
     "bullets": [
       "AI Readiness: A clear assessment of how prepared your architecture is for the next wave of automation.",
-      "The Integrity Gap: Which data sources are currently undermining your decision-making?",
-      "The ROI Roadmap: A prioritized list of \"Optimization\" tasks that lead to immediate cost reduction and time savings."
+      "The Integrity Gap: Pinpoint exactly which data sources are undermining your high-stakes decisions.",
+      "The CDM Shortcut: Discover how our Common Data Model unblocks your IT teams and accelerates analytics cycles by 10x.",
+      "The ROI Roadmap: A prioritized list of optimization tasks that lead to immediate cost reduction and time savings."
     ],
-    "primary": { "label": "Book Your Data Audit", "href": "https://outlook.office.com/book/Demo@consultcd.com/" }
+    "primary": { "label": "Book Your Portfolio Data Audit", "href": "https://outlook.office.com/book/Demo@consultcd.com/" }
   }
 }

@@ -9,7 +9,7 @@ export default function DiagramPage() {
             Diagram
           </p>
           <h1 className="mt-2 text-3xl font-semibold tracking-tight text-slate-900 md:text-4xl">
-            Interactive Diagram
+            An AI Native Solution
           </h1>
           <p className="mt-3 text-slate-600">
             Explore the interactive decision map in a dedicated view.
@@ -26,7 +26,7 @@ export default function DiagramPage() {
       <div className="mt-8">
         <DiagramGate
           mode="page"
-          title="Interactive Diagram"
+          title="An AI Native Solution"
           subtitle="Explore the interactive decision map in a dedicated full-page view."
         />
       </div>
