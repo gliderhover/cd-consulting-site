@@ -167,10 +167,11 @@ export default function Home() {
                 <div className="grid gap-4">
                   <div className="rounded-2xl border border-white/15 bg-white/10 p-4">
                     <div className="text-xs font-semibold uppercase tracking-wide text-white/60">
-                      Unified Data Layer
+                      Accelerated Data Foundation
                     </div>
                     <div className="mt-2 text-sm text-white/80">
-                      Normalize HR, Finance, and CRE signals into a single decision-ready model.
+                      Deliver a world-class data infrastructure in 1/10th of the time, saving
+                      significant hours for CRE and IT teams.
                     </div>
                   </div>
                   <div className="grid gap-4 sm:grid-cols-2">
@@ -194,17 +195,14 @@ export default function Home() {
                   <div className="rounded-2xl border border-white/20 bg-gradient-to-r from-[#00b8d4] to-[#2563eb] p-[1px]">
                     <div className="rounded-2xl bg-[#051c2c]/70 p-4">
                       <div className="text-xs font-semibold uppercase tracking-wide text-white/60">
-                        Decision Engine
+                        Cutting-Edge Decision Making
                       </div>
                       <div className="mt-2 text-sm text-white/80">
-                        Turn your data foundation into measurable action.
+                        Implement market-leading decision making capabilities currently lacking in
+                        the CRE industry.
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="mt-6 flex items-center gap-3 text-xs text-white/60">
-                  <span className="h-2 w-2 rounded-full bg-teal-300" />
-                  Live model readiness indicator
                 </div>
               </div>
             </div>
