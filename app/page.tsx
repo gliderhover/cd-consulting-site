@@ -1,5 +1,6 @@
 import Container from "@/components/Container";
 import DiagramGate from "@/components/DiagramGate";
+import HowWeCompare from "@/components/HowWeCompare";
 import homeContent from "@/content/home.json";
 import solutionContent from "@/content/solution.json";
 import outcomesContent from "@/content/outcomes.json";
@@ -163,47 +164,8 @@ export default function Home() {
             <div className="relative">
               <div className="absolute -top-16 right-6 h-56 w-56 rounded-full bg-gradient-to-br from-[#2563eb] via-[#00b8d4] to-[#eaf2ff] blur-3xl opacity-70" />
               <div className="absolute -bottom-12 left-6 h-48 w-48 rounded-full bg-gradient-to-br from-[#0f344d] via-[#2563eb] to-[#00b8d4] blur-3xl opacity-60" />
-              <div className="relative rounded-3xl border border-white/15 bg-white/10 p-6 shadow-lg backdrop-blur">
-                <div className="grid gap-4">
-                  <div className="rounded-2xl border border-white/15 bg-white/10 p-4">
-                    <div className="text-xs font-semibold uppercase tracking-wide text-white/60">
-                      Accelerated Data Foundation
-                    </div>
-                    <div className="mt-2 text-sm text-white/80">
-                      Deliver a world-class data infrastructure in 1/10th of the time, saving
-                      significant hours for CRE and IT teams.
-                    </div>
-                  </div>
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <div className="rounded-2xl border border-white/15 bg-white/10 p-4">
-                      <div className="text-xs font-semibold uppercase tracking-wide text-white/60">
-                        AI-Ready
-                      </div>
-                      <div className="mt-2 text-sm text-white/80">
-                        High-fidelity data designed for deterministic analytics.
-                      </div>
-                    </div>
-                    <div className="rounded-2xl border border-white/15 bg-white/10 p-4">
-                      <div className="text-xs font-semibold uppercase tracking-wide text-white/60">
-                        Portfolio Intelligence
-                      </div>
-                      <div className="mt-2 text-sm text-white/80">
-                        Forecast outcomes with confidence, not just reports.
-                      </div>
-                    </div>
-                  </div>
-                  <div className="rounded-2xl border border-white/20 bg-gradient-to-r from-[#00b8d4] to-[#2563eb] p-[1px]">
-                    <div className="rounded-2xl bg-[#051c2c]/70 p-4">
-                      <div className="text-xs font-semibold uppercase tracking-wide text-white/60">
-                        Cutting-Edge Decision Making
-                      </div>
-                      <div className="mt-2 text-sm text-white/80">
-                        Implement market-leading decision making capabilities currently lacking in
-                        the CRE industry.
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              <div className="relative rounded-3xl border border-white/15 bg-[#FAF6F1]/95 p-6 shadow-lg backdrop-blur">
+                <HowWeCompare />
               </div>
             </div>
           </div>
