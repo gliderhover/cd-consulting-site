@@ -1,5 +1,9 @@
+"use client";
+
+import { useState } from "react";
 import Container from "@/components/Container";
 import DiagramGate from "@/components/DiagramGate";
+import HeroSection from "@/components/HeroSection";
 import HowWeCompare from "@/components/HowWeCompare";
 import homeContent from "@/content/home.json";
 import solutionContent from "@/content/solution.json";
@@ -96,6 +100,15 @@ type ContactContent = {
   cta?: { label?: string; href?: string };
 };
 
+type LayoutVariant =
+  | "current"
+  | "micro-grid"
+  | "tabs-compact"
+  | "tabs-compact-side-lower"
+  | "tabs-compact-side-final";
+
+type StyleVariant = "light" | "dark";
+
 const home = homeContent as Partial<HomeContent>;
 const solution = solutionContent as Partial<SolutionContent>;
 const outcomes = outcomesContent as Partial<GenericSectionContent>;
@@ -103,13 +116,20 @@ const about = aboutContent as Partial<AboutContent>;
 const contact = contactContent as Partial<ContactContent>;
 
 export default function Home() {
+  const [layoutVariant, setLayoutVariant] = useState<LayoutVariant>("current");
+  const [styleVariant, setStyleVariant] = useState<StyleVariant>("light");
   const heroBadge = home.heroBadge ?? {};
   const technicalTeaser = home.technicalTeaser ?? {};
 
   return (
     <main className="min-h-screen bg-white text-slate-900">
       {/* Hero */}
-      <section className="bg-gradient-to-br from-[#051c2c] via-[#0f344d] to-[#051c2c] py-16 sm:py-20">
+      <HeroSection
+        layoutVariant={layoutVariant}
+        setLayoutVariant={setLayoutVariant}
+        styleVariant={styleVariant}
+        setStyleVariant={setStyleVariant}
+      >
         <Container>
           <div className="grid gap-12 text-white lg:grid-cols-2 lg:items-center">
             <div className="max-w-3xl">
@@ -164,13 +184,16 @@ export default function Home() {
             <div className="relative">
               <div className="absolute -top-16 right-6 h-56 w-56 rounded-full bg-gradient-to-br from-[#2563eb] via-[#00b8d4] to-[#eaf2ff] blur-3xl opacity-70" />
               <div className="absolute -bottom-12 left-6 h-48 w-48 rounded-full bg-gradient-to-br from-[#0f344d] via-[#2563eb] to-[#00b8d4] blur-3xl opacity-60" />
-              <div className="relative rounded-3xl border border-white/15 bg-[#FAF6F1]/95 p-6 shadow-lg backdrop-blur">
-                <HowWeCompare />
+              <div className={`relative ${layoutVariant === "tabs-compact-side-final" ? "" : "rounded-3xl border border-white/15 p-6 shadow-lg backdrop-blur"} ${
+                styleVariant === "dark" && layoutVariant === "tabs-compact-side-final" ? "bg-transparent" : (styleVariant === "dark" ? "bg-black/5" : "bg-[#FAF6F1]/95")
+              }`}>
+                <HowWeCompare layoutVariant={layoutVariant} setLayoutVariant={setLayoutVariant} styleVariant={styleVariant} />
               </div>
             </div>
           </div>
         </Container>
-      </section>
+      </HeroSection>
+
 
       {/* Solution */}
       <section
