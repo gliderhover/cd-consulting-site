@@ -346,7 +346,7 @@ export default function HowWeCompare() {
               Cheaper footprint, happier teams, lower carbon, and a playbook you own instead of
               renting from vendors.
               <span className="mt-4 block rounded-r-md border-l-4 border-[#5A6349] bg-[#A2AB99]/10 py-2 pl-4 font-semibold text-[#5A6349]">
-                Strategic control instead of vendor‑driven chaos.
+                Strategic control instead of vendor-driven chaos.
               </span>
             </div>
           </div>
