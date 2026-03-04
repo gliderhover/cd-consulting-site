@@ -25,7 +25,7 @@ export default function DiagramGate({
   mode,
   embedSrc = "/Diagram/diagram_complete_v2.html",
   title = "An AI Native Solution",
-  subtitle = "A visual map of the data foundation and how the pieces connect.",
+  subtitle = "A map of our common data model and how data, analytics and decisions come together.",
 }: DiagramGateProps) {
   const [isUnlocked, setIsUnlocked] = useState(false);
   const [submitting, setSubmitting] = useState(false);

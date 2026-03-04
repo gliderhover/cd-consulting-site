@@ -7,8 +7,8 @@
   },
   "heroTitle": "Own the Future of Your Portfolio",
   "heroSubtitle": "Your real estate portfolio has a data problem, not a software problem.",
-  "heroBodyPrimary": "We provide the Common Data Model (CDM) that automates the labor-intensive data preparation currently stalling your AI and data initiatives. Our products unblock your IT and data teams by orchestrating data 10x faster than legacy data engineering cycles.",
-  "heroBodySecondary": "Move beyond dashboards; we deliver the advanced, high-fidelity analytics the industry has lacked to manage global corporate real estate portfolios.",
+  "heroBodyPrimary": "We give CRE teams the data foundation they need to cut IT implementation cycles by 90% and navigate the future of their portfolio.",
+  "heroBodySecondary": "We move teams beyond dashboards and deliver advanced, high-fidelity analytics the industry has lacked.",
   "heroFooter": "Built by Corporate Real Estate Natives. Powered by Proprietary Technology.",
   "heroCtaPrimary": { "label": "Explore the technical approach", "href": "/technical" },
   "heroCtaSecondary": { "label": "Book a discovery call", "href": "#contact" },
@@ -28,7 +28,7 @@
   ],
   "technicalTeaser": {
     "title": "Technical details",
-    "body": "Most CRE systems were built to record transactions, not forecast strategy. See the architecture gaps that turn teams into data janitors and how a semantic layer fixes them.",
+    "body": "Most CRE systems were built to record the past, not forecast the future. See how we fix the gaps between data, analytics and decisions",
     "cta": { "label": "Read technical details", "href": "/technical" }
   },
   "problemTitle": "The problem inside the problem",

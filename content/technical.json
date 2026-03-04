@@ -19,7 +19,7 @@
     }
   ],
   "detailsTitle": "Technical details",
-  "detailsBody": "Most CRE systems were built to record the past, not forecast the future. See how we fix the gaps between data and analytics",
+  "detailsBody": "Most CRE systems were built to record the past, not forecast the future. See how we fix the gaps between data, analytics and decisions",
   "issueTitle": "The issue is not reporting. It is architecture.",
   "issueBody": "Most CRE stacks were built to capture reality (payments, work orders, lease abstracts). They are great at looking backward. They struggle to forecast and connect decisions to P&L, employee experience, ESG goals, and risk. That gap turns teams into manual data janitors.",
   "issueCards": [
