@@ -7,13 +7,13 @@
   ],
   "graphicPlaceholder": "GRAPHIC TO BE INSERTED",
   "cta": {
-    "title": "Navigate the Future of Your Portfolio",
-    "body": "Most portfolios are sitting on a goldmine of data trapped within static systems. Our Portfolio Data Audit is a high-impact diagnostic identifying the bottlenecks that are preventing your teams from moving at the speed of the market.",
+    "title": "Book a Portfolio Audit",
+    "body": "You are likely sitting on a goldmine of data trapped inside static, siloed systems. In 45 minutes, we will identify the bottlenecks keeping your team stuck in the past.",
     "bulletsTitle": "What we'll uncover in 45 minutes:",
     "bullets": [
       "AI Readiness: A clear assessment of how prepared your architecture is for the next wave of automation.",
       "The Integrity Gap: Pinpoint exactly which data sources are undermining your high-stakes decisions.",
-      "The CDM Shortcut: Discover how our Common Data Model unblocks your IT teams and accelerates analytics cycles by 10x.",
+      "The CDM Shortcut: Discover how our Common Data Model bypasses the 24 months needed for data projects.",
       "The ROI Roadmap: A prioritized list of optimization tasks that lead to immediate cost reduction and time savings."
     ],
     "primary": { "label": "Book Your Portfolio Data Audit", "href": "https://outlook.office.com/book/Demo@consultcd.com/" }
