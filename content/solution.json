@@ -1,9 +1,10 @@
 {
   "heroBadge": "Solution Framework",
-  "heroTitle": "Traditional CRE systems are built to record the past, not navigate the future.",
+  "heroTitle": "We see what others miss.",
   "heroParagraphs": [
-    "Most platforms function as expensive digital filing cabinets or “systems of record”. They show you where you’ve been providing descriptive dashboards capturing payments, work orders and lease details. But they fail to forecast impacts to your P&L, employee experience or enterprise risk.",
-    "C&D turns your data into a decision engine. By combining deep domain and data expertise specific to corporate real estate, we provide the 'connective tissue' between your daily operations and your board-room goals. We don't just organize your data; we optimize it to unlock capital, slash operational costs immediately, improve employee experience and reduce portfolio risks."
+    "Most data platforms function as expensive digital filing cabinets. They are built to treat data as numbers trapped in a cell—passively capturing payments, work orders, and lease details.",
+    "We model reality. By combining deep domain and data expertise specific to corporate real estate, we map the context and the relationships between every lease, space, person, project, and dollar.",
+    "We’ve spent a combined 30+ years at JLL managing Fortune 500 real estate portfolios and data initiatives. We’ve seen firsthand where the gaps exist and what it actually takes to close them. We built C&D to turn those hard-won corporate lessons into an agile playbook—so you can move fast while avoiding the pitfalls and multi-million dollar mistakes."
   ],
   "graphicPlaceholder": "GRAPHIC TO BE INSERTED",
   "cta": {

@@ -5,11 +5,9 @@
     "infix": "",
     "emphasisSecondary": ""
   },
-  "heroTitle": "Own the Future of Your Portfolio",
-  "heroSubtitle": "Your real estate portfolio has a data problem, not a software problem.",
-  "heroBodyPrimary": "We give CRE teams the data foundation they need to cut IT implementation cycles by 90% and navigate the future of their portfolio.",
-  "heroBodySecondary": "We move teams beyond dashboards and deliver advanced, high-fidelity analytics the industry has lacked.",
-  "heroFooter": "Built by Corporate Real Estate Natives. Powered by Proprietary Technology.",
+  "heroTitle": "Turn portfolio chaos into clarity",
+  "heroSubtitle": "While others spend 12-to-24 months agonizing over legacy data integrations, you could be making better decisions within days. We give Corporate Real Estate and IT teams the data superpowers they need to cut decision-making cycles by 90%.",
+  "heroFooter": "Portfolio decision making without data drama. Just clarity, from day one. Built by CRE Natives.",
   "heroCtaPrimary": { "label": "Explore the technical approach", "href": "/technical" },
   "heroCtaSecondary": { "label": "Book a discovery call", "href": "#contact" },
   "differentiators": [
