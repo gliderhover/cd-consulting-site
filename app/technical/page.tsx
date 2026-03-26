@@ -50,13 +50,13 @@ export default function TechnicalPage() {
               <div className="mt-8 flex flex-wrap gap-3">
                 <a
                   href={technical.heroCtaPrimary?.href ?? ""}
-                  className="rounded-full bg-white px-5 py-3 text-sm font-medium text-slate-900 hover:bg-slate-100"
+                  className="rounded-full bg-white px-5 py-3 text-sm font-medium text-slate-900 hover:bg-slate-100 focus:outline-none focus-visible:outline-none focus-visible:ring-0"
                 >
                   {technical.heroCtaPrimary?.label ?? ""}
                 </a>
                 <a
                   href={technical.heroCtaSecondary?.href ?? ""}
-                  className="rounded-full border border-white/30 px-5 py-3 text-sm font-medium text-white hover:bg-white/10"
+                  className="rounded-full border border-white/30 px-5 py-3 text-sm font-medium text-white hover:bg-white/10 focus:outline-none focus-visible:outline-none focus-visible:ring-0"
                 >
                   {technical.heroCtaSecondary?.label ?? ""}
                 </a>
