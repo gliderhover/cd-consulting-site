@@ -3,7 +3,6 @@
   "heroTitle": "A semantic layer for corporate real estate strategy.",
   "heroBody": "We deploy a Common Data Model and CRE ontology that makes portfolio decisions computable: neutral across vendors, aligned to how your business actually runs, and structured for deterministic analytics and enterprise AI.",
   "heroCtaPrimary": { "label": "Book a discovery call", "href": "/#contact" },
-  "heroCtaSecondary": { "label": "See the AI Native Solution", "href": "/#diagram" },
   "heroCards": [
     {
       "title": "Neutral by design",

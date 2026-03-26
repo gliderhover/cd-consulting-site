@@ -28,7 +28,10 @@ export default function SiteFooter() {
                 <div className="text-xs text-slate-400">CRE Data + Strategy Intelligence</div>
               </div>
             </div>
-            <div className="text-xs text-slate-400">© {year} C&amp;D Consulting. All rights reserved.</div>
+            <div className="text-xs text-slate-400">
+              © {year} C&amp;D Consulting. All rights reserved. C&amp;D Consulting is an independent
+              firm and is not affiliated with JLL.
+            </div>
           </div>
 
           <div className="space-y-2 text-sm">
