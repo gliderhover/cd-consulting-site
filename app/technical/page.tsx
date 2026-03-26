@@ -47,20 +47,16 @@ export default function TechnicalPage() {
                 {technical.heroBody ?? ""}
               </p>
 
-              <div className="mt-8 flex flex-wrap gap-3">
-                <a
-                  href={technical.heroCtaPrimary?.href ?? ""}
-                  className="rounded-full bg-white px-5 py-3 text-sm font-medium text-slate-900 hover:bg-slate-100 focus:outline-none focus-visible:outline-none focus-visible:ring-0"
-                >
-                  {technical.heroCtaPrimary?.label ?? ""}
-                </a>
-                <a
-                  href={technical.heroCtaSecondary?.href ?? ""}
-                  className="rounded-full border border-white/30 px-5 py-3 text-sm font-medium text-white hover:bg-white/10 focus:outline-none focus-visible:outline-none focus-visible:ring-0"
-                >
-                  {technical.heroCtaSecondary?.label ?? ""}
-                </a>
-              </div>
+              {technical.heroCtaPrimary?.href ? (
+                <div className="mt-8 flex flex-wrap gap-3">
+                  <a
+                    href={technical.heroCtaPrimary.href}
+                    className="rounded-full bg-white px-5 py-3 text-sm font-medium text-slate-900 hover:bg-slate-100 focus:outline-none focus-visible:outline-none focus-visible:ring-0"
+                  >
+                    {technical.heroCtaPrimary?.label ?? ""}
+                  </a>
+                </div>
+              ) : null}
             </div>
 
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-1">
