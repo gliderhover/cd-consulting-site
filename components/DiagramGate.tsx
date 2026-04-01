@@ -45,7 +45,7 @@ export default function DiagramGate({
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const stored = window.localStorage.getItem(STORAGE_KEY) === "1";
+    const stored = window.localStorage.getItem(STORAGE_KEY) === "true";
     const cookieHit = document.cookie.includes(`${COOKIE_NAME}=1`);
     if (stored || cookieHit) {
       setIsUnlocked(true);
