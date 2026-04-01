@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
+import { CosmosClient } from "@azure/cosmos";
 
 type DiagramAskPayload = {
   email?: string;
@@ -20,30 +20,39 @@ export async function POST(request: Request) {
   }
 
   const email = (payload.email ?? "").trim();
+  const name = (payload.name ?? "").trim();
   if (!email) {
     return NextResponse.json({ error: "Email is required." }, { status: 400 });
   }
-
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-  if (!supabaseUrl || !serviceRoleKey) {
-    return NextResponse.json({ error: "Missing Supabase credentials." }, { status: 500 });
+  if (!name) {
+    return NextResponse.json({ error: "Name is required." }, { status: 400 });
   }
 
-  const supabase = createClient(supabaseUrl, serviceRoleKey);
+  const endpoint = process.env.COSMOS_ENDPOINT;
+  const key = process.env.COSMOS_KEY;
+  const databaseId = process.env.COSMOS_DATABASE ?? "website";
+  const containerId = process.env.COSMOS_CONTAINER ?? "contacts";
 
-  const { error } = await supabase.from("diagram_ask").insert({
-    email,
-    name: payload.name ?? null,
-    company: payload.company ?? null,
-    phone: payload.phone ?? null,
-    message: payload.message ?? null,
-    source: payload.source ?? null,
-  });
+  if (!endpoint || !key) {
+    console.error("Missing Cosmos DB credentials.");
+    return NextResponse.json({ error: "Missing Cosmos DB credentials." }, { status: 500 });
+  }
 
-  if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  try {
+    const client = new CosmosClient({ endpoint, key });
+    const container = client.database(databaseId).container(containerId);
+    await container.items.create({
+      id: crypto.randomUUID(),
+      name,
+      email,
+      company: (payload.company ?? "").trim(),
+      message: (payload.message ?? "").trim(),
+      createdAt: new Date().toISOString(),
+      source: "website-form",
+    });
+  } catch (error) {
+    console.error("Cosmos DB insert failed.", error);
+    return NextResponse.json({ error: "Failed to save submission." }, { status: 500 });
   }
 
   return NextResponse.json({ ok: true });
