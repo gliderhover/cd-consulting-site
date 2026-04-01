@@ -38,8 +38,17 @@ export async function POST(request: Request) {
   const containerId = process.env.COSMOS_CONTAINER ?? "contacts";
 
   if (!endpoint || !key) {
-    console.error("Missing Cosmos DB credentials.");
-    return NextResponse.json({ error: "Missing Cosmos DB credentials." }, { status: 500 });
+    const debug = {
+      hasEndpoint: Boolean(process.env.COSMOS_ENDPOINT),
+      hasKey: Boolean(process.env.COSMOS_KEY),
+      hasDatabase: Boolean(process.env.COSMOS_DATABASE),
+      hasContainer: Boolean(process.env.COSMOS_CONTAINER),
+    };
+    console.error("Missing Cosmos DB credentials.", debug);
+    return NextResponse.json(
+      { error: "Missing Cosmos DB credentials.", debug },
+      { status: 500 }
+    );
   }
 
   try {
