@@ -2,14 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import DiagramGate from "@/components/DiagramGate";
 
 const STORAGE_KEY = "diagram_unlocked";
 const COOKIE_NAME = "diagram_unlocked";
 
 export default function DiagramViewerPage() {
-  const router = useRouter();
   const [hasAccess, setHasAccess] = useState(false);
+  const [isReady, setIsReady] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const viewportRef = useRef<HTMLDivElement | null>(null);
 
@@ -19,10 +19,9 @@ export default function DiagramViewerPage() {
     const cookieHit = document.cookie.includes(`${COOKIE_NAME}=1`);
     if (stored || cookieHit) {
       setHasAccess(true);
-      return;
     }
-    router.replace("/#diagram");
-  }, [router]);
+    setIsReady(true);
+  }, []);
 
   useEffect(() => {
     if (typeof document === "undefined") return;
@@ -66,10 +65,18 @@ export default function DiagramViewerPage() {
     }
   };
 
+  if (!isReady) {
+    return (
+      <main className="min-h-screen bg-white">
+        <DiagramGate mode="page" />
+      </main>
+    );
+  }
+
   if (!hasAccess) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-white text-slate-700">
-        Checking access...
+      <main className="min-h-screen bg-white">
+        <DiagramGate mode="page" />
       </main>
     );
   }
@@ -91,7 +98,7 @@ export default function DiagramViewerPage() {
           {isFullscreen ? "Exit Full Screen" : "Full Screen"}
         </button>
       </header>
-      <div ref={viewportRef} className="diagram-fs flex-1">
+      <div ref={viewportRef} className="diagram-fs flex-1 min-h-[80svh]">
         <iframe
           title="Interactive diagram"
           src="/Diagram/diagram_complete_v2.html"
