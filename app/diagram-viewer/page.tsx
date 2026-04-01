@@ -19,6 +19,7 @@ export default function DiagramViewerPage() {
   const [hasAccess, setHasAccess] = useState(false);
   const [isReady, setIsReady] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [pseudoFullscreen, setPseudoFullscreen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -67,21 +68,38 @@ export default function DiagramViewerPage() {
       webkitRequestFullscreen?: () => Promise<void> | void;
     };
 
-    if (doc.fullscreenElement || doc.webkitFullscreenElement) {
+    if (doc.fullscreenElement || doc.webkitFullscreenElement || pseudoFullscreen) {
       if (doc.exitFullscreen) {
         void doc.exitFullscreen();
       } else if (doc.webkitExitFullscreen) {
         doc.webkitExitFullscreen();
       }
+      setPseudoFullscreen(false);
       return;
     }
 
-    if (element.requestFullscreen) {
-      void element.requestFullscreen();
-    } else if (element.webkitRequestFullscreen) {
-      element.webkitRequestFullscreen();
+    try {
+      if (element.requestFullscreen) {
+        void element.requestFullscreen();
+        return;
+      }
+      if (element.webkitRequestFullscreen) {
+        element.webkitRequestFullscreen();
+        return;
+      }
+    } catch {
+      // fall through to pseudo fullscreen
     }
+    setPseudoFullscreen(true);
   };
+
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    document.body.style.overflow = pseudoFullscreen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [pseudoFullscreen]);
 
   const onChange =
     (field: keyof FormState) =>
@@ -247,11 +265,15 @@ export default function DiagramViewerPage() {
       </header>
       <div
         ref={viewportRef}
-        className="diagram-fs"
-        style={{
-          height: `calc(100svh - ${headerHeight}px)`,
-          minHeight: `calc(100vh - ${headerHeight}px)`,
-        }}
+        className={`diagram-fs ${pseudoFullscreen ? "fixed inset-0 z-50 bg-white" : ""}`}
+        style={
+          pseudoFullscreen
+            ? { height: "100svh" }
+            : {
+                height: `calc(100svh - ${headerHeight}px)`,
+                minHeight: `calc(100vh - ${headerHeight}px)`,
+              }
+        }
       >
         <iframe
           title="Interactive diagram"
@@ -259,6 +281,7 @@ export default function DiagramViewerPage() {
           className="h-full w-full"
           loading="lazy"
           allowFullScreen
+          allow="fullscreen"
           scrolling="yes"
         />
       </div>
