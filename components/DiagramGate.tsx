@@ -32,6 +32,7 @@ export default function DiagramGate({
   const [success, setSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const viewportRef = useRef<HTMLDivElement | null>(null);
   const [form, setForm] = useState<FormState>({
     email: "",
@@ -48,6 +49,19 @@ export default function DiagramGate({
     if (stored || cookieHit) {
       setIsUnlocked(true);
     }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const media = window.matchMedia("(max-width: 767px)");
+    const update = () => setIsMobile(media.matches);
+    update();
+    if (media.addEventListener) {
+      media.addEventListener("change", update);
+      return () => media.removeEventListener("change", update);
+    }
+    media.addListener(update);
+    return () => media.removeListener(update);
   }, []);
 
   useEffect(() => {
@@ -147,37 +161,58 @@ export default function DiagramGate({
 
   return (
     <div className="rounded-2xl border border-slate-200 bg-white shadow-sm">
-      <div className="flex flex-col gap-4 border-b border-slate-200 px-6 py-5 md:flex-row md:items-center md:justify-between">
+        <div className="flex flex-col gap-4 border-b border-slate-200 px-6 py-5 md:flex-row md:items-center md:justify-between">
         <div>
           <h2 className="text-3xl font-semibold text-slate-900 sm:text-4xl lg:text-5xl">
             {title}
           </h2>
           <p className="mt-2 max-w-3xl text-base text-slate-600 sm:text-lg">{subtitle}</p>
         </div>
-        <div className="flex flex-wrap gap-2">
-          <button
-            type="button"
-            onClick={toggleFullscreen}
-            disabled={!isUnlocked}
-            className="inline-flex items-center justify-center rounded-full border border-slate-300 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-slate-700 hover:border-slate-400 hover:text-slate-900 disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            {isFullscreen ? "EXIT FULL SCREEN" : "OPEN FULL SCREEN"}
-          </button>
-        </div>
+        {!isMobile ? (
+          <div className="flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={toggleFullscreen}
+              disabled={!isUnlocked}
+              className="inline-flex items-center justify-center rounded-full border border-slate-300 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-slate-700 hover:border-slate-400 hover:text-slate-900 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {isFullscreen ? "EXIT FULL SCREEN" : "OPEN FULL SCREEN"}
+            </button>
+          </div>
+        ) : null}
       </div>
 
       {isUnlocked ? (
-        <div className="overflow-hidden rounded-b-2xl">
-          <div ref={viewportRef} className="diagram-fs aspect-[16/9] w-full">
-            <iframe
-              title="Interactive diagram"
-              src={embedSrc}
-              className="h-full w-full"
-              loading="lazy"
-              scrolling="yes"
-            />
+        isMobile ? (
+          <div className="px-6 py-6">
+            <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-100">
+              <img
+                src="/diagram-preview.png"
+                alt="Diagram preview"
+                className="h-[220px] w-full object-cover sm:h-[280px]"
+              />
+            </div>
+            <div className="mt-4 text-sm text-slate-600">Best viewed in landscape.</div>
+            <a
+              href="/diagram-viewer"
+              className="mt-4 inline-flex w-full items-center justify-center rounded-full bg-slate-900 px-5 py-2.5 text-sm font-medium text-white hover:bg-slate-800"
+            >
+              Open interactive diagram
+            </a>
           </div>
-        </div>
+        ) : (
+          <div className="overflow-hidden rounded-b-2xl">
+            <div ref={viewportRef} className="diagram-fs aspect-[16/9] w-full">
+              <iframe
+                title="Interactive diagram"
+                src={embedSrc}
+                className="h-full w-full"
+                loading="lazy"
+                scrolling="yes"
+              />
+            </div>
+          </div>
+        )
       ) : (
         <div className="px-6 py-6">
           <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-100">
