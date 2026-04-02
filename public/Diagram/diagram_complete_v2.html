@@ -134,6 +134,18 @@
             gap: 12px;
         }
 
+        .zoom-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .zoom-btn {
+            min-width: 44px;
+            min-height: 44px;
+            font-size: 14px;
+            border-radius: 10px;
+        }
+
         .controls-section {
             display: flex;
             flex-direction: column;
@@ -295,6 +307,14 @@
         </div>
         
         <div class="controls-content">
+            <div class="controls-section" id="zoomSection">
+                <div class="controls-title">Zoom</div>
+                <div class="zoom-controls">
+                    <button class="btn zoom-btn" id="zoomOutBtn" aria-label="Zoom out">−</button>
+                    <button class="btn zoom-btn" id="zoomFitBtn" aria-label="Fit diagram">Fit</button>
+                    <button class="btn zoom-btn" id="zoomInBtn" aria-label="Zoom in">+</button>
+                </div>
+            </div>
             <div class="controls-section" id="collapseGroupsSection">
                 <div class="controls-section-header">
                     <div class="controls-title">Collapse Groups</div>
@@ -500,6 +520,7 @@
                 'opacity': 0.95
             }
         };
+        let currentZoom = 1;
 
         const nodesData = [
             // Level 0 (System of Record)
@@ -943,6 +964,7 @@
         ];
 
         window.onload = function() {
+            const isMobile = window.matchMedia("(max-width: 767px)").matches;
             cy = cytoscape({
                 container: document.getElementById('cy'),
                 elements: elements,
@@ -1105,11 +1127,14 @@
             });
 
             applyLayout();
+            const initialPadding = isMobile ? 32 : 80;
+            cy.fit(null, initialPadding);
             setupControls();
             setupCollapseControls();
             setupPanelToggle('controlsPanel', 'panelTitle', 'togglePanel');
             setupHighlightControls();
             setupSectionToggles();
+            setupZoomControls();
             
             // Apply initial visibility state to hide level 5 nodes
             updateVisibility();
@@ -1132,11 +1157,39 @@
             });
 
             cy.on('zoom', function() {
-                updateLabels(cy.zoom());
+                const zoom = cy.zoom();
+                updateLabels(zoom);
+                scheduleZoomScale(zoom, isMobile);
             });
 
             window.addEventListener('resize', debounce(applyLayout, 250));
         };
+
+        function setupZoomControls() {
+            const zoomInBtn = document.getElementById('zoomInBtn');
+            const zoomOutBtn = document.getElementById('zoomOutBtn');
+            const zoomFitBtn = document.getElementById('zoomFitBtn');
+            if (!zoomInBtn || !zoomOutBtn || !zoomFitBtn) return;
+
+            zoomInBtn.addEventListener('click', () => zoomBy(1.15));
+            zoomOutBtn.addEventListener('click', () => zoomBy(1 / 1.15));
+            zoomFitBtn.addEventListener('click', () => {
+                const padding = window.matchMedia("(max-width: 767px)").matches ? 32 : 80;
+                cy.fit(null, padding);
+            });
+        }
+
+        function zoomBy(factor) {
+            const w = cy.width();
+            const h = cy.height();
+            const minZoom = 0.2;
+            const maxZoom = 2.2;
+            const next = clamp(cy.zoom() * factor, minZoom, maxZoom);
+            cy.zoom({
+                level: next,
+                renderedPosition: { x: w / 2, y: h / 2 }
+            });
+        }
 
         function setupPanelToggle(panelId, titleId, btnId) {
             const panel = document.getElementById(panelId);
@@ -1511,8 +1564,9 @@
                         // Apply group style
                         const style = groupStyles[groupId];
                         if (style) {
-                            Object.keys(style).forEach(key => {
-                                parentNode.style(key, style[key]);
+                            const scaled = scaleGroupStyle(style, currentZoom);
+                            Object.keys(scaled).forEach(key => {
+                                parentNode.style(key, scaled[key]);
                             });
                             // Ensure background stays opaque even when node opacity changes
                             parentNode.style('background-opacity', 1);
@@ -1759,7 +1813,8 @@
                 });
             });
 
-            cy.fit(null, 80);
+            const padding = window.matchMedia("(max-width: 767px)").matches ? 32 : 80;
+            cy.fit(null, padding);
         }
 
         function updateLabels(zoom) {
@@ -1770,6 +1825,113 @@
             });
         }
 
+        let zoomFrame = null;
+        function scheduleZoomScale(zoom, isMobile) {
+            if (zoomFrame) return;
+            zoomFrame = requestAnimationFrame(() => {
+                zoomFrame = null;
+                applyZoomScale(zoom, isMobile);
+            });
+        }
+
+        function applyZoomScale(zoom, isMobile) {
+            currentZoom = zoom;
+            const base = {
+                root: 100,
+                core: 40,
+                detail: 18,
+                systemW: 150,
+                systemH: 60,
+                externalW: 150,
+                externalH: 60,
+                fontRoot: 10,
+                fontCore: 10,
+                fontDetail: 9,
+                fontSystem: 10,
+                edge: 1.5,
+                textMaxCore: isMobile ? 90 : 120,
+                textMaxSystem: isMobile ? 90 : 110,
+                textMaxDetail: isMobile ? 80 : 100
+            };
+
+            const rootSize = clamp(base.root * zoom, 70, 160);
+            const coreSize = clamp(base.core * zoom, 24, 72);
+            const detailSize = clamp(base.detail * zoom, 10, 32);
+            const systemW = clamp(base.systemW * zoom, 90, 220);
+            const systemH = clamp(base.systemH * zoom, 40, 120);
+            const externalW = clamp(base.externalW * zoom, 90, 220);
+            const externalH = clamp(base.externalH * zoom, 40, 120);
+
+            cy.style()
+                .selector('.root')
+                .style({
+                    width: rootSize,
+                    height: rootSize,
+                    'font-size': clamp(base.fontRoot * zoom, 8, 20) + 'px',
+                    'text-max-width': clamp(80 * zoom, 60, 140) + 'px'
+                })
+                .selector('.core, .descriptor, .analytical, .decision, .outcome')
+                .style({
+                    width: coreSize,
+                    height: coreSize,
+                    'font-size': clamp(base.fontCore * zoom, 8, 18) + 'px',
+                    'text-max-width': clamp(base.textMaxCore * zoom, 70, 180) + 'px'
+                })
+                .selector('.detail')
+                .style({
+                    width: detailSize,
+                    height: detailSize,
+                    'font-size': clamp(base.fontDetail * zoom, 7, 14) + 'px',
+                    'text-max-width': clamp(base.textMaxDetail * zoom, 60, 140) + 'px'
+                })
+                .selector('.system_of_record')
+                .style({
+                    width: systemW,
+                    height: systemH,
+                    'font-size': clamp(base.fontSystem * zoom, 8, 18) + 'px',
+                    'text-max-width': clamp(base.textMaxSystem * zoom, 70, 170) + 'px'
+                })
+                .selector('.external_context')
+                .style({
+                    width: externalW,
+                    height: externalH,
+                    'font-size': clamp(base.fontSystem * zoom, 8, 18) + 'px',
+                    'text-max-width': clamp(base.textMaxSystem * zoom, 70, 170) + 'px'
+                })
+                .selector('edge')
+                .style({
+                    width: clamp(base.edge * zoom, 0.6, 3.2)
+                })
+                .update();
+
+            // Re-apply scaled group styles
+            cy.nodes('[isGroupParent]').forEach(node => {
+                const groupId = node.data('groupId');
+                const baseStyle = groupStyles[groupId];
+                if (!baseStyle) return;
+                const scaled = scaleGroupStyle(baseStyle, zoom);
+                Object.keys(scaled).forEach(key => node.style(key, scaled[key]));
+            });
+        }
+
+        function scaleGroupStyle(style, zoom) {
+            const scaled = {};
+            Object.keys(style).forEach(key => {
+                const value = style[key];
+                if (typeof value === 'number') {
+                    scaled[key] = value * zoom;
+                    return;
+                }
+                if (typeof value === 'string' && value.endsWith('px')) {
+                    const num = parseFloat(value);
+                    scaled[key] = (num * zoom) + 'px';
+                    return;
+                }
+                scaled[key] = value;
+            });
+            return scaled;
+        }
+
         function debounce(func, wait) {
             let timeout;
             return function() {
@@ -1777,6 +1939,10 @@
                 clearTimeout(timeout);
                 timeout = setTimeout(() => func.apply(context, args), wait);
             };
+        }
+
+        function clamp(value, min, max) {
+            return Math.min(Math.max(value, min), max);
         }
     </script>
 </body>
