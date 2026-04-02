@@ -1854,53 +1854,56 @@
                 textMaxDetail: isMobile ? 80 : 100
             };
 
-            const rootSize = clamp(base.root * zoom, 70, 160);
-            const coreSize = clamp(base.core * zoom, 24, 72);
-            const detailSize = clamp(base.detail * zoom, 10, 32);
-            const systemW = clamp(base.systemW * zoom, 90, 220);
-            const systemH = clamp(base.systemH * zoom, 40, 120);
-            const externalW = clamp(base.externalW * zoom, 90, 220);
-            const externalH = clamp(base.externalH * zoom, 40, 120);
+            const z = zoom || 1;
+            const scale = isMobile ? (value) => value / z : (value) => value * z;
+
+            const rootSize = clamp(scale(base.root), 18, 160);
+            const coreSize = clamp(scale(base.core), 18, 72);
+            const detailSize = clamp(scale(base.detail), 10, 32);
+            const systemW = clamp(scale(base.systemW), 90, 220);
+            const systemH = clamp(scale(base.systemH), 40, 120);
+            const externalW = clamp(scale(base.externalW), 90, 220);
+            const externalH = clamp(scale(base.externalH), 40, 120);
 
             cy.style()
                 .selector('.root')
                 .style({
                     width: rootSize,
                     height: rootSize,
-                    'font-size': clamp(base.fontRoot * zoom, 8, 20) + 'px',
+                    'font-size': clamp(scale(base.fontRoot), 10, 20) + 'px',
                     'text-max-width': clamp(80 * zoom, 60, 140) + 'px'
                 })
                 .selector('.core, .descriptor, .analytical, .decision, .outcome')
                 .style({
                     width: coreSize,
                     height: coreSize,
-                    'font-size': clamp(base.fontCore * zoom, 8, 18) + 'px',
-                    'text-max-width': clamp(base.textMaxCore * zoom, 70, 180) + 'px'
+                    'font-size': clamp(scale(base.fontCore), 10, 18) + 'px',
+                    'text-max-width': clamp(scale(base.textMaxCore), 70, 180) + 'px'
                 })
                 .selector('.detail')
                 .style({
                     width: detailSize,
                     height: detailSize,
-                    'font-size': clamp(base.fontDetail * zoom, 7, 14) + 'px',
-                    'text-max-width': clamp(base.textMaxDetail * zoom, 60, 140) + 'px'
+                    'font-size': clamp(scale(base.fontDetail), 10, 14) + 'px',
+                    'text-max-width': clamp(scale(base.textMaxDetail), 60, 140) + 'px'
                 })
                 .selector('.system_of_record')
                 .style({
                     width: systemW,
                     height: systemH,
-                    'font-size': clamp(base.fontSystem * zoom, 8, 18) + 'px',
-                    'text-max-width': clamp(base.textMaxSystem * zoom, 70, 170) + 'px'
+                    'font-size': clamp(scale(base.fontSystem), 10, 18) + 'px',
+                    'text-max-width': clamp(scale(base.textMaxSystem), 70, 170) + 'px'
                 })
                 .selector('.external_context')
                 .style({
                     width: externalW,
                     height: externalH,
-                    'font-size': clamp(base.fontSystem * zoom, 8, 18) + 'px',
-                    'text-max-width': clamp(base.textMaxSystem * zoom, 70, 170) + 'px'
+                    'font-size': clamp(scale(base.fontSystem), 10, 18) + 'px',
+                    'text-max-width': clamp(scale(base.textMaxSystem), 70, 170) + 'px'
                 })
                 .selector('edge')
                 .style({
-                    width: clamp(base.edge * zoom, 0.6, 3.2)
+                    width: clamp(scale(base.edge), 1, 3)
                 })
                 .update();
 
@@ -1909,7 +1912,7 @@
                 const groupId = node.data('groupId');
                 const baseStyle = groupStyles[groupId];
                 if (!baseStyle) return;
-                const scaled = scaleGroupStyle(baseStyle, zoom);
+                const scaled = scaleGroupStyle(baseStyle, isMobile ? 1 / z : z);
                 Object.keys(scaled).forEach(key => node.style(key, scaled[key]));
             });
         }
