@@ -20,6 +20,8 @@ export default function DiagramViewerPage() {
   const [isReady, setIsReady] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [pseudoFullscreen, setPseudoFullscreen] = useState(false);
+  const isMobile = useMediaQuery("(max-width: 768px)");
+  const isPortrait = useMediaQuery("(orientation: portrait)");
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -275,16 +277,51 @@ export default function DiagramViewerPage() {
               }
         }
       >
-        <iframe
-          title="Interactive diagram"
-          src="/Diagram/diagram_complete_v2.html"
-          className="h-full w-full"
-          loading="lazy"
-          allowFullScreen
-          allow="fullscreen"
-          scrolling="yes"
-        />
+        {isMobile && isPortrait ? (
+          <div className="diagram-rotate-shell">
+            <div className="diagram-rotate-inner">
+              <iframe
+                title="Interactive diagram"
+                src="/Diagram/diagram_complete_v2.html"
+                className="h-full w-full"
+                loading="lazy"
+                allowFullScreen
+                allow="fullscreen"
+                scrolling="yes"
+              />
+            </div>
+          </div>
+        ) : (
+          <iframe
+            title="Interactive diagram"
+            src="/Diagram/diagram_complete_v2.html"
+            className="h-full w-full"
+            loading="lazy"
+            allowFullScreen
+            allow="fullscreen"
+            scrolling="yes"
+          />
+        )}
       </div>
     </main>
   );
+}
+
+function useMediaQuery(query: string) {
+  const [matches, setMatches] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const media = window.matchMedia(query);
+    const update = () => setMatches(media.matches);
+    update();
+    if (media.addEventListener) {
+      media.addEventListener("change", update);
+      return () => media.removeEventListener("change", update);
+    }
+    media.addListener(update);
+    return () => media.removeListener(update);
+  }, [query]);
+
+  return matches;
 }
