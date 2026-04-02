@@ -964,7 +964,7 @@
         ];
 
         window.onload = function() {
-            const isMobile = window.matchMedia("(max-width: 767px)").matches;
+            const isMobile = window.matchMedia("(max-width: 768px)").matches;
             cy = cytoscape({
                 container: document.getElementById('cy'),
                 elements: elements,
@@ -1159,7 +1159,11 @@
             cy.on('zoom', function() {
                 const zoom = cy.zoom();
                 updateLabels(zoom);
-                scheduleEdgeScale(zoom);
+                if (isMobileView()) {
+                    scheduleMobileScale(zoom);
+                } else {
+                    scheduleEdgeScale(zoom);
+                }
             });
 
             window.addEventListener('resize', debounce(applyLayout, 250));
@@ -1813,7 +1817,7 @@
                 });
             });
 
-            const padding = window.matchMedia("(max-width: 767px)").matches ? 32 : 80;
+            const padding = window.matchMedia("(max-width: 768px)").matches ? 32 : 80;
             cy.fit(null, padding);
         }
 
@@ -1823,6 +1827,10 @@
                 if (node.hasClass('root')) return; 
                 node.style('text-opacity', zoom < threshold ? 0 : 1);
             });
+        }
+
+        function isMobileView() {
+            return window.matchMedia("(max-width: 768px)").matches;
         }
 
         let zoomFrame = null;
@@ -1839,6 +1847,72 @@
             const z = zoom || 1;
             const edgeWidth = clamp(baseEdgeWidth / Math.sqrt(z), 0.5, baseEdgeWidth);
             cy.style()
+                .selector('edge')
+                .style({ width: edgeWidth })
+                .update();
+        }
+
+        let mobileScaleFrame = null;
+        const mobileBase = {
+            root: 100,
+            core: 40,
+            detail: 18,
+            systemW: 150,
+            systemH: 60,
+            externalW: 150,
+            externalH: 60,
+            fontRoot: 10,
+            fontCore: 10,
+            fontDetail: 9,
+            fontSystem: 10,
+            edge: 1.5
+        };
+
+        function scheduleMobileScale(zoom) {
+            if (mobileScaleFrame) return;
+            mobileScaleFrame = requestAnimationFrame(() => {
+                mobileScaleFrame = null;
+                applyMobileScale(zoom);
+            });
+        }
+
+        function applyMobileScale(zoom) {
+            const z = zoom || 1;
+            const nodeSize = (value, min, max) => clamp(value / Math.pow(z, 0.65), min, max);
+            const fontSize = (value, min, max) => clamp(value / Math.pow(z, 0.75), min, max);
+            const edgeWidth = clamp(mobileBase.edge / Math.pow(z, 0.5), 0.6, mobileBase.edge);
+
+            cy.style()
+                .selector('.root')
+                .style({
+                    width: nodeSize(mobileBase.root, 18, mobileBase.root),
+                    height: nodeSize(mobileBase.root, 18, mobileBase.root),
+                    'font-size': fontSize(mobileBase.fontRoot, 8, mobileBase.fontRoot) + 'px'
+                })
+                .selector('.core, .descriptor, .analytical, .decision, .outcome')
+                .style({
+                    width: nodeSize(mobileBase.core, 18, mobileBase.core),
+                    height: nodeSize(mobileBase.core, 18, mobileBase.core),
+                    'font-size': fontSize(mobileBase.fontCore, 8, mobileBase.fontCore) + 'px'
+                })
+                .selector('.detail')
+                .style({
+                    width: nodeSize(mobileBase.detail, 10, mobileBase.detail),
+                    height: nodeSize(mobileBase.detail, 10, mobileBase.detail),
+                    'font-size': fontSize(mobileBase.fontDetail, 8, mobileBase.fontDetail) + 'px'
+                })
+                .selector('.system_of_record')
+                .style({
+                    width: nodeSize(mobileBase.systemW, 90, mobileBase.systemW),
+                    height: nodeSize(mobileBase.systemH, 40, mobileBase.systemH),
+                    'font-size': fontSize(mobileBase.fontSystem, 8, mobileBase.fontSystem) + 'px'
+                })
+                .selector('.external_context')
+                .style({
+                    width: nodeSize(mobileBase.externalW, 90, mobileBase.externalW),
+                    height: nodeSize(mobileBase.externalH, 40, mobileBase.externalH),
+                    'font-size': fontSize(mobileBase.fontSystem, 8, mobileBase.fontSystem) + 'px'
+                })
                 .selector('edge')
                 .style({ width: edgeWidth })
                 .update();
