@@ -1158,6 +1158,7 @@
 
             cy.on('zoom', function() {
                 const zoom = cy.zoom();
+                currentZoom = zoom;
                 updateLabels(zoom);
                 if (isMobileView()) {
                     scheduleMobileScale(zoom);
@@ -1929,6 +1930,10 @@
 
         function clamp(value, min, max) {
             return Math.min(Math.max(value, min), max);
+        }
+
+        function scaleGroupStyle(style) {
+            return style;
         }
     </script>
 </body>

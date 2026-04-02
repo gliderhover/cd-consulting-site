@@ -187,11 +187,11 @@ export default function DiagramGate({
       {isUnlocked && isReady ? (
         isMobile ? (
           <div className="px-6 py-6">
-            <div className="min-h-[420px] overflow-hidden rounded-2xl border border-slate-200 bg-slate-100">
+            <div className="sm:mx-0 -mx-6 overflow-hidden rounded-none border border-slate-200 bg-slate-100 sm:rounded-2xl">
               <img
                 src="/diagram-preview.png"
                 alt="Diagram preview"
-                className="min-h-[420px] w-full object-cover"
+                className="h-[72svh] min-h-[520px] w-full object-cover sm:h-[70vh] sm:min-h-[600px]"
               />
             </div>
             <div className="mt-4 text-sm text-slate-600">Best viewed in landscape.</div>
@@ -217,7 +217,7 @@ export default function DiagramGate({
         )
       ) : (
         <div className="px-6 py-6">
-          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-100">
+          <div className="sm:mx-0 -mx-6 overflow-hidden rounded-none border border-slate-200 bg-slate-100 sm:rounded-2xl">
             <button
               type="submit"
               className="relative block w-full text-left"
@@ -226,7 +226,7 @@ export default function DiagramGate({
               <img
                 src="/diagram-preview.png"
                 alt="Diagram preview"
-                className="min-h-[420px] w-full object-cover blur-md"
+                className="h-[72svh] min-h-[520px] w-full object-cover blur-md sm:h-[70vh] sm:min-h-[600px]"
               />
               <div className="absolute inset-0 flex items-center justify-center bg-slate-900/35">
                 <span className="rounded-full bg-white/90 px-4 py-2 text-sm font-medium text-slate-900 shadow-sm">
